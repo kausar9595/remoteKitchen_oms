@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:oms/view/menus/menus.dart';
+import 'package:oms/view/order/screen/orders.dart';
 
 
 class CheckAuth extends StatefulWidget {
@@ -12,9 +14,23 @@ class _CheckAuthState extends State<CheckAuth> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: const Text('CheckAuth'),
+      backgroundColor: Colors.red,
+      body: Column(
+        children: [
+          Center(
+            child: const Text('CheckAuth',style: TextStyle(fontSize: 30),),
+          ),
+          ElevatedButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Menus()));
+
+          }, child: Text("menus")),
+          ElevatedButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Orders()));
+
+          }, child: Text("orders")),
+        ],
       ),
+
     );
   }
 }
