@@ -1,5 +1,9 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:oms/view/menus/widgets/modifiers.dart';
+import 'package:oms/view/menus/widgets/widget/radio.dart';
+import 'package:oms/view/order/screen/orders.dart';
 
 import '../../../utility/appcolor.dart';
 
@@ -12,7 +16,6 @@ class AvailabilityMenus extends StatefulWidget {
 
 class _AvailabilityMenusState extends State<AvailabilityMenus> {
   bool _ischeck = false;
-
   List _items = ["All", "Available", "Unavailable"];
   List _selectedItems = [];
   @override
@@ -48,8 +51,8 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                       },
                       child: Container(
                         margin: EdgeInsets.only(left: 15),
-                        padding:
-                            EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
+                        padding: EdgeInsets.only(
+                            left: 10, right: 10, top: 3, bottom: 3),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
@@ -133,7 +136,10 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Modifiers()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Modifiers()));
                         },
                         child: Container(
                           padding: EdgeInsets.only(
@@ -161,8 +167,8 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
               Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(width: 1, color: Colors.grey))),
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.grey))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,8 +213,8 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
               Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(width: 1, color: Colors.grey))),
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.grey))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,8 +251,8 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
               Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(width: 1, color: Colors.grey))),
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.grey))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -283,8 +289,8 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
               Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(width: 1, color: Colors.grey))),
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.grey))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,8 +328,8 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
               Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(width: 1, color: Colors.grey))),
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.grey))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -367,8 +373,8 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
               Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(width: 1, color: Colors.grey))),
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.grey))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -406,8 +412,8 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
               Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(width: 1, color: Colors.grey))),
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.grey))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -445,8 +451,8 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
               Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(width: 1, color: Colors.grey))),
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Colors.grey))),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -485,57 +491,70 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
           ),
         ),
         bottomNavigationBar: Container(
-          padding: EdgeInsets.only(left: 25,right: 25),
-          height: MediaQuery.of(context).size.height*0.07,
+          padding: EdgeInsets.only(left: 25, right: 25),
+          height: MediaQuery.of(context).size.height * 0.07,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                child: Text("2 Selected",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
-                    color: AppColors.textblack,
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  child: Text(
+                    "2 Selected",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      color: AppColors.textblack,
+                    ),
                   ),
                 ),
-
               ),
               Row(
                 children: [
                   InkWell(
-                    onTap: (){},
+                    onTap: () {},
                     child: Container(
-                      height: MediaQuery.of(context).size.height*0.07,
-                      width: MediaQuery.of(context).size.width*0.13,
+                      height: MediaQuery.of(context).size.height * 0.07,
+                      width: MediaQuery.of(context).size.width * 0.13,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey,),
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
                       ),
-                      child: Text("Select All",
+                      child: Text(
+                        "Select All",
                         style: TextStyle(
-                          fontSize: 16,fontWeight: FontWeight.w500,
-                          color:AppColors.textblack,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textblack,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   InkWell(
-                    onTap: (){},
+                    onTap: () {},
                     child: Container(
-                      height: MediaQuery.of(context).size.height*0.07,
-                      width: MediaQuery.of(context).size.width*0.13,
+                      height: MediaQuery.of(context).size.height * 0.07,
+                      width: MediaQuery.of(context).size.width * 0.13,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey,),
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
                       ),
-                      child: Text("Unselect",
+                      child: Text(
+                        "Unselect",
                         style: TextStyle(
-                          fontSize: 16,fontWeight: FontWeight.w500,
-                          color:AppColors.textblack,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textblack,
                         ),
                       ),
                     ),
@@ -543,17 +562,98 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                 ],
               ),
               InkWell(
-                onTap: (){},
+                onTap: () =>showDialog(context: (context), builder: (context)=>AlertDialog(
+                  backgroundColor: Colors.white,
+                  shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  alignment: Alignment.centerRight,
+                  title: Container(
+                    padding: EdgeInsets.all(15),
+                    height: MediaQuery.of(context).size.height*0.85,
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+
+                        Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                                onPressed:(){
+                                  Navigator.pop(context);
+                                },
+                              icon:Icon(Icons.cancel_outlined, size: 40,)
+
+                            )),
+                        SizedBox(height: 30,),
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Change \n Availability",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                "2 Items Selected",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.textindigo,
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 30,),
+                        RadioList(),
+                        SizedBox(height: MediaQuery.of(context).size.height*0.3,),
+                        Center(
+                          child: InkWell(
+                            onTap: (){
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: MediaQuery.of(context).size.height*0.05,
+                              width: MediaQuery.of(context).size.width*0.30,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColors.textindigo,
+                              ),
+                              child: Text("Change for Direct Ordering",
+                                style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
                 child: Container(
                   alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height*0.13,
-                  width: MediaQuery.of(context).size.width*0.20,
+                  height: MediaQuery.of(context).size.height * 0.13,
+                  width: MediaQuery.of(context).size.width * 0.30,
                   //margin: EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.textindigo,
                   ),
-                  child: Text("Change Availability",style: TextStyle(fontWeight:FontWeight.w600,fontSize: 16,color: Colors.white),),
+                  child: Text(
+                    "Change Availability",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Colors.white),
+                  ),
                 ),
               ),
             ],
@@ -563,3 +663,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
     );
   }
 }
+
+
+
+
