@@ -26,7 +26,6 @@ class _MenusState extends State<Menus> {
         child: Scaffold(
           backgroundColor: Colors.white,
           drawer: Drawer(
-
             backgroundColor: Colors.white,
             width: MediaQuery.of(context).size.width * 0.45,
             child: SingleChildScrollView(
@@ -259,7 +258,7 @@ class _MenusState extends State<Menus> {
                   InkWell(
                     onTap: (){},
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
@@ -269,6 +268,8 @@ class _MenusState extends State<Menus> {
                               fontWeight: FontWeight.w600,
                               color: Colors.black),
                         ),
+                        Icon(Icons.ios_share_sharp,size: 20,color: Colors.black,),
+                        SizedBox(width: 60,),
 
 
                       ],

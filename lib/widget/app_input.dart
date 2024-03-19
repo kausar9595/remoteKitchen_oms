@@ -7,11 +7,18 @@ class AppInput extends StatelessWidget {
     this.title,
     required this.controller,
     this.suffixIcon,
+    this.readOnly = false,
+    this.obscureText = false,
+    this.validator,
   });
   final TextEditingController controller;
   final String? title;
   final String hintText;
   final Widget? suffixIcon;
+  final bool obscureText;
+  final bool readOnly;
+  final String? Function(String?)? validator;
+
 
 
 
@@ -25,6 +32,9 @@ class AppInput extends StatelessWidget {
         children: [
           Text("$title",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20,color: Colors.black),),
           TextFormField(
+            readOnly: readOnly,
+            obscureText: obscureText,
+            validator: validator,
             controller: controller,
             decoration: InputDecoration(
               hintText: hintText,
