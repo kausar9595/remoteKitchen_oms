@@ -31,8 +31,6 @@ class AppButton extends StatelessWidget {
         alignment: Alignment.center,
         height: height,
         width: width,
-        // height: MediaQuery.of(context).size.height * 0.08,
-        // width: MediaQuery.of(context).size.width * 0.25,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: bgColor,

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:oms/view/auth/login.dart';
 import 'package:oms/view/setting_screen/widget/app_input.dart';
 
 import '../../utility/appcolor.dart';
@@ -67,7 +68,9 @@ class _SettingScreenState extends State<SettingScreen> {
                         style: TextStyle(fontWeight:FontWeight.w600,fontSize: 18,color: Colors.black),
                       ),
                       InkWell(
-                        onTap: (){},
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+                        },
                         child: Container(
                           alignment: Alignment.center,
                           height:MediaQuery.of(context).size.height*0.06,

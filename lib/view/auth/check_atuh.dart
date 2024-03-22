@@ -22,11 +22,9 @@ class _CheckAuthState extends State<CheckAuth> {
           ),
           ElevatedButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>Menus()));
-
           }, child: Text("menus")),
           ElevatedButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>Orders()));
-
           }, child: Text("orders")),
         ],
       ),

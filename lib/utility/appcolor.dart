@@ -9,7 +9,6 @@ class AppColors{
   static const Color Customerbuttom = Color(0xff414141);
   static const Color textindigo = Color(0xff304FFE);
   static const Color textred = Color(0xffF44336);
-
   static const Color textorange = Color(0xffFB8A00);
 
 

@@ -52,7 +52,6 @@ class _MenusState extends State<Menus> {
                         color: Colors.black),
                   ),
                   Container(
-                    //margin: EdgeInsets.only(left: 10),
                     padding: EdgeInsets.only(
                       left: 10,
                     ),
@@ -65,7 +64,6 @@ class _MenusState extends State<Menus> {
                     ),
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      //alignment: Alignment.bottomCenter,
                       icon: Icon(
                         Icons.keyboard_arrow_down_rounded,
                         size: 40,
@@ -112,7 +110,6 @@ class _MenusState extends State<Menus> {
                     ),
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      //alignment: Alignment.bottomCenter,
                       icon: Icon(
                         Icons.keyboard_arrow_down_rounded,
                         size: 40,
@@ -365,13 +362,11 @@ class _MenusState extends State<Menus> {
                 child: TabBar(
                     labelStyle: TextStyle(
                         fontSize: 20,
-
                         fontWeight: FontWeight.w600,
                         color: AppColors.textblack),
                     tabs: [
                       Tab(
                         text: "Availability",
-
                       ),
                       Tab(
                         text: "Hours",
@@ -383,7 +378,8 @@ class _MenusState extends State<Menus> {
               )
             ],
           ),
-          body: TabBarView(children: [
+          body: TabBarView(
+              children: [
             AvailabilityMenus(),
             HoursMenus(),
           ]),
