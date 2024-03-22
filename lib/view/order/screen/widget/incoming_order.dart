@@ -199,9 +199,10 @@ class _IncomingOrderState extends State<IncomingOrder> {
               Container(
                 alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width * 0.30,
+                height: 70,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.access_time_sharp,
