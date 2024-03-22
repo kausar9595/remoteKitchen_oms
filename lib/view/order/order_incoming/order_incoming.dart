@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 
 class OrderIncoming extends StatefulWidget {
@@ -23,7 +24,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
           children: [
             ListTile(
               title: Text("New Ordering Incoming",style: TextStyle(
-                fontWeight: FontWeight.w500,color: Colors.white,fontSize: 20,
+                fontWeight: FontWeight.w700,color: Colors.white,fontSize: 20,
               ),),
               trailing: IconButton(
                   onPressed: (){Navigator.pop(context);},
@@ -55,7 +56,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text("User Name",
-                        style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: Colors.white),
+                        style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Colors.white),
                       ),
                       SizedBox(width: 10,),
                       InkWell(
@@ -69,7 +70,10 @@ class _OrderIncomingState extends State<OrderIncoming> {
                             color: AppColors.textindigo,
                           ),
                           child: Text("Lvl 01",
-                            style: TextStyle(fontWeight: FontWeight.w600,fontSize: 14,color: Colors.white),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: smallFontSize,color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -77,7 +81,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
                       Text("(",style: TextStyle(color: Colors.white),),
                       RichText(text: TextSpan(
                           text: "Accumulated order:",
-                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: AppColors.textorange),
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: AppColors.textorange),
                           children: [
                             TextSpan(
                               text: "CA\$356.98",
@@ -91,11 +95,11 @@ class _OrderIncomingState extends State<OrderIncoming> {
                   ),
                   SizedBox(height: 10,),
                   Text("Has ordered 3 Items",style: TextStyle(
-                    fontSize: 18,color: Colors.white,fontWeight:FontWeight.w600,
+                    fontSize: 16,color: Colors.white,fontWeight:FontWeight.w700,
                   ),),
                   SizedBox(height: 5,),
                   Text("Order for Delivery",
-                    style: TextStyle(fontSize: 16,color:Colors.white,fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 16,color:Colors.white,fontWeight: FontWeight.w400),
                   ),
                   SizedBox(height: 5,),
                   Row(
@@ -111,12 +115,12 @@ class _OrderIncomingState extends State<OrderIncoming> {
                           border: Border.all(color: Colors.white,width: 2),
                           color: AppColors.textindigo,
                         ),
-                        child: Text("2",style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white,fontSize: 15),
+                        child: Text("2",style: TextStyle(fontWeight: FontWeight.w600,color: Colors.white,fontSize: 16),
                         ),
                       ),
                       SizedBox(width: 10,),
                       Text("Fresh lamb kebab (10 skewers)- BOGO item ",
-                        style: TextStyle(fontSize:18,fontWeight: FontWeight.w600,color: Colors.white),
+                        style: TextStyle(fontSize:16,fontWeight: FontWeight.w700,color: Colors.white),
                       ),
 
                     ],
@@ -135,7 +139,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
                           border: Border.all(color: Colors.white,width: 2),
                           color: AppColors.textindigo,
                         ),
-                        child: Text("1",style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white,fontSize: 15),
+                        child: Text("1",style: TextStyle(fontWeight: FontWeight.w600,color: Colors.white,fontSize: 16),
                         ),
                       ),
                       SizedBox(width: 10,),
@@ -147,7 +151,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
                   ),
                   SizedBox(height: 5,),
                   TextButton(onPressed: (){}, child: Text("View Order Details",
-                    style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: AppColors.textindigo),),
+                    style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: AppColors.textindigo),),
                   ),
                 ],
 

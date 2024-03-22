@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oms/view/history/history_screen.dart';
+import 'package:oms/utility/app_const.dart';
+
 
 import '../../../utility/appcolor.dart';
 
@@ -34,40 +35,38 @@ class _SpecialHourState extends State<SpecialHour> {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "Date",
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,
                                 color: Colors.black),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(left: 10),
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.18,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(color: Colors.grey),
-                              ),
-                              child: Text(
-                                "22/02/2024",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: Colors.black),
+                          SizedBox(height: 10,),
+                          Container(
+                            padding: EdgeInsets.only(top: 15),
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: MediaQuery.of(context).size.width * 0.18,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(color:AppColors.grey200),
+                            ),
+                            child: Center(
+                              child: TextFormField(
+                                textAlign: TextAlign.start,
+                                decoration: InputDecoration(
+                                  hintText: "2/16/24",
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                  )
+                                ),
                               ),
                             ),
                           )
@@ -80,8 +79,8 @@ class _SpecialHourState extends State<SpecialHour> {
                           Text(
                             "Opens at",
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,
                                 color: Colors.black),
                           ),
                           SizedBox(
@@ -102,8 +101,8 @@ class _SpecialHourState extends State<SpecialHour> {
                               child: Text(
                                 "Open",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: smallFontSize,
                                     color: Colors.black),
                               ),
                             ),
@@ -117,8 +116,8 @@ class _SpecialHourState extends State<SpecialHour> {
                           Text(
                             "Closes at",
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,
                                 color: Colors.black),
                           ),
                           SizedBox(
@@ -139,23 +138,22 @@ class _SpecialHourState extends State<SpecialHour> {
                               child: Text(
                                 "Closes",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: smallFontSize,
                                     color: Colors.black),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      Align(
-                          alignment: Alignment.bottomRight,
-                          child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.more_vert,
-                                color: Colors.black,
-                                size: 30,
-                              ))),
+
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.more_vert,
+                            color: Colors.black,
+                            size: 30,
+                          )),
                     ],
                   ),
                   SizedBox(
@@ -164,7 +162,7 @@ class _SpecialHourState extends State<SpecialHour> {
                   Row(
                     children: [
                       Transform.scale(
-                        scale: 2.0,
+                        scale: 1.0,
                         child: Checkbox(
                             checkColor: Colors.white,
                             activeColor: AppColors.textindigo,
@@ -176,23 +174,22 @@ class _SpecialHourState extends State<SpecialHour> {
                             }),
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 5,
                       ),
                       Text(
                         "Closed",
                         style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
+                            fontSize: smallFontSize,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black
+                        ),
                       )
                     ],
                   ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 10,),
             Row(
               children: [
                 IconButton(
@@ -208,8 +205,8 @@ class _SpecialHourState extends State<SpecialHour> {
                 Text(
                   "Add Day",
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontSize: smallFontSize,
                       color: Colors.black),
                 ),
               ],

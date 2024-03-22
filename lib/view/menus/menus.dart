@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/view/history/history_screen.dart';
 import 'package:oms/view/menus/widgets/availability.dart';
@@ -38,7 +39,7 @@ class _MenusState extends State<Menus> {
                       onPressed: () {Navigator.pop(context);},
                       icon: Icon(
                         Icons.cancel_outlined,
-                        color: Colors.black,
+                        color: AppColors.textblack,
                         size: 40,
                       )),
                   SizedBox(
@@ -47,10 +48,11 @@ class _MenusState extends State<Menus> {
                   Text(
                     "Current location Selected",
                     style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                        color: Colors.black),
+                        fontWeight: FontWeight.w700,
+                        fontSize: normalFontSize,
+                        color: AppColors.textblack),
                   ),
+                  SizedBox(height: 10,),
                   Container(
                     padding: EdgeInsets.only(
                       left: 10,
@@ -167,13 +169,13 @@ class _MenusState extends State<Menus> {
                                 left: BorderSide(
                                     color: AppColors.textindigo, width: 6))
                             : Border(left: BorderSide.none),
-                        color: _isOrder ? Colors.grey : Colors.transparent,
+                        color: _isOrder ? AppColors.selectgrey : Colors.transparent,
                       ),
                       child: Text(
                         "Orders",
                         style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.w600,color: Colors.black),
+                            fontWeight: FontWeight.w700,color: AppColors.grey200),
                       ),
                     ),
                   ),
@@ -201,14 +203,14 @@ class _MenusState extends State<Menus> {
                                     color: AppColors.textindigo, width: 6),
                               )
                             : Border(left: BorderSide.none),
-                        color: _isMenu ? Colors.grey : Colors.transparent,
+                        color: _isMenu ? AppColors.selectgrey : Colors.transparent,
                       ),
                       child: Text(
                         "Menu",
                         style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black),
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.grey200),
                       ),
                     ),
                   ),
@@ -238,14 +240,14 @@ class _MenusState extends State<Menus> {
                                 left: BorderSide(
                                     color: AppColors.textindigo, width: 6),
                         ) : Border(left: BorderSide.none),
-                        color: _isHistory ? Colors.grey : Colors.transparent,
+                        color: _isHistory ? AppColors.selectgrey : Colors.transparent,
                       ),
                       child: Text(
                         "History",
                         style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black),
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.grey200),
                       ),
                     ),
                   ),
@@ -261,9 +263,9 @@ class _MenusState extends State<Menus> {
                         Text(
                           "Dashboard",
                           style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black),
+                              fontSize: normalFontSize,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textblack),
                         ),
                         Icon(Icons.ios_share_sharp,size: 20,color: Colors.black,),
                         SizedBox(width: 60,),
@@ -282,9 +284,9 @@ class _MenusState extends State<Menus> {
                     child: Text(
                       "Settings",
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
+                          fontSize: normalFontSize,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textblack),
                     ),
                   ),
                   SizedBox(
@@ -295,9 +297,9 @@ class _MenusState extends State<Menus> {
                     child: Text(
                       "Helps",
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
+                          fontSize: normalFontSize,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textblack),
                     ),
                   ),
                 ],
@@ -312,8 +314,8 @@ class _MenusState extends State<Menus> {
                   "Menu",
                   style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textblack),
                 ),
                 SizedBox(
                   width: 15,
