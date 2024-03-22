@@ -10,6 +10,7 @@ class HistoryDetail extends StatefulWidget {
 class _HistoryDetailState extends State<HistoryDetail> {
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(child: Scaffold(
       appBar: AppBar(
         title: Text("Shakib Kabiraz"),
