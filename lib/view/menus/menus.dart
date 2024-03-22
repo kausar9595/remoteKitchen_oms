@@ -27,9 +27,9 @@ class _MenusState extends State<Menus> {
           backgroundColor: Colors.white,
           drawer: Drawer(
             backgroundColor: Colors.white,
-            width: MediaQuery.of(context).size.width * 0.45,
+            width: MediaQuery.of(context).size.width * 0.30,
             child: SingleChildScrollView(
-              padding: EdgeInsets.only(left: 20),
+              padding: EdgeInsets.all(20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
