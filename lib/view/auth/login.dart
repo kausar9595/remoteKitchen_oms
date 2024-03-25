@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:oms/controller/auth_controller.dart';
+import 'package:oms/utility/app_text.dart';
 import 'package:oms/view/menus/menus.dart';
 import 'package:oms/widget/app_input.dart';
+import 'package:oms/widget/app_snapcbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../model/auth_model/login_model.dart';
 import '../../widget/app_button.dart';
 
 class Login extends StatefulWidget {
@@ -12,7 +19,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _loginForm = GlobalKey<FormState>();
-  bool _isloading = false;
   bool _showpassword = false;
 
   final _email = TextEditingController();
@@ -23,6 +29,16 @@ class _LoginState extends State<Login> {
     _email.dispose();
     _password.dispose();
   }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _email.text = "soumik9876@gmail.com";
+    _password.text = "19981998!";
+  }
+
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -97,14 +113,11 @@ class _LoginState extends State<Login> {
               ),
               Center(
                 child: AppButton(
-                  onClick: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Menus()));
-                  },
+                  onClick: () => _login(),
                   height: MediaQuery.of(context).size.height * 0.08,
                   width: MediaQuery.of(context).size.width * 0.25,
                   text: "Login",
-                  isLoading: _isloading,
+                  isLoading: _isLoading,
                 ),
               ),
             ],
@@ -113,4 +126,35 @@ class _LoginState extends State<Login> {
       ),
     ));
   }
+
+
+  //-------- login ---------
+  _login() async{
+
+    if(_loginForm.currentState!.validate()){
+      SharedPreferences _pref = await SharedPreferences.getInstance();
+      setState(() => _isLoading = true);
+      var res = await AuthController.login(context: context, email: _email.text, password: _password.text);
+
+      print("res === ${res.body}");
+      //check if success
+      if(res.statusCode == 200){
+        //store data into a model
+        LoginModel.fromJson(jsonDecode(res.body));
+
+        //store token
+        _pref.setString("token", jsonDecode(res.body)["token"]);
+        AppSnackBar(context, loginSuccessText, Colors.green);
+
+        //redirect to the home page
+         Navigator.push(context, MaterialPageRoute(builder: (context)=>Menus()));
+      }else{
+        AppSnackBar(context, loginErrorText, Colors.red);
+      }
+
+      setState(() => _isLoading = false);
+    }
+    }
+
+  //----------end-----------//
 }
