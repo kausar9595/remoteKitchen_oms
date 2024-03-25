@@ -11,7 +11,7 @@ String restaurantListModelToJson(RestaurantListModel data) => json.encode(data.t
 class RestaurantListModel {
   final Links? links;
   final int? count;
-  final List<Result>? results;
+  final List<RestaurantResult>? results;
 
   RestaurantListModel({
     this.links,
@@ -22,7 +22,7 @@ class RestaurantListModel {
   factory RestaurantListModel.fromJson(Map<String, dynamic> json) => RestaurantListModel(
     links: json["links"] == null ? null : Links.fromJson(json["links"]),
     count: json["count"],
-    results: json["results"] == null ? [] : List<Result>.from(json["results"]!.map((x) => Result.fromJson(x))),
+    results: json["results"] == null ? [] : List<RestaurantResult>.from(json["results"]!.map((x) => RestaurantResult.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -52,7 +52,7 @@ class Links {
   };
 }
 
-class Result {
+class RestaurantResult {
   final int? id;
   final List<dynamic>? openingHours;
   final RImage? avatarImage;
@@ -73,12 +73,12 @@ class Result {
   final bool? isStoreClose;
   final String? timezone;
   final int? inflationPercent;
-  final int? rewardPointEquivalent;
+  final double? rewardPointEquivalent;
   final int? owner;
   final int? company;
   final int? paymentDetails;
 
-  Result({
+  RestaurantResult({
     this.id,
     this.openingHours,
     this.avatarImage,
@@ -105,7 +105,7 @@ class Result {
     this.paymentDetails,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory RestaurantResult.fromJson(Map<String, dynamic> json) => RestaurantResult(
     id: json["id"],
     openingHours: json["opening_hours"] == null ? [] : List<dynamic>.from(json["opening_hours"]!.map((x) => x)),
     avatarImage: json["avatar_image"] == null ? null : RImage.fromJson(json["avatar_image"]),
@@ -126,7 +126,7 @@ class Result {
     isStoreClose: json["is_store_close"],
     timezone: json["timezone"],
     inflationPercent: json["inflation_percent"],
-    rewardPointEquivalent: json["reward_point_equivalent"],
+    rewardPointEquivalent: double.parse("${json["reward_point_equivalent"]}"),
     owner: json["owner"],
     company: json["company"],
     paymentDetails: json["payment_details"],
