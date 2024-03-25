@@ -19,13 +19,21 @@ class _MenusState extends State<Menus> {
 
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("this is menu page");
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
-          drawer: AppDrawer(),
+          drawer: AppDrawer(currentPage: Menus(),),
           appBar: AppBar(
             backgroundColor: Colors.white,
             title: Row(
