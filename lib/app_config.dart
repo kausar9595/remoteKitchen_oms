@@ -10,6 +10,7 @@ class AppConfig{
   static const String API_VERSION = "v1";
   static const String BASE_URL = "$DOMAIN/$API";
   static const String LOGIN = "$BASE_URL/accounts/$API_VERSION/login/email/";
-  static const String RESTAURANT_LIST = "$BASE_URL//food/v1/restaurant";
+  static const String RESTAURANT_LIST = "$BASE_URL/food/v1/restaurant";
+  static const String LOCATION_LIST = "$BASE_URL/food/v1/location?restaurant=";
 
 }
