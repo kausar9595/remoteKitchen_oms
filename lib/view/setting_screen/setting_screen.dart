@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/view/auth/login.dart';
 import 'package:oms/view/setting_screen/widget/app_input.dart';
 
@@ -27,7 +28,7 @@ class _SettingScreenState extends State<SettingScreen> {
             backgroundColor: Colors.white,
             leading: Icon(Icons.menu,size: 30,color: Colors.black),
             title: Text("Settings",
-              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: Colors.black),),
+              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: AppColors.textblack),),
 
           ),
           body: SingleChildScrollView(
@@ -44,28 +45,51 @@ class _SettingScreenState extends State<SettingScreen> {
                     children: [
                       SizedBox(height: 20,),
                       Text("Store settings",
-                        style: TextStyle(fontWeight: FontWeight.w700,fontSize: 22,color: Colors.black),
+                        style: TextStyle(fontWeight: FontWeight.w700,fontSize: 22,color: AppColors.textblack),
                       ),
                      Text("Account information and workflow configuration ",
-                       style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),
+                       style: TextStyle(fontSize: normalFontSize,
+                           fontWeight: FontWeight.w400,
+                           color: AppColors.textblack,
+                       ),
                      ),
                       SizedBox(height: 10,),
                       Text("Account info",
-                        style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20,color: Colors.black),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: bigFontSize,
+                            color: AppColors.textblack,
+                        ),
                       ),
                       SizedBox(height: 10,),
                       Text("Time Zone",
-                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),
+                        style: TextStyle(
+                            fontSize: normalFontSize,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textblack,
+                        ),
                       ),
                       Text("America / Vancouver",
-                        style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: bigFontSize,
+                            color: AppColors.textblack,
+                        ),
                       ),
                       SizedBox(height: 10,),
                       Text("Account",
-                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),
+                        style: TextStyle(
+                            fontSize: normalFontSize,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textblack,
+                        ),
                       ),
                       Text("bd@heyremotekitchen.com",
-                        style: TextStyle(fontWeight:FontWeight.w600,fontSize: 18,color: Colors.black),
+                        style: TextStyle(
+                            fontWeight:FontWeight.w400,
+                            fontSize: bigFontSize,
+                            color: AppColors.textblack,
+                        ),
                       ),
                       InkWell(
                         onTap: (){
@@ -80,13 +104,21 @@ class _SettingScreenState extends State<SettingScreen> {
                             color: AppColors.selectgrey,
                           ),
                           child: Text("Sign Out",
-                            style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),
+                            style: TextStyle(
+                                fontSize: bigFontSize,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.textblack,
+                            ),
                           ),
                         ),
                       ),
                       SizedBox(height: 10,),
                       Text("Reset Password",
-                        style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20,color: Colors.black),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: bigFontSize,
+                            color: AppColors.textblack,
+                        ),
                       ),
                       SizedBox(height: 10,),
                       AppInput(
@@ -104,7 +136,11 @@ class _SettingScreenState extends State<SettingScreen> {
                         controller: _confirmpassword,
                       ),
                       Text("Logout all other sessions",
-                        style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.black),
+                        style: TextStyle(
+                          fontSize: bigFontSize,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textblack,
+                        ),
                       ),
                       Checkbox(
                         activeColor:AppColors.textindigo,
@@ -127,7 +163,11 @@ class _SettingScreenState extends State<SettingScreen> {
                             color: AppColors.selectgrey,
                           ),
                           child: Text("Reset Password",
-                            style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18,color: Colors.black),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: bigFontSize,
+                                color: AppColors.textblack,
+                            ),
                           ),
 
                         ),
@@ -144,16 +184,28 @@ class _SettingScreenState extends State<SettingScreen> {
                       children: [
                         SizedBox(height: MediaQuery.of(context).size.height*0.13,),
                         Text("Workflow Settings",
-                          style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Colors.black),
+                          style: TextStyle(
+                            fontSize: bigFontSize,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textblack,
+                          ),
                         ),
                         SizedBox(height: 10,),
                         Text("Using a POS for Delivery Orders",
-                          style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20,color: Colors.black),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: normalFontSize,
+                            color: AppColors.textblack,
+                          ),
                         ),
                         SizedBox(height: 5,),
                         Text("If you use a POS, we’ll let you track whether"
                             "\n orders has been entered or still need to be input.",
-                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),
+                          style: TextStyle(
+                            fontSize: smallFontSize,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textblack,
+                          ),
                         ),
                         SizedBox(height: 5,),
                         Row(
@@ -169,13 +221,21 @@ class _SettingScreenState extends State<SettingScreen> {
                                   });
                                 }),
                             Text("You are using POS",
-                              style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20,color: Colors.black),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: normalFontSize,
+                                color: AppColors.textblack,
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 10,),
                         Text("Your POS: Revel",
-                          style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: Colors.black),
+                          style: TextStyle(
+                            fontSize: normalFontSize,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textblack,
+                          ),
                         ),
                         //SizedBox(height: 5,),
                         InkWell(
@@ -189,19 +249,31 @@ class _SettingScreenState extends State<SettingScreen> {
                               color: AppColors.selectgrey,
                             ),
                             child: Text("Edit POS",
-                              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),
+                              style: TextStyle(
+                                fontSize: bigFontSize,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.textblack,
+                              ),
                             ),
                           ),
                         ),
                         SizedBox(height: 10,),
                         Text("New order alerts",
-                          style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18,color: Colors.black),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: normalFontSize,
+                            color: AppColors.textblack,
+                          ),
                         ),
                         SizedBox(height: 5,),
-                        Text("If you are not receiving new order notification, "
-                            "please check your device time zones in your device’s "
+                        Text("If you are not receiving new order notification,\n "
+                            "please check your device time zones in your device’s\n "
                             "settings and  make sure it is correct.",
-                          style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.black),
+                          style: TextStyle(
+                            fontSize: smallFontSize,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textblack,
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -216,13 +288,21 @@ class _SettingScreenState extends State<SettingScreen> {
                                   });
                                 }),
                             Text("Full screen notifications",
-                              style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20,color: Colors.black),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: normalFontSize,
+                                color: AppColors.textblack,
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 10,),
                         Text("Print prices on receipts",
-                          style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.black),
+                          style: TextStyle(
+                            fontSize: normalFontSize,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textblack,
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -237,13 +317,21 @@ class _SettingScreenState extends State<SettingScreen> {
                                   });
                                 }),
                             Text("Show prices on printed tickets",
-                              style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20,color: Colors.black),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: normalFontSize,
+                                color: AppColors.textblack,
+                              ),
                             ),
                           ],
                         ),
                         SizedBox(height: 10,),
                         Text("Test Audio",
-                          style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: normalFontSize,
+                            color: AppColors.textblack,
+                          ),
                         ),
                         SizedBox(height: 5,),
                         InkWell(
@@ -257,7 +345,10 @@ class _SettingScreenState extends State<SettingScreen> {
                               color: AppColors.selectgrey,
                             ),
                             child: Text("Play Test Sound",
-                              style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18,color: Colors.black),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: bigFontSize,
+                                color: AppColors.textblack,),
                             ),
 
                           ),

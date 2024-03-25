@@ -22,7 +22,6 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
   List _selectedItems = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _selectedItems.add(_items[0]);
   }
@@ -89,7 +88,8 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                         hintStyle: TextStyle(
                             fontSize: smallFontSize,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.grey200),
+                            color: AppColors.grey200,
+                        ),
                         prefixIcon: Icon(
                           Icons.search,
                           color: Colors.black,
@@ -522,7 +522,9 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
               Row(
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+
+                    },
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.07,
                       width: MediaQuery.of(context).size.width * 0.13,

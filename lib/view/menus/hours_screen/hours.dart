@@ -20,17 +20,15 @@ class _HoursMenusState extends State<HoursMenus> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(15),
+      body: Padding(
+        padding: EdgeInsets.all(20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
                 flex: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: ListView(
                   children: [
                     InkWell(
                         onTap: () {
@@ -57,7 +55,7 @@ class _HoursMenusState extends State<HoursMenus> {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.black),
+                                  color: AppColors.textblack),
                             ))),
                     SizedBox(
                       height: 10,
@@ -86,18 +84,20 @@ class _HoursMenusState extends State<HoursMenus> {
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.black),
+                                color: AppColors.textblack),
                           ),
                         )),
                   ],
                 )),
             _isRegular ? RegularHoursSetting() : Center(),
             _isSpacial ? SpecialHour() : Center()
+
           ],
         ),
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.only(left: 15, right: 15),
+        margin: EdgeInsets.only(bottom: 15),
         height: MediaQuery.of(context).size.height * 0.07,
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,7 +109,7 @@ class _HoursMenusState extends State<HoursMenus> {
                   "Restore settings",
                   style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w400,
                       color: AppColors.textindigo),
                 ),
               ),

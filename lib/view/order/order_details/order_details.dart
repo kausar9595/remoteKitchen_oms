@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import '../order_incoming/order_incoming.dart';
 
@@ -49,8 +50,8 @@ class _OrderDetailState extends State<OrderDetail> {
                             ),
                             child:  Text("Customer",
                               style:TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
+                                fontSize: normalFontSize,
+                                fontWeight: FontWeight.w700,
                                 color: Colors.white,),
                             ),
                           ),
@@ -72,8 +73,8 @@ class _OrderDetailState extends State<OrderDetail> {
                             ),
                             child: Text("Courier",
                               style:TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
+                                fontSize: normalFontSize,
+                                fontWeight: FontWeight.w700,
                                 color: Colors.white,),
                             ),
                           ),
@@ -96,8 +97,8 @@ class _OrderDetailState extends State<OrderDetail> {
                     SizedBox(height: 10,),
                     Text("User Name",
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          fontSize: normalFontSize,
                           color: Colors.white,
                       ),
                     ),
@@ -112,7 +113,9 @@ class _OrderDetailState extends State<OrderDetail> {
                           borderRadius: BorderRadius.circular(10),
                           color: AppColors.textindigo,
                         ),
-                        child: Text("Lvl 01",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.white),
+                        child: Text("Lvl 01",
+                          style: TextStyle(fontSize: smallFontSize,
+                              fontWeight: FontWeight.w600,color: Colors.white),
                         ),
                       ),
                     ),
@@ -123,11 +126,19 @@ class _OrderDetailState extends State<OrderDetail> {
                     SizedBox(height: 10,),
                     RichText(text: TextSpan(
                       text: "Accumulated order :",
-                      style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: AppColors.textorange),
+                      style: TextStyle(
+                          fontSize: normalFontSize,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textorange,
+                      ),
                       children: [
                         TextSpan(
                           text: " CA\$356.98",
-                          style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color: Colors.white),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: normalFontSize,
+                              color: Colors.white,
+                          ),
                         )
                       ]
                     ))
@@ -170,7 +181,12 @@ class _OrderDetailState extends State<OrderDetail> {
                                 children: [
                                   Icon(Icons.print,color: Colors.black,size: 35,),
                                   SizedBox(height: 5,),
-                                  Text("Reprint Ticket"),
+                                  Text("Reprint Ticket",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: smallFontSize,
+                                      color: AppColors.textblack,
+                                    ),),
                                   SizedBox(height: 10,),
                                 ],
                               ),
@@ -196,8 +212,8 @@ class _OrderDetailState extends State<OrderDetail> {
                         child: Text("3 items for\n Example User\n Name",
                           style: TextStyle(
                               fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textblack),
                         ),
                       ),
                       ListTile(
@@ -214,10 +230,18 @@ class _OrderDetailState extends State<OrderDetail> {
                           ),
                         ),
                         title: Text("Fresh lamb kebab (10\nskewers)- BOGO item ",
-                          style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: Colors.black),
+                          style: TextStyle(
+                              fontSize: normalFontSize,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textblack,
+                          ),
                         ),
                         trailing: Text("CA\$13.99",
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black),
+                          style: TextStyle(
+                              fontSize: normalFontSize,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textblack,
+                          ),
                         ),
                       ),
                       SizedBox(height: 10,),
@@ -231,43 +255,60 @@ class _OrderDetailState extends State<OrderDetail> {
                             color: AppColors.textindigo,
                           ),
                           child: Text("1",
-                            style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white,fontSize: 16),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                                fontSize: normalFontSize,
+                            ),
                           ),
                         ),
                         title: Text("Lamb Fried Rice",
-                          style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: Colors.black),
+                          style: TextStyle(
+                              fontSize: normalFontSize,
+                              fontWeight: FontWeight.w700,color: AppColors.textblack,
+                          ),
                         ),
                         trailing: Text("CA\$13.99",
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black),
+                          style: TextStyle(fontSize: normalFontSize,
+                              fontWeight: FontWeight.w400,color: AppColors.textblack,
+                          ),
                         ),
                       ),
                       SizedBox(height: 10,),
                       ListTile(
                         leading: Text("Item Subtotal",
-                          style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15,color: Colors.black),
+                          style: TextStyle(fontWeight: FontWeight.w400,
+                              fontSize: normalFontSize,color: AppColors.textblack,
+                          ),
                         ),
                         title: Divider(),
                         trailing: Text("CA\$13.99",
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black),
+                          style: TextStyle(fontSize: normalFontSize,
+                              fontWeight: FontWeight.w400,color: AppColors.textblack,
+                          ),
                         ),
                       ),
                       ListTile(
                         leading: Text("Tex",
-                          style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15,color: Colors.black),
+                          style: TextStyle(fontWeight: FontWeight.w400,
+                              fontSize: normalFontSize,color:AppColors.textblack),
                         ),
                         title: Divider(),
                         trailing: Text("CA\$7.1",
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black),
+                          style: TextStyle(fontWeight: FontWeight.w400,
+                              fontSize: normalFontSize,color:AppColors.textblack),
                         ),
                       ),
                       Divider(),
                       ListTile(
                         leading: Text("Total",
-                          style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15,color: Colors.black),
+                          style: TextStyle(fontWeight: FontWeight.w400,
+                              fontSize: normalFontSize,color:AppColors.textblack),
                         ),
                         title: Divider(),
                         trailing: Text("CA\$20.0",
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black),
+                          style: TextStyle(fontWeight: FontWeight.w400,
+                              fontSize: normalFontSize,color:AppColors.textblack),
                         ),
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height*0.1,),

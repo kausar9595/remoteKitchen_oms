@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
+import 'package:oms/utility/appcolor.dart';
 
 class RegularHoursSetting extends StatefulWidget {
   const RegularHoursSetting({super.key});
@@ -15,9 +17,7 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
   Widget build(BuildContext context) {
     return  Expanded(
         flex: 3,
-        child:Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child:ListView(
           children: [
             Container(
               decoration: BoxDecoration(
@@ -40,7 +40,10 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Monday",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),)
+                      Text("Monday",
+                        style: TextStyle(fontSize: normalFontSize,
+                            fontWeight: FontWeight.w700,color:AppColors.textblack),
+                      ),
                     ],
                   ),
                   Row(
@@ -55,11 +58,14 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",
+                              style: TextStyle(fontWeight: FontWeight.w400,
+                                  fontSize: smallFontSize,color: AppColors.textblack),
+                            ),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -67,11 +73,13 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",
+                              style: TextStyle(fontWeight: FontWeight.w400,
+                                  fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -83,11 +91,13 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",
+                              style: TextStyle(fontWeight: FontWeight.w400,
+                                  fontSize: smallFontSize,color: AppColors.textblack),),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -95,10 +105,11 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -137,7 +148,8 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Tuesday",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),)
+                      Text("Tuesday",style: TextStyle(fontSize: normalFontSize,
+                          fontWeight: FontWeight.w700,color:AppColors.textblack),)
                     ],
                   ),
                   Row(
@@ -150,11 +162,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -162,11 +175,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -178,11 +192,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -190,10 +205,11 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -201,9 +217,9 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.more_vert,color: Colors.black,),
+                          Icon(Icons.more_vert,color: AppColors.textblack,),
                           SizedBox(height: 20,),
-                          Icon(Icons.delete,color: Colors.black,)
+                          Icon(Icons.delete,color: AppColors.textblack,)
                         ],
                       ),
                     ],
@@ -232,7 +248,9 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Wednesday",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),)
+                      Text("Wednesday",style: TextStyle(fontSize: normalFontSize,
+                          fontWeight: FontWeight.w700,color:AppColors.textblack),
+                      ),
                     ],
                   ),
                   Row(
@@ -245,11 +263,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -257,11 +276,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -273,11 +293,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -285,10 +306,11 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -296,9 +318,9 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.more_vert,color: Colors.black,),
+                          Icon(Icons.more_vert,color: AppColors.textblack,),
                           SizedBox(height: 20,),
-                          Icon(Icons.delete,color: Colors.black,)
+                          Icon(Icons.delete,color: AppColors.textblack,)
                         ],
                       ),
                     ],
@@ -327,7 +349,8 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Thursday",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),)
+                      Text("Thursday",style: TextStyle(fontSize: normalFontSize,
+                          fontWeight: FontWeight.w700,color:AppColors.textblack),)
                     ],
                   ),
                   Row(
@@ -340,11 +363,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -352,11 +376,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -368,11 +393,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -380,10 +406,11 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -391,9 +418,9 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.more_vert,color: Colors.black,),
+                          Icon(Icons.more_vert,color: AppColors.textblack,),
                           SizedBox(height: 20,),
-                          Icon(Icons.delete,color: Colors.black,)
+                          Icon(Icons.delete,color: AppColors.textblack,)
                         ],
                       ),
                     ],
@@ -422,7 +449,8 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Friday",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),)
+                      Text("Friday",style: TextStyle(fontSize: normalFontSize,
+                          fontWeight: FontWeight.w700,color:AppColors.textblack),)
                     ],
                   ),
                   Row(
@@ -435,11 +463,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -447,11 +476,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -463,11 +493,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -475,10 +506,11 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -486,9 +518,9 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.more_vert,color: Colors.black,),
+                          Icon(Icons.more_vert,color: AppColors.textblack,),
                           SizedBox(height: 20,),
-                          Icon(Icons.delete,color: Colors.black,)
+                          Icon(Icons.delete,color: AppColors.textblack,)
                         ],
                       ),
                     ],
@@ -517,7 +549,9 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Saturday",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),)
+                      Text("Saturday",style: TextStyle(fontSize: normalFontSize,
+                          fontWeight: FontWeight.w700,color:AppColors.textblack),
+                      )
                     ],
                   ),
                   Row(
@@ -530,11 +564,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -542,11 +577,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -558,11 +594,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -570,10 +607,11 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),),
                           )
                         ],
                       ),
@@ -581,9 +619,9 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.more_vert,color: Colors.black,),
+                          Icon(Icons.more_vert,color: AppColors.textblack,),
                           SizedBox(height: 20,),
-                          Icon(Icons.delete,color: Colors.black,)
+                          Icon(Icons.delete,color: AppColors.textblack,)
                         ],
                       ),
                     ],
@@ -612,7 +650,8 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Sunday",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: Colors.black),)
+                      Text("Sunday",style: TextStyle(fontSize: normalFontSize,
+                          fontWeight: FontWeight.w700,color:AppColors.textblack),)
                     ],
                   ),
                   Row(
@@ -625,11 +664,13 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),
+                            ),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -637,11 +678,13 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),
+                            ),
                           )
                         ],
                       ),
@@ -653,11 +696,13 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
 
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),
+                            ),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 20,right: 20,top: 5,bottom: 5),
@@ -665,10 +710,12 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: AppColors.grey200),
                               color: Colors.white,
                             ),
-                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16,color: Colors.black),),
+                            child: Text("11:30 AM",style: TextStyle(fontWeight: FontWeight.w400,
+                                fontSize: smallFontSize,color: AppColors.textblack),
+                            ),
                           )
                         ],
                       ),
@@ -676,9 +723,9 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.more_vert,color: Colors.black,),
+                          Icon(Icons.more_vert,color: AppColors.textblack,),
                           SizedBox(height: 20,),
-                          Icon(Icons.delete,color: Colors.black,)
+                          Icon(Icons.delete,color: AppColors.textblack,)
                         ],
                       ),
                     ],
