@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oms/view/order/screen/widget/incoming_order.dart';
 
 import '../../../widget/app_drawer.dart';
-import '../../menus/menus.dart';
+
 
 
 class Orders extends StatefulWidget {
@@ -44,10 +44,11 @@ class _OrdersState extends State<Orders> {
 
           ],
         ),
-        body: TabBarView(children:[
-          IncomingOrder(),
-          IncomingOrder(),
-          IncomingOrder(),
+        body: TabBarView(
+            children:[
+                IncomingOrder(),
+                IncomingOrder(),
+                IncomingOrder(),
 
         ]),
       ),

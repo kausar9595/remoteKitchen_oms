@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
+import 'package:shimmer/shimmer.dart';
 import '../order_incoming/order_incoming.dart';
 
 class OrderDetail extends StatefulWidget {
