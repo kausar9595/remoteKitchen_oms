@@ -14,7 +14,7 @@ class NewUser extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(15),
         width: 350,
-        height: 300,
+        height: 350,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -31,7 +31,7 @@ class NewUser extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(AppAssets.location, height: 40, width: 40,),
+            Image.asset(AppAssets.location, height: 100, width: 100,),
             SizedBox(height: 20,),
             Text("Welcome to OMS",
               style: TextStyle(
@@ -42,6 +42,7 @@ class NewUser extends StatelessWidget {
             ),
             SizedBox(height: 10,),
             Text(mes,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,

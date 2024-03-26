@@ -139,7 +139,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       setState(() {
                         _selectedRestaurantId = v!;
                       });
-                      RestaurantController.addSelectedRestaurantInfo(restaurantId: _selectedRestaurantId.toString()).then((value){
+                      RestaurantController.addSelectedRestaurantInfo(restaurantId: _selectedRestaurantId.toString(), restaurantName: '').then((value){
                         //call location list
                         _getLocation();
                       });
@@ -190,7 +190,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       });
                       //After that back to the
                       ///Get.to(widget.currentPage, transition: Transition.fade);
-                      RestaurantController.addSelectedLocationInfo(locationId: _selectedLocationId).then((value){
+                      RestaurantController.addSelectedLocationInfo(locationId: _selectedLocationId, locationName: '').then((value){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=> widget.currentPage));
                       });
 
