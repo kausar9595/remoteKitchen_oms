@@ -1,13 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
+import 'package:oms/model/order_model/order_list_model.dart';
 import 'package:oms/utility/app_const.dart';
+import 'package:oms/view/order/screen/widget/order_list_view.dart';
+import 'package:oms/widget/app_shemmer.dart';
+import 'package:oms/widget/empty_data.dart';
 
 import '../../../../utility/appcolor.dart';
 import '../../order_details/order_details.dart';
 
 class IncomingOrder extends StatefulWidget {
-  const IncomingOrder({super.key});
+  final List<OrderResult> orders;
+  final VoidCallback onClick;
+  final bool isLoading;
+
+  const IncomingOrder({super.key, required this.orders, required this.onClick, required this.isLoading});
 
   @override
   State<IncomingOrder> createState() => _IncomingOrderState();
@@ -104,524 +113,44 @@ class _IncomingOrderState extends State<IncomingOrder> {
             ],
           ),
           Divider(color: AppColors.grey200,),
-          Expanded(
-            child:ListView(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Not in POS ( 4 )",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textblack),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 10),
-                      alignment: Alignment.centerLeft,
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      width: MediaQuery.of(context).size.width * 0.05,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.textindigo),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: DropdownButton<String>(
-                        //isExpanded: true,
-                        icon: Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          size: 25,
-                          color: AppColors.textindigo,
-                        ),
-                        elevation: 0,
-                        underline: Container(
-                          decoration: BoxDecoration(
-                            border: Border(bottom: BorderSide.none),
-                          ),
-                        ),
-                        hint: Text(
-                          "ETA",
-                          style: TextStyle(
-                            fontSize: smallFontSize,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.textindigo,
-                          ),
-                        ),
-                        items: <String>[
-                          'A',
-                          'B',
-                          'C',
-                        ].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (_) {},
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(color: AppColors.grey200,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: ListTile(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderDetail()));
-                        },
-                        title: Text(
-                          "#600175820",
-                          style: TextStyle(
-                              fontSize: smallFontSize, fontWeight: FontWeight.w400),
-                        ),
-                        subtitle: Text(
-                          "Customer Name Ex.",
-                          style: TextStyle(
-                              fontSize: normalFontSize, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      width: MediaQuery.of(context).size.width * 0.04,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: AppColors.grey200),
-                      ),
-                      child: Text(
-                        "3",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: AppColors.textblack),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      child: ListTile(
-                        title: Text(
-                          "Meat that Skewers&Kebab",
-                          style: TextStyle(
-                              fontSize: smallFontSize, fontWeight: FontWeight.w400),
-                        ),
-                        subtitle: Text(
-                          "Fresh lamb kebab (10 skewers)- BOG....",
-                          style: TextStyle(
-                              fontSize: normalFontSize, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width * 0.30,
-                      height: 70,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.access_time_sharp,
-                            size: bigFontSize,
-                            color: AppColors.textblack,
-                          ),
-                          RichText(
-                              text: TextSpan(
-                                  text: "Courier",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: normalFontSize,
-                                      color: AppColors.grey100),
-                                  children: [
-                                    TextSpan(
-                                      text: ".22m",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: normalFontSize,
-                                          color: AppColors.textblack),
-                                    )
-                                  ])),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(color: AppColors.grey200,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: ListTile(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderDetail()));
-                        },
-                        title: Text(
-                          "#600175820",
-                          style: TextStyle(
-                              fontSize: smallFontSize, fontWeight: FontWeight.w400),
-                        ),
-                        subtitle: Text(
-                          "Customer Name Ex.",
-                          style: TextStyle(
-                              fontSize: normalFontSize, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      width: MediaQuery.of(context).size.width * 0.04,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: AppColors.grey200),
-                      ),
-                      child: Text(
-                        "2",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: AppColors.textblack,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      child: ListTile(
-                        title: Text(
-                          "Meat that Skewers&Kebab",
-                          style: TextStyle(
-                              fontSize: smallFontSize, fontWeight: FontWeight.w400),
-                        ),
-                        subtitle: Text(
-                          "Fresh lamb kebab (10 skewers)- BOG....",
-                          style: TextStyle(
-                              fontSize: normalFontSize, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width * 0.30,
-                      height: 70,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.access_time_sharp,
-                            size: bigFontSize,
-                            color: Colors.black,
-                          ),
-                          RichText(
-                              text: TextSpan(
-                                  text: "Courier",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: normalFontSize,
-                                      color: AppColors.grey100),
-                                  children: [
-                                    TextSpan(
-                                      text: ".22m",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: normalFontSize,
-                                          color: AppColors.grey200),
-                                    )
-                                  ])),
-                          SizedBox(width: 10,),
-                          Icon(Icons.shopping_bag_outlined,color: AppColors.textblack,size: 27,)
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(color: AppColors.grey200,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: ListTile(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderDetail()));
-                        },
-                        title: Text(
-                          "#600175820",
-                          style: TextStyle(
-                              fontSize: smallFontSize, fontWeight: FontWeight.w400),
-                        ),
-                        subtitle: Text(
-                          "Customer Name Ex.",
-                          style: TextStyle(
-                              fontSize: normalFontSize, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      width: MediaQuery.of(context).size.width * 0.04,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color:AppColors.grey200),
-                      ),
-                      child: Text(
-                        "5",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: AppColors.textblack),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      child: ListTile(
-                        title: Text(
-                          "Meat that Skewers&Kebab",
-                          style: TextStyle(
-                              fontSize: smallFontSize, fontWeight: FontWeight.w400),
-                        ),
-                        subtitle: Text(
-                          "Fresh lamb kebab (10 skewers)- BOG....",
-                          style: TextStyle(
-                              fontSize: normalFontSize, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width * 0.30,
-                      height: 70,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Checkbox(
-                            shape: CircleBorder(),
-                              value: _ischeck,
-                              activeColor: AppColors.textindigo,
-                              onChanged: (value) {
-                                setState(() {
-                                  _ischeck = value!;
-                                });
-                              }),
 
-                          RichText(
-                              text: TextSpan(
-                                  text: "Courier",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: normalFontSize,
-                                      color: AppColors.grey100),
-                                  children: [
-                                    TextSpan(
-                                      text: ". Delivered",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: normalFontSize,
-                                          color: AppColors.textblack),
-                                    )
-                                  ]))
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(color: AppColors.grey200,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: ListTile(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderDetail()));
-                        },
-                        title: Text(
-                          "#600175820",
-                          style: TextStyle(
-                              fontSize: smallFontSize, fontWeight: FontWeight.w400),
-                        ),
-                        subtitle: Text(
-                          "Customer Name Ex.",
-                          style: TextStyle(
-                              fontSize: normalFontSize, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      width: MediaQuery.of(context).size.width * 0.04,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color:AppColors.grey200),
-                      ),
-                      child: Text(
-                        "1",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: AppColors.textblack),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      child: ListTile(
-                        title: Text(
-                          "Meat that Skewers&Kebab",
-                          style: TextStyle(
-                              fontSize: smallFontSize, fontWeight: FontWeight.w400),
-                        ),
-                        subtitle: Text(
-                          "Fresh lamb kebab (10 skewers)- BOG....",
-                          style: TextStyle(
-                              fontSize: normalFontSize, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width * 0.30,
-                      height: 70,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Checkbox(
-                              shape: CircleBorder(),
-                              value: _ischeck,
-                              activeColor: AppColors.textindigo,
-                              onChanged: (value) {
-                                setState(() {
-                                  _ischeck = value!;
-                                });
-                              }),
-                          RichText(
-                              text: TextSpan(
-                                  text: "Courier",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: normalFontSize,
-                                      color: AppColors.grey100),
-                                  children: [
-                                    TextSpan(
-                                      text: ". Out of Delivered",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: normalFontSize,
-                                          color: AppColors.textblack),
-                                    )
-                                  ]))
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(color: AppColors.grey200,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: ListTile(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderDetail()));
-                        },
-                        title: Text(
-                          "#600175820",
-                          style: TextStyle(
-                              fontSize: smallFontSize, fontWeight: FontWeight.w400),
-                        ),
-                        subtitle: Text(
-                          "Customer Name Ex.",
-                          style: TextStyle(
-                              fontSize: normalFontSize, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      width: MediaQuery.of(context).size.width * 0.04,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: AppColors.grey200),
-                      ),
-                      child: Text(
-                        "1",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: AppColors.textblack),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      child: ListTile(
-                        title: Text(
-                          "Meat that Skewers&Kebab",
-                          style: TextStyle(
-                              fontSize: smallFontSize, fontWeight: FontWeight.w400),
-                        ),
-                        subtitle: Text(
-                          "Fresh lamb kebab (10 skewers)- BOG....",
-                          style: TextStyle(
-                              fontSize: normalFontSize, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width * 0.30,
-                      height: 70,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.access_time_sharp,
-                            size: bigFontSize,
-                            color: Colors.black,
-                          ),
-                          Text(".Scheduled Order",
-                            style: TextStyle(
-                                fontSize: normalFontSize,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.textblack,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Divider(color: AppColors.grey200,),
+         widget.isLoading ? Expanded(
+             child: ListView.builder(
+               itemCount: 10,
+               itemBuilder: (_, index){
+                 return Container(
+                   margin: EdgeInsets.only(bottom: 10),
+                   child: AppShimmer(
+                     width: MediaQuery.of(context).size.width,
+                     height: 50,
+                   ),
+                 );
+               },
+             )
 
-              ],
-            ),
-          ),
+         ) :  widget.orders!.isNotEmpty ? Expanded(
+            child: ListView.builder(
+              itemCount: widget.orders!.length,
+              itemBuilder: (_, index){
+                var data = widget.orders[index];
+                List<String> comboItems = data.orderitemSet![0].itemName!.split('\n')
+                    .map((item) => item.trim())
+                    .toList();
+                return OrderListView(
+                    orderId: data.id!.toString(),
+                    customerName: data.customer!,
+                    qty: data.quantity.toString(),
+                    itemName: comboItems.join(', '),
+                    itemSubName: data.orderitemSet![0].modifiers!.isNotEmpty ? data.orderitemSet![0].modifiers![0].toString() : "",
+                    item: data.orderitemSet!,
+                    status: data.status.toString()
+                );
+              },
+            )
+          ) : EmptyData(
+              onClick: widget.onClick,
+              mes: "No orders found in Incoming Orders. Try again with reload.",
+          )
         ],
       ),
     );

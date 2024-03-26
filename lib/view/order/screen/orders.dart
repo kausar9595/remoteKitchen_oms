@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:oms/controller/order_controller.dart';
 import 'package:oms/controller/restaurant_controller.dart';
 import 'package:oms/view/order/screen/widget/incoming_order.dart';
 import 'package:oms/widget/new_user.dart';
 
+import '../../../model/order_model/order_list_model.dart';
 import '../../../widget/app_drawer.dart';
 import '../../menus/menus.dart';
 
@@ -18,12 +20,32 @@ class Orders extends StatefulWidget {
 class _OrdersState extends State<Orders> {
   final _key = GlobalKey<ScaffoldState>();
 
+  List<OrderResult> _incomingOrdersList = [];
+  bool _isLoading = false;
+  _getIncomingOrders()async{
+    setState(() => _isLoading = true);
+    var response = await OrderController.getPendingOrder();
+    for(var i in response!.results!){
+      setState(() {
+        _incomingOrdersList.add(i);
+      });
+    }
+    setState(() => _isLoading = false);
+
+  }
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     //get location id and restaurant id
     _getLocationAndRestaurantId();
+    _getIncomingOrders();
+
+    //store incoming orders into "_incomingOrdersList"
+
+
     print("this is order page");
   }
 
@@ -55,9 +77,9 @@ class _OrdersState extends State<Orders> {
         body: _isNew ? NewUser(onClick: (){
           _key.currentState!.openDrawer();
         }, mes: "You are new here. You need to Choose Restaurant & Location") : TabBarView(children:[
-          IncomingOrder(),
-          IncomingOrder(),
-          IncomingOrder(),
+          IncomingOrder(orders: _incomingOrdersList, onClick: ()=>_getIncomingOrders(), isLoading: _isLoading,),
+          IncomingOrder(orders: _incomingOrdersList, onClick: () {  }, isLoading: _isLoading,),
+          IncomingOrder(orders: _incomingOrdersList, onClick: () {  }, isLoading: _isLoading,),
 
         ]),
       ),

@@ -11,7 +11,7 @@ String orderListModelToJson(OrderListModel data) => json.encode(data.toJson());
 class OrderListModel {
   final Links? links;
   final int? count;
-  final List<Result>? results;
+  final List<OrderResult>? results;
 
   OrderListModel({
     this.links,
@@ -22,7 +22,7 @@ class OrderListModel {
   factory OrderListModel.fromJson(Map<String, dynamic> json) => OrderListModel(
     links: json["links"] == null ? null : Links.fromJson(json["links"]),
     count: json["count"],
-    results: json["results"] == null ? [] : List<Result>.from(json["results"]!.map((x) => Result.fromJson(x))),
+    results: json["results"] == null ? [] : List<OrderResult>.from(json["results"]!.map((x) => OrderResult.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -52,7 +52,7 @@ class Links {
   };
 }
 
-class Result {
+class OrderResult {
   final int? id;
   final List<OrderitemSet>? orderitemSet;
   final dynamic voucher;
@@ -64,17 +64,17 @@ class Result {
   final String? orderId;
   final String? status;
   final String? statusBeforeCancelled;
-  final int? refundAmount;
+  final double? refundAmount;
   final int? quantity;
   final double? subtotal;
   final double? deliveryFee;
   final double? originalDeliveryFee;
-  final int? deliveryDiscount;
-  final int? tax;
-  final int? convenienceFee;
-  final int? discount;
+  final double? deliveryDiscount;
+  final double? tax;
+  final double? convenienceFee;
+  final double? discount;
   final double? total;
-  final int? tips;
+  final double? tips;
   final String? currency;
   final bool? isPaid;
   final DateTime? receiveDate;
@@ -108,7 +108,7 @@ class Result {
   final dynamic externalPlatform;
   final List<dynamic>? posData;
 
-  Result({
+  OrderResult({
     this.id,
     this.orderitemSet,
     this.voucher,
@@ -165,7 +165,7 @@ class Result {
     this.posData,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory OrderResult.fromJson(Map<String, dynamic> json) => OrderResult(
     id: json["id"],
     orderitemSet: json["orderitem_set"] == null ? [] : List<OrderitemSet>.from(json["orderitem_set"]!.map((x) => OrderitemSet.fromJson(x))),
     voucher: json["voucher"],
