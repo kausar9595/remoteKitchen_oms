@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:oms/view/order/screen/widget/incoming_order.dart';
 
 import '../../../widget/app_drawer.dart';
-import '../../../widget/new_user.dart';
 import '../../menus/menus.dart';
 
 
@@ -16,9 +15,6 @@ class Orders extends StatefulWidget {
 
 class _OrdersState extends State<Orders> {
 
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -26,14 +22,11 @@ class _OrdersState extends State<Orders> {
     print("this is order page");
   }
 
-  bool _isEmpty = true;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(child:DefaultTabController(
       length: 3,
       child: Scaffold(
-        key: _key,
         drawer: AppDrawer(currentPage: Orders(),),
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -51,12 +44,7 @@ class _OrdersState extends State<Orders> {
 
           ],
         ),
-        body: _isEmpty ? NewUser(
-          onClick: (){
-            _key.currentState!.openDrawer();
-          },
-          mes: "You are new here. Please select Restaurant and Location to get Orders",
-        ) : TabBarView(children:[
+        body: TabBarView(children:[
           IncomingOrder(),
           IncomingOrder(),
           IncomingOrder(),

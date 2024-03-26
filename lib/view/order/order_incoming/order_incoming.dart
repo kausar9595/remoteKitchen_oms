@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 
+
 class OrderIncoming extends StatefulWidget {
   const OrderIncoming({super.key});
 
@@ -150,7 +151,8 @@ class _OrderIncomingState extends State<OrderIncoming> {
                     ],
                   ),
                   SizedBox(height: 5,),
-                  TextButton(onPressed: (){}, child: Text("View Order Details",
+                  TextButton(onPressed: (){},
+                    child: Text("View Order Details",
                     style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: AppColors.textindigo),),
                   ),
                 ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/view/history/history_details.dart';
+import 'package:oms/widget/app_drawer.dart';
 
 import '../../utility/appcolor.dart';
 import '../menus/widgets/widget/radio.dart';
@@ -20,15 +21,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          drawer: AppDrawer(currentPage: HistoryScreen(),),
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0.3,
         backgroundColor: Colors.white,
-        leading: Icon(
-          Icons.menu,
-          size: 40,
-          color: Colors.black,
-        ),
         title: Text(
           "History",
           style: TextStyle(

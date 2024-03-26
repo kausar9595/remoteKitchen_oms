@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/view/auth/login.dart';
 import 'package:oms/view/setting_screen/widget/app_input.dart';
+import 'package:oms/widget/app_drawer.dart';
 
 import '../../utility/appcolor.dart';
 
@@ -23,10 +24,10 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          drawer: AppDrawer(currentPage: SettingScreen(),),
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            leading: Icon(Icons.menu,size: 30,color: Colors.black),
             title: Text("Settings",
               style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: AppColors.textblack),),
 
