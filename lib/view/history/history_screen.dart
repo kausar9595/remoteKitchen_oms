@@ -21,7 +21,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          drawer: AppDrawer(),
+          drawer: AppDrawer(currentPage: HistoryScreen(),),
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0.3,
