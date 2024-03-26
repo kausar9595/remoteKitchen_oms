@@ -13,6 +13,7 @@ class AppButton extends StatelessWidget {
     this.bgColor = AppColors.textindigo,
     required this.onClick,
     this.isLoading = false,
+    this.fontSize = 18
 
   });
   final String text;
@@ -21,6 +22,7 @@ class AppButton extends StatelessWidget {
   final double height;
   final VoidCallback onClick;
   final bool isLoading;
+  final double fontSize;
 
 
   @override
@@ -39,7 +41,7 @@ class AppButton extends StatelessWidget {
           text,
           style: TextStyle(
               fontWeight: FontWeight.w600,
-              fontSize: 20,
+              fontSize: 18,
               color: Colors.white),
         ),
       ),
