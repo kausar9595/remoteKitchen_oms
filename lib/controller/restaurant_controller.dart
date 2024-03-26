@@ -32,5 +32,10 @@ class RestaurantController{
     SharedPreferences _pref = await SharedPreferences.getInstance();
     _pref.setString("restaurant_id",restaurantId);
   }
+  //add selected restaurant name into local storage
+  static Future addSelectedLocationInfo({required String locationId})async{
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    _pref.setString("location_id",locationId);
+  }
 
 }

@@ -112,7 +112,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 border: Border.all(color: AppColors.textindigo, width: 2),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: _isRestaurantLoading ? AppShimmer(width: 200,)
+              child: _isRestaurantLoading ? AppShimmer(width: 200)
 
                   : DropdownButtonHideUnderline(
                 child: DropdownButton2<String>(
@@ -189,7 +189,10 @@ class _AppDrawerState extends State<AppDrawer> {
                         _selectedLocationId = v!;
                       });
                       //After that back to the
-                      Get.to(widget.currentPage, transition: Transition.fade);
+                      ///Get.to(widget.currentPage, transition: Transition.fade);
+                      RestaurantController.addSelectedLocationInfo(locationId: _selectedLocationId).then((value){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> widget.currentPage));
+                      });
 
                     },
                   ),
