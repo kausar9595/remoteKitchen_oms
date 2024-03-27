@@ -102,18 +102,18 @@ class _OrderDetailState extends State<OrderDetail> {
                     ),
                     _iscustomer ? UserInfo(
                       orderResult: widget.orderResult,
-                      email: widget.orderResult!.pickupAddress!.name,
-                      phone: widget.orderResult.dropoffPhoneNumber!,
+                      email: " Waiting for backend response",
+                      phone: " Waiting for backend response",
                       amount: widget.orderResult.total!.toString(),
                       isCurirar: _iscourier,
                       name: widget.orderResult.customer!,
                     ) :  UserInfo(
                       orderResult: widget.orderResult,
-                      email: widget.orderResult.dropoffAddress!,
+                      email: " Waiting for backend response",
                       phone: widget.orderResult.dropoffPhoneNumber!,
                       amount: widget.orderResult.total!.toString(),
                       isCurirar: _iscourier,
-                      name: widget.orderResult.customer!,
+                      name: " Waiting for backend response",
                     )
                   ],
                 ),
@@ -174,35 +174,6 @@ class _OrderDetailState extends State<OrderDetail> {
                               }).toList(),
                               onChanged: (_) {},
                             ),
-                          ),
-                          DropdownButton<String>(
-                            icon: Icon(Icons.keyboard_arrow_down_rounded,size: 35,color: Colors.black,),
-                            elevation: 0,
-                            underline:Container(
-                              decoration: BoxDecoration(
-                                border: Border(bottom: BorderSide.none),
-                              ),
-                            ),
-                            hint: Row(
-                              children: [
-                                Icon(Icons.print,color: Colors.black,size: 35,),
-                                SizedBox(height: 5,),
-                                Text("Reprint Ticket",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: smallFontSize,
-                                    color: AppColors.textblack,
-                                  ),),
-                                SizedBox(height: 10,),
-                              ],
-                            ),
-                            items: <String>['A', 'B', 'C', 'D'].map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (_) {},
                           ),
                           IconButton(onPressed: (){
                             Navigator.pop(context);

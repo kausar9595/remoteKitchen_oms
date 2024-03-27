@@ -27,7 +27,12 @@ class _OrdersState extends State<Orders> {
   List<OrderResult> _acceptedOrderList = [];
   List<OrderResult> _scheduleOrderList = [];
   bool _isLoading = false;
-  _getIncomingOrders()async{
+  Future<void> _getIncomingOrders()async{
+    _incomingOrdersList.clear();
+    _acceptedOrderList.clear();
+    _readyForDelivered.clear();
+    _cancelledOrderList.clear();
+    _scheduleOrderList.clear();
     setState(() => _isLoading = true);
     var response = await OrderController.getPendingOrder();
     for(var i in response!.results!){
@@ -109,13 +114,13 @@ class _OrdersState extends State<Orders> {
               _key.currentState!.openDrawer();
             }, mes: "You are new here. You need to Choose Restaurant & Location")
                 : TabBarView(children:[
-                    OrderList(orders: _incomingOrdersList, onClick: ()=>_getIncomingOrders(), isLoading: _isLoading,),
-                    OrderList(orders: _acceptedOrderList, onClick: () => _getIncomingOrders(), isLoading: _isLoading, isCompleteToday: true,),
+                    OrderList(orders: _incomingOrdersList, onClick: ()=>_getIncomingOrders(), onRefresh: ()=>_getIncomingOrders(), isLoading: _isLoading,),
+                    OrderList(orders: _acceptedOrderList, onClick: () => _getIncomingOrders(), onRefresh: ()=>_getIncomingOrders(), isLoading: _isLoading, isCompleteToday: true,),
                     //OrderList(orders: _readyForDelivered, onClick: () => _getIncomingOrders(), isLoading: _isLoading,),
-                    OrderList(orders: _scheduleOrderList, onClick: () => _getIncomingOrders(), isLoading: _isLoading,),
-                    OrderList(orders: _cancelledOrderList, onClick: () => _getIncomingOrders(), isLoading: _isLoading,),
+                    OrderList(orders: _scheduleOrderList, onClick: () => _getIncomingOrders(), onRefresh: ()=>_getIncomingOrders(), isLoading: _isLoading,),
+                    OrderList(orders: _cancelledOrderList, onClick: () => _getIncomingOrders(), onRefresh: ()=>_getIncomingOrders(), isLoading: _isLoading,),
 
-            ]),
+                            ]),
           ),
         ));
   }

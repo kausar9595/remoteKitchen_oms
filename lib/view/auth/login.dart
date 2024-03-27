@@ -5,6 +5,7 @@ import 'package:oms/controller/auth_controller.dart';
 import 'package:oms/utility/app_text.dart';
 import 'package:oms/view/history/history_screen.dart';
 import 'package:oms/view/menus/menus.dart';
+import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_input.dart';
 import 'package:oms/widget/app_snapcbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -148,7 +149,7 @@ class _LoginState extends State<Login> {
         AppSnackBar(context, loginSuccessText, Colors.green);
 
         //redirect to the home page
-         Navigator.push(context, MaterialPageRoute(builder: (context)=>HistoryScreen()));
+         Navigator.push(context, MaterialPageRoute(builder: (context)=>Orders()));
       }else{
         AppSnackBar(context, loginErrorText, Colors.red);
       }
