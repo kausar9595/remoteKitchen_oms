@@ -13,7 +13,7 @@ class _HistoryDetailState extends State<HistoryDetail> {
 
     return SafeArea(child: Scaffold(
       appBar: AppBar(
-        title: Text("Shakib Kabiraz"),
+        title: Text("History detail screen"),
         backgroundColor: Colors.red,
       ),
       body: Column(

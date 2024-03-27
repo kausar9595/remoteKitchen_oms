@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:oms/controller/order_controller.dart';
 import 'package:oms/controller/restaurant_controller.dart';
+import 'package:oms/view/order/screen/widget/competed_today.dart';
 import 'package:oms/view/order/screen/widget/incoming_order.dart';
+import 'package:oms/view/order/screen/widget/scheduled_order.dart';
 import 'package:oms/widget/new_user.dart';
 
 import '../../../model/order_model/order_list_model.dart';
@@ -78,8 +80,8 @@ class _OrdersState extends State<Orders> {
           _key.currentState!.openDrawer();
         }, mes: "You are new here. You need to Choose Restaurant & Location") : TabBarView(children:[
           IncomingOrder(orders: _incomingOrdersList, onClick: ()=>_getIncomingOrders(), isLoading: _isLoading,),
-          IncomingOrder(orders: _incomingOrdersList, onClick: () {  }, isLoading: _isLoading,),
-          IncomingOrder(orders: _incomingOrdersList, onClick: () {  }, isLoading: _isLoading,),
+          CompetedToday(orders: _incomingOrdersList, onClick: () {  }, isLoading: _isLoading,),
+          ScheduledOrder(orders: _incomingOrdersList, onClick: () {  }, isLoading: _isLoading,),
 
         ]),
       ),
