@@ -57,4 +57,17 @@ class Api{
     return response;
   }
 
+  //post api
+  static Future<http.Response> pathch({required String url, required Map<String, dynamic> body})async{
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    var token = _pref.getString("token");
+    var response = await http.patch(Uri.parse(url),
+        headers: {
+          "Authorization" : "token $token"
+        },
+        body: body
+    );
+    return response;
+  }
+
 }

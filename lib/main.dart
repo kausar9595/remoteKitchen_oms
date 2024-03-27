@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oms/view/auth/check_atuh.dart';
 import 'package:oms/view/menus/menus.dart';
+import 'package:oms/view/order/screen/orders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'view/auth/login.dart';
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> {
         fontFamily: 'Poppins',
         primarySwatch: Colors.blue,
       ),
-      home: token == null ? Login() : Menus(),
+      home: token == null ? Login() : Orders(),
     );
   }
 }

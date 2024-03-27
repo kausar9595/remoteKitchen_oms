@@ -33,7 +33,7 @@ class OrderListModel {
 }
 
 class Links {
-  final dynamic next;
+  final String? next;
   final dynamic previous;
 
   Links({
@@ -55,7 +55,7 @@ class Links {
 class OrderResult {
   final int? id;
   final List<OrderitemSet>? orderitemSet;
-  final dynamic voucher;
+  final String? voucher;
   final dynamic pickupAddressDetails;
   final dynamic dropoffAddressDetails;
   final DateTime? createdDate;
@@ -75,13 +75,13 @@ class OrderResult {
   final double? discount;
   final double? total;
   final double? tips;
-  final String? currency;
+  final Currency? currency;
   final bool? isPaid;
   final DateTime? receiveDate;
-  final dynamic pickupTime;
-  final dynamic deliveryTime;
+  final DateTime? pickupTime;
+  final DateTime? deliveryTime;
   final String? deliveryPlatform;
-  final String? pickupAddress;
+  final PickupAddress? pickupAddress;
   final String? dropoffAddress;
   final DropoffLocation? dropoffLocation;
   final String? dropoffPhoneNumber;
@@ -93,10 +93,10 @@ class OrderResult {
   final String? dasherPickupPhoneNumber;
   final String? cancellationReason;
   final String? orderMethod;
-  final String? schedulingType;
+  final SchedulingType? schedulingType;
   final dynamic scheduledTime;
   final DropoffLocation? extra;
-  final String? orderType;
+  final OrderType? orderType;
   final int? user;
   final int? company;
   final int? restaurant;
@@ -173,43 +173,43 @@ class OrderResult {
     dropoffAddressDetails: json["dropoff_address_details"],
     createdDate: json["created_date"] == null ? null : DateTime.parse(json["created_date"]),
     modifiedDate: json["modified_date"] == null ? null : DateTime.parse(json["modified_date"]),
-    customer: json["customer"],
+    customer: json["customer"]!,
     orderId: json["order_id"],
     status: json["status"],
-    statusBeforeCancelled: json["status_before_cancelled"],
-    refundAmount: json["refund_amount"],
+    statusBeforeCancelled: json["status_before_cancelled"]!,
+    refundAmount: json["refund_amount"]?.toDouble(),
     quantity: json["quantity"],
     subtotal: json["subtotal"]?.toDouble(),
-    deliveryFee: json["delivery_fee"]?.toDouble(),
-    originalDeliveryFee: json["original_delivery_fee"]?.toDouble(),
+    deliveryFee: json["delivery_fee"],
+    originalDeliveryFee: json["original_delivery_fee"],
     deliveryDiscount: json["delivery_discount"],
-    tax: json["tax"],
+    tax: json["tax"]?.toDouble(),
     convenienceFee: json["convenience_fee"],
-    discount: json["discount"],
+    discount: json["discount"]?.toDouble(),
     total: json["total"]?.toDouble(),
     tips: json["tips"],
-    currency: json["currency"],
+    currency: currencyValues.map[json["currency"]]!,
     isPaid: json["is_paid"],
     receiveDate: json["receive_date"] == null ? null : DateTime.parse(json["receive_date"]),
-    pickupTime: json["pickup_time"],
-    deliveryTime: json["delivery_time"],
-    deliveryPlatform: json["delivery_platform"],
-    pickupAddress: json["pickup_address"],
+    pickupTime: json["pickup_time"] == null ? null : DateTime.parse(json["pickup_time"]),
+    deliveryTime: json["delivery_time"] == null ? null : DateTime.parse(json["delivery_time"]),
+    deliveryPlatform: json["delivery_platform"]!,
+    pickupAddress: pickupAddressValues.map[json["pickup_address"]]!,
     dropoffAddress: json["dropoff_address"],
     dropoffLocation: json["dropoff_location"] == null ? null : DropoffLocation.fromJson(json["dropoff_location"]),
     dropoffPhoneNumber: json["dropoff_phone_number"],
-    dropoffContactFirstName: json["dropoff_contact_first_name"],
-    dropoffContactLastName: json["dropoff_contact_last_name"],
+    dropoffContactFirstName: json["dropoff_contact_first_name"]!,
+    dropoffContactLastName: json["dropoff_contact_last_name"]!,
     trackingUrl: json["tracking_url"],
     supportReference: json["support_reference"],
     dasherDropoffPhoneNumber: json["dasher_dropoff_phone_number"],
     dasherPickupPhoneNumber: json["dasher_pickup_phone_number"],
     cancellationReason: json["cancellation_reason"],
-    orderMethod: json["order_method"],
-    schedulingType: json["scheduling_type"],
+    orderMethod: json["order_method"]!,
+    schedulingType: schedulingTypeValues.map[json["scheduling_type"]]!,
     scheduledTime: json["scheduled_time"],
     extra: json["extra"] == null ? null : DropoffLocation.fromJson(json["extra"]),
-    orderType: json["order_type"],
+    orderType: orderTypeValues.map[json["order_type"]]!,
     user: json["user"],
     company: json["company"],
     restaurant: json["restaurant"],
@@ -245,13 +245,13 @@ class OrderResult {
     "discount": discount,
     "total": total,
     "tips": tips,
-    "currency": currency,
+    "currency": currencyValues.reverse[currency],
     "is_paid": isPaid,
     "receive_date": receiveDate?.toIso8601String(),
-    "pickup_time": pickupTime,
-    "delivery_time": deliveryTime,
+    "pickup_time": pickupTime?.toIso8601String(),
+    "delivery_time": deliveryTime?.toIso8601String(),
     "delivery_platform": deliveryPlatform,
-    "pickup_address": pickupAddress,
+    "pickup_address": pickupAddressValues.reverse[pickupAddress],
     "dropoff_address": dropoffAddress,
     "dropoff_location": dropoffLocation?.toJson(),
     "dropoff_phone_number": dropoffPhoneNumber,
@@ -262,11 +262,11 @@ class OrderResult {
     "dasher_dropoff_phone_number": dasherDropoffPhoneNumber,
     "dasher_pickup_phone_number": dasherPickupPhoneNumber,
     "cancellation_reason": cancellationReason,
-    "order_method": orderMethod,
-    "scheduling_type": schedulingType,
+    "order_method": orderMethodValues.reverse[orderMethod],
+    "scheduling_type": schedulingTypeValues.reverse[schedulingType],
     "scheduled_time": scheduledTime,
     "extra": extra?.toJson(),
-    "order_type": orderType,
+    "order_type": orderTypeValues.reverse[orderType],
     "user": user,
     "company": company,
     "restaurant": restaurant,
@@ -280,25 +280,51 @@ class OrderResult {
   };
 }
 
-class DropoffLocation {
-  final String? ok;
+enum Currency {
+  CAD,
+  USD
+}
 
-  DropoffLocation({
-    this.ok,
-  });
+final currencyValues = EnumValues({
+  "cad": Currency.CAD,
+  "usd": Currency.USD
+});
+
+
+
+
+class DropoffLocation {
+  DropoffLocation();
 
   factory DropoffLocation.fromJson(Map<String, dynamic> json) => DropoffLocation(
-    ok: json["ok"],
   );
 
   Map<String, dynamic> toJson() => {
-    "ok": ok,
   };
 }
+
+enum OrderMethod {
+  DELIVERY,
+  PICKUP
+}
+
+final orderMethodValues = EnumValues({
+  "delivery": OrderMethod.DELIVERY,
+  "pickup": OrderMethod.PICKUP
+});
+
+enum OrderType {
+  INTERNAL
+}
+
+final orderTypeValues = EnumValues({
+  "internal": OrderType.INTERNAL
+});
 
 class OrderitemSet {
   final int? id;
   final String? itemName;
+  final double? itemPrice;
   final List<dynamic>? modifiers;
   final DateTime? createdDate;
   final DateTime? modifiedDate;
@@ -309,6 +335,7 @@ class OrderitemSet {
   OrderitemSet({
     this.id,
     this.itemName,
+    this.itemPrice,
     this.modifiers,
     this.createdDate,
     this.modifiedDate,
@@ -319,7 +346,8 @@ class OrderitemSet {
 
   factory OrderitemSet.fromJson(Map<String, dynamic> json) => OrderitemSet(
     id: json["id"],
-    itemName: json["item_name"],
+    itemName: json["item_name"]!,
+    itemPrice: json["item_price"]?.toDouble(),
     modifiers: json["modifiers"] == null ? [] : List<dynamic>.from(json["modifiers"]!.map((x) => x)),
     createdDate: json["created_date"] == null ? null : DateTime.parse(json["created_date"]),
     modifiedDate: json["modified_date"] == null ? null : DateTime.parse(json["modified_date"]),
@@ -330,7 +358,8 @@ class OrderitemSet {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "item_name": itemName,
+    "item_name": itemNameValues.reverse[itemName],
+    "item_price": itemPrice,
     "modifiers": modifiers == null ? [] : List<dynamic>.from(modifiers!.map((x) => x)),
     "created_date": createdDate?.toIso8601String(),
     "modified_date": modifiedDate?.toIso8601String(),
@@ -338,4 +367,56 @@ class OrderitemSet {
     "order": order,
     "menu_item": menuItem,
   };
+}
+
+enum ItemName {
+  CHOPPED_SALAD_SHIRAZI,
+  KACCHI_6,
+  YELLOW_SPLIT_PEA_STEW
+}
+
+final itemNameValues = EnumValues({
+  "Chopped Salad(Shirazi)": ItemName.CHOPPED_SALAD_SHIRAZI,
+  "Kacchi 6": ItemName.KACCHI_6,
+  "Yellow split pea stew": ItemName.YELLOW_SPLIT_PEA_STEW
+});
+
+enum PickupAddress {
+  THE_3994_SHELBOURNE_ST_103_B_VICTORIA_BC_V8_N_3_E2_CANADA
+}
+
+final pickupAddressValues = EnumValues({
+  "3994 Shelbourne St #103b, Victoria, BC V8N 3E2, Canada": PickupAddress.THE_3994_SHELBOURNE_ST_103_B_VICTORIA_BC_V8_N_3_E2_CANADA
+});
+
+enum SchedulingType {
+  ASAP
+}
+
+final schedulingTypeValues = EnumValues({
+  "asap": SchedulingType.ASAP
+});
+
+enum StatusBeforeCancelled {
+  ACCEPTED,
+  N_A,
+  PENDING
+}
+
+final statusBeforeCancelledValues = EnumValues({
+  "accepted": StatusBeforeCancelled.ACCEPTED,
+  "n/a": StatusBeforeCancelled.N_A,
+  "pending": StatusBeforeCancelled.PENDING
+});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }
