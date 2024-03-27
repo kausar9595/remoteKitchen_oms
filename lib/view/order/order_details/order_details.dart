@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
@@ -144,7 +145,7 @@ class _OrderDetailState extends State<OrderDetail> {
                               color: Colors.white,
                               border: Border.all(color: Colors.grey),
                             ),
-                            child: DropdownButton<String>(
+                            child:  DropdownButton<String>(
                               icon: Icon(Icons.keyboard_arrow_down_rounded,size: 35,color: Colors.black,),
                               elevation: 0,
                               underline:Container(
@@ -158,8 +159,8 @@ class _OrderDetailState extends State<OrderDetail> {
                                   SizedBox(height: 5,),
                                   Text("Reprint Ticket",
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: smallFontSize,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: smallFontSize,
                                       color: AppColors.textblack,
                                     ),),
                                   SizedBox(height: 10,),
@@ -173,6 +174,35 @@ class _OrderDetailState extends State<OrderDetail> {
                               }).toList(),
                               onChanged: (_) {},
                             ),
+                          ),
+                          DropdownButton<String>(
+                            icon: Icon(Icons.keyboard_arrow_down_rounded,size: 35,color: Colors.black,),
+                            elevation: 0,
+                            underline:Container(
+                              decoration: BoxDecoration(
+                                border: Border(bottom: BorderSide.none),
+                              ),
+                            ),
+                            hint: Row(
+                              children: [
+                                Icon(Icons.print,color: Colors.black,size: 35,),
+                                SizedBox(height: 5,),
+                                Text("Reprint Ticket",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: smallFontSize,
+                                    color: AppColors.textblack,
+                                  ),),
+                                SizedBox(height: 10,),
+                              ],
+                            ),
+                            items: <String>['A', 'B', 'C', 'D'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (_) {},
                           ),
                           IconButton(onPressed: (){
                             Navigator.pop(context);
