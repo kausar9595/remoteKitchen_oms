@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 
 class AppInput extends StatelessWidget {
   const AppInput({
@@ -30,7 +31,7 @@ class AppInput extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("$title",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20,color: Colors.black),),
+          Text("$title",style: TextStyle(fontWeight: FontWeight.w500,fontSize: normalFontSize,color: Colors.black),),
           TextFormField(
             readOnly: readOnly,
             obscureText: obscureText,
@@ -39,7 +40,7 @@ class AppInput extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(
-                  fontSize: 15,
+                  fontSize: normalFontSize,
                   fontWeight: FontWeight.w500,
                   color: Colors.black),
               suffixIcon: suffixIcon,

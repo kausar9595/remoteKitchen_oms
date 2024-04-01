@@ -7,6 +7,7 @@ import 'package:oms/controller/api.dart';
 import 'package:oms/controller/restaurant_controller.dart';
 import 'package:oms/utility/order_status.dart';
 
+import '../model/order_model/order_curiar_model.dart';
 import '../model/order_model/order_list_model.dart';
 
 class OrderController{
@@ -20,7 +21,10 @@ class OrderController{
   static Future<OrderListModel> getPendingOrder()async{
     var ids = await RestaurantController.getLocationAndRestaurantIds();
     var response = await Api.getApi(url: AppConfig.ORDER_LIST+"?restaurant=${ids.restaurantId}&location=${ids.locationId}");
-    return OrderListModel.fromJson(jsonDecode(response.body));
+    print("orders --- ${response.statusCode}");
+    print("orders --- ${response.body}");
+    final decodedBody = utf8.decode(response.bodyBytes);
+    return OrderListModel.fromJson(jsonDecode(decodedBody));
   }
 
 
@@ -48,5 +52,11 @@ class OrderController{
   }
 
   //get Complete orders (Status: complete_orders)
+
+  //  get order curiar info
+  static Future<OrderCuriarInfoModel> geteCuriarInfo(id)async{
+    var response = await Api.getApi(url: AppConfig.CURIAR_INFO+id);
+    return OrderCuriarInfoModel.fromJson(jsonDecode(response.body));
+  }
 
 }

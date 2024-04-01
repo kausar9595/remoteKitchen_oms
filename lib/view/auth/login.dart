@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:oms/controller/auth_controller.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/app_text.dart';
 import 'package:oms/view/history/history_screen.dart';
 import 'package:oms/view/menus/menus.dart';
@@ -10,6 +11,7 @@ import 'package:oms/widget/app_input.dart';
 import 'package:oms/widget/app_snapcbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../model/auth_model/login_model.dart';
+import '../../notifications/notification.dart';
 import '../../widget/app_button.dart';
 
 class Login extends StatefulWidget {
@@ -36,8 +38,8 @@ class _LoginState extends State<Login> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _email.text = "soumik9876@gmail.com";
-    _password.text = "19981998!";
+    // _email.text = "soumik9876@gmail.com";
+    // _password.text = "19981998!";
   }
 
   bool _isLoading = false;
@@ -61,7 +63,7 @@ class _LoginState extends State<Login> {
                   child: Text(
                 "LogIn",
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: bigFontSize,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
               )),
@@ -70,7 +72,7 @@ class _LoginState extends State<Login> {
               ),
               AppInput(
                 title: "Email :",
-                hintText: "Jhon@gmail.com",
+                hintText: "",
                 controller: _email,
                 validator: (v) {
                   if (v!.isEmpty) {
@@ -147,6 +149,9 @@ class _LoginState extends State<Login> {
         //store token
         _pref.setString("token", jsonDecode(res.body)["token"]);
         AppSnackBar(context, loginSuccessText, Colors.green);
+
+        //store device token
+        NotificationController().getDeviceToken();
 
         //redirect to the home page
          Navigator.push(context, MaterialPageRoute(builder: (context)=>Orders()));

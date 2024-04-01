@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-double smallFontSize = 12.00;
-double normalFontSize = 16.00;
-double bigFontSize = 20.00;
+double smallFontSize = 4.00.sp;
+double normalFontSize = 5.00.sp;
+double bigFontSize = 10.00.sp;
+double titleFontSize = 7.00.sp;
 

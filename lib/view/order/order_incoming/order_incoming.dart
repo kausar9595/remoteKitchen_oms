@@ -144,6 +144,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
                                 alignment: Alignment.center,
                                 height: 45,
                                 width:45,
+                                margin: EdgeInsets.only(bottom: 10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
                                   border: Border.all(color: Colors.white,width: 2),
@@ -214,14 +215,18 @@ class _OrderIncomingState extends State<OrderIncoming> {
   //Order accept
   orderAccept(id) async{
     setState(() => _isAccepting = true);
-    await OrderController.changeStatus(id, OrderStatus.accepted).then((value) {
-      if(value.statusCode == 200){
-        AppSnackBar(context, "Order has been accepted", Colors.green);
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Orders()), (route) => false);
-      }else{
-        AppSnackBar(context, "Getting some issues to Accept this order.", Colors.red);
-      }
-    });
+   try{
+     await OrderController.changeStatus(id, OrderStatus.accepted).then((value) {
+       if(value.statusCode == 200){
+         AppSnackBar(context, "Order has been accepted", Colors.green);
+         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Orders()), (route) => false);
+       }else{
+         AppSnackBar(context, "Getting some issues to Accept this order.", Colors.red);
+       }
+     });
+   }catch(e){
+     print("error: $e");
+   }
     setState(() => _isAccepting = false);
   }
 

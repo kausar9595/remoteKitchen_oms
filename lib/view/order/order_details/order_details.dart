@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/utility/order_status.dart';
+import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_alert.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../controller/order_controller.dart';
+import '../../../model/order_model/order_curiar_model.dart';
 import '../../../model/order_model/order_list_model.dart';
 
 class OrderDetail extends StatefulWidget {
@@ -22,11 +24,14 @@ class _OrderDetailState extends State<OrderDetail> {
    bool _iscourier = false;
    String currentOrderStatus = "";
 
+   Future<OrderCuriarInfoModel>? getOrderCuriar;
+
    @override
   void initState() {
     // TODO: implement initState
     super.initState();
     currentOrderStatus = widget.orderResult.status!;
+
   }
 
   @override
@@ -72,7 +77,9 @@ class _OrderDetailState extends State<OrderDetail> {
                             ),
                           ),
                         ),
-                        InkWell(
+
+                        ///TODO: Uncomment it
+                        widget.orderResult.orderMethod == "delivery" ? InkWell(
                           onTap: (){
                             setState(() {
                               _iscustomer = false;
@@ -94,7 +101,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                 color: Colors.white,),
                             ),
                           ),
-                        ),
+                        ) : Center(),
 
                       ],
                     ),
@@ -102,19 +109,33 @@ class _OrderDetailState extends State<OrderDetail> {
                     ),
                     _iscustomer ? UserInfo(
                       orderResult: widget.orderResult,
-                      email: " Waiting for backend response",
-                      phone: " Waiting for backend response",
+                      address: " ${widget.orderResult.pickupAddress}",
+                      phone: " ",
                       amount: widget.orderResult.total!.toString(),
                       isCurirar: _iscourier,
                       name: widget.orderResult.customer!,
-                    ) :  UserInfo(
-                      orderResult: widget.orderResult,
-                      email: " Waiting for backend response",
-                      phone: widget.orderResult.dropoffPhoneNumber!,
-                      amount: widget.orderResult.total!.toString(),
-                      isCurirar: _iscourier,
-                      name: " Waiting for backend response",
-                    )
+                      orderMethod: widget.orderResult.orderMethod.toString(),
+                    ) : widget.orderResult.orderMethod == "delivery" ?  FutureBuilder<OrderCuriarInfoModel>(
+                      future: OrderController.geteCuriarInfo(widget.orderResult.id.toString()),
+                      builder: (context, snapshot) {
+                        if(snapshot.connectionState == ConnectionState.waiting){
+                          return Center(child: CircularProgressIndicator(color: Colors.white,),);
+                        }else if(snapshot.hasData){
+                          return  UserInfo(
+                            orderResult: widget.orderResult,
+                            address: " ${snapshot.data!.dropoffAddress}",
+                            phone: snapshot.data!.dasherDropoffPhoneNumber.toString(),
+                            amount: widget.orderResult.total!.toString(),
+                            isCurirar: _iscourier,
+                            name: snapshot.data!.dasherName.toString(),
+                            orderMethod: widget.orderResult.orderMethod.toString(),
+
+                          );
+                        }else{
+                          return const Center(child: Text("No courier data found"),);
+                        }
+                      }
+                    ) : Center()
                   ],
                 ),
               ),
@@ -136,45 +157,47 @@ class _OrderDetailState extends State<OrderDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            alignment: Alignment.center,
-                            height: MediaQuery.of(context).size.height*0.07,
-                            width: MediaQuery.of(context).size.width*0.20,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey),
-                            ),
-                            child:  DropdownButton<String>(
-                              icon: Icon(Icons.keyboard_arrow_down_rounded,size: 35,color: Colors.black,),
-                              elevation: 0,
-                              underline:Container(
-                                decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide.none),
-                                ),
-                              ),
-                              hint: Row(
-                                children: [
-                                  Icon(Icons.print,color: Colors.black,size: 35,),
-                                  SizedBox(height: 5,),
-                                  Text("Reprint Ticket",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: smallFontSize,
-                                      color: AppColors.textblack,
-                                    ),),
-                                  SizedBox(height: 10,),
-                                ],
-                              ),
-                              items: <String>['Print - A', 'Printer - B', 'Printer - C', 'Printer - D'].map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (_) {},
-                            ),
-                          ),
+                          ///TODO: Uncomment it
+                          // Container(
+                          //   alignment: Alignment.center,
+                          //   height: MediaQuery.of(context).size.height*0.07,
+                          //   width: MediaQuery.of(context).size.width*0.20,
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(10),
+                          //     color: Colors.white,
+                          //     border: Border.all(color: Colors.grey),
+                          //   ),
+                          //   child:  DropdownButton<String>(
+                          //     icon: Icon(Icons.keyboard_arrow_down_rounded,size: 35,color: Colors.black,),
+                          //     elevation: 0,
+                          //     underline:Container(
+                          //       decoration: BoxDecoration(
+                          //         border: Border(bottom: BorderSide.none),
+                          //       ),
+                          //     ),
+                          //     hint: Row(
+                          //       children: [
+                          //         Icon(Icons.print,color: Colors.black,size: 35,),
+                          //         SizedBox(height: 5,),
+                          //         Text("Reprint Ticket",
+                          //           style: TextStyle(
+                          //             fontWeight: FontWeight.w400,
+                          //             fontSize: smallFontSize,
+                          //             color: AppColors.textblack,
+                          //           ),),
+                          //         SizedBox(height: 10,),
+                          //       ],
+                          //     ),
+                          //     items: <String>['Print - A', 'Printer - B', 'Printer - C', 'Printer - D'].map((String value) {
+                          //       return DropdownMenuItem<String>(
+                          //         value: value,
+                          //         child: Text(value),
+                          //       );
+                          //     }).toList(),
+                          //     onChanged: (_) {},
+                          //   ),
+                          // ),
+                          Center(),
                           IconButton(onPressed: (){
                             Navigator.pop(context);
                           }, icon: Icon(Icons.cancel_outlined,color: Colors.black,size: 50,)
@@ -252,7 +275,7 @@ class _OrderDetailState extends State<OrderDetail> {
                         ),
                       ),
                       ListTile(
-                        leading: Text("Tex",
+                        leading: Text("Tax",
                           style: TextStyle(fontWeight: FontWeight.w400,
                               fontSize: normalFontSize,color:AppColors.textblack),
                         ),
@@ -275,13 +298,7 @@ class _OrderDetailState extends State<OrderDetail> {
                         ),
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height*0.1,),
-                     currentOrderStatus == OrderStatus.readyForPickup
-                         ?   StatusButton(
-                               onClick: (){
-                               },
-                               text: "Order is Ready for pickup",
-                               bgColor:AppColors.textindigo,
-                             ) : currentOrderStatus == OrderStatus.rider_confirmed
+                        currentOrderStatus == OrderStatus.rider_confirmed
                          ? StatusButton(
                              onClick: (){
                              },
@@ -318,20 +335,20 @@ class _OrderDetailState extends State<OrderDetail> {
                              },
                              text: "Order Cancelled",
                              bgColor: Colors.red,
-                           ) : currentOrderStatus == OrderStatus.readyForPickup && widget.orderResult!.orderMethod == "pickup"
+                           ) : currentOrderStatus == OrderStatus.readyForPickup || currentOrderStatus == OrderStatus.schedule && widget.orderResult.orderMethod == "pickup"
                          ? StatusButton(
-                             onClick: (){
-                               appPopup(
-                                   context: context,
-                                   id: widget.orderResult!.id.toString(),
-                                   title: "Are you sure?",
-                                   child: const Text("Are you sure? This order is Delivered?"),
-                                   okClick: ()=> orderStatusChange(OrderStatus.completed)
-                               );
-                             },
-                             text: "Order Delivered",
-                             bgColor: Colors.red,
-                           ) : Column(
+                       onClick: (){
+                         appPopup(
+                             context: context,
+                             id: widget.orderResult!.id.toString(),
+                             title: "Are you sure?",
+                             child: const Text("Are you sure? This order is Delivered?"),
+                             okClick: ()=> orderStatusChange(OrderStatus.completed)
+                         );
+                       },
+                       text: "Order Delivered",
+                       bgColor: Colors.green,
+                     ) :  Column(
                            children: [
                              StatusButton(
                                onClick: (){
@@ -380,12 +397,15 @@ class _OrderDetailState extends State<OrderDetail> {
           setState(() => currentOrderStatus = status);
           if(status == OrderStatus.cancelled){
             AppSnackBar(context, "Order has been cancelled", Colors.green);
-            Navigator.pop(context);
-            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> Orders(pageIndex: 3,)));
+
+          } else if(status == OrderStatus.completed){
+
+            AppSnackBar(context, "Order has been Delivered", Colors.green);
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> Orders(pageIndex: 1,)));
           }else{
-            AppSnackBar(context, "Order has been Ready for Pickup", Colors.green);
-            Navigator.pop(context);
-            Navigator.pop(context);
+            AppSnackBar(context, "Order has been Delivered", Colors.green);
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> Orders(pageIndex: 1,)));
           }
 
         }else{
@@ -426,92 +446,123 @@ class StatusButton extends StatelessWidget {
 class UserInfo extends StatelessWidget {
   final bool isCurirar;
   final OrderResult orderResult;
-  final String email;
+  final String address;
   final String phone;
   final String amount;
   final String name;
+  final String orderMethod;
   const UserInfo({
-    super.key, required this.orderResult, required this.isCurirar, required this.email, required this.phone, required this.amount, required this.name,
+    super.key, required this.orderResult, required this.isCurirar, required this.address, required this.phone, required this.amount, required this.name, required this.orderMethod,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.center,
-          height: MediaQuery.of(context).size.height*0.15,
-          width:MediaQuery.of(context).size.width*0.10,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            color: Colors.white,
-          ),
-          child: Icon(Icons.person,color: Colors.black,size: 50,),
-        ),
-        SizedBox(height: 10,),
-        Text("$name",
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: normalFontSize,
-            color: Colors.white,
-          ),
-        ),
-        SizedBox(height: 10,),
-        InkWell(
-          onTap: (){},
-          child: Container(
-            alignment: Alignment.center,
-            height: MediaQuery.of(context).size.height*0.05,
-            width: MediaQuery.of(context).size.width*0.06,
+    return SizedBox(
+      width: MediaQuery.of(context).size.width*.25,
+      child: Column(
+        children: [
+          Text("Order For",style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.white
+          ),),
+          Container(
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 8, top: 8),
+            margin: EdgeInsets.only(bottom: 30, top: 5),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: AppColors.textindigo,
+              color: Colors.transparent,
+              border: Border.all(width: 1, color: Colors.white),
+              borderRadius: BorderRadius.circular(5)
             ),
-            child: Text("Lvl 01",
-              style: TextStyle(fontSize: smallFontSize,
-                  fontWeight: FontWeight.w600,color: Colors.white),
+            child: Text("${orderMethod}",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.white
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 10,),
-        RichText(text: TextSpan(
-            text: "Email:",
-            style: TextStyle(
-              fontSize: normalFontSize,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textorange,
+          Container(
+            alignment: Alignment.center,
+            height: MediaQuery.of(context).size.height*0.15,
+            width:MediaQuery.of(context).size.width*0.10,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              color: Colors.white,
             ),
-            children: [
-              TextSpan(
-                text: "$email",
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: normalFontSize,
-                  color: Colors.white,
-                ),
-              )
-            ]
-        )),
-        SizedBox(height: 10,),
-        RichText(text: TextSpan(
-            text: "${isCurirar ? "Phone: " : "Accumulated order: "}",
+            child: Icon(Icons.person,color: Colors.black,size: 50,),
+          ),
+          SizedBox(height: 10,),
+          Text("$name",
             style: TextStyle(
-              fontSize: normalFontSize,
               fontWeight: FontWeight.w700,
-              color: AppColors.textorange,
+              fontSize: normalFontSize,
+              color: Colors.white,
             ),
-            children: [
-              TextSpan(
-                text: "${isCurirar ? "$phone " : "CAD\$$amount"}",
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: normalFontSize,
-                  color: Colors.white,
-                ),
-              )
-            ]
-        )),
-      ],
+          ),
+          SizedBox(height: 10,),
+          InkWell(
+            onTap: (){},
+            child: Container(
+              alignment: Alignment.center,
+              height: MediaQuery.of(context).size.height*0.05,
+              width: MediaQuery.of(context).size.width*0.06,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.textindigo,
+              ),
+              child: Text("Lvl 01",
+                style: TextStyle(fontSize: smallFontSize,
+                    fontWeight: FontWeight.w600,color: Colors.white),
+              ),
+            ),
+          ),
+          ///TODO: Uncomment it
+
+          SizedBox(height: 10,),
+          RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+              text: "${isCurirar ? "Phone: " : "Accumulated order: "}",
+              style: TextStyle(
+                fontSize: normalFontSize,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textorange,
+              ),
+              children: [
+                TextSpan(
+                  text: "${isCurirar ? "$phone " : "CAD\$$amount"}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: normalFontSize,
+                    color: Colors.white,
+                  ),
+                )
+              ]
+          )),
+          SizedBox(height: 10,),
+          RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+              text: "${isCurirar ? "Drop Address: " : "Pickup Address" }",
+              style: TextStyle(
+                fontSize: normalFontSize,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textorange,
+              ),
+              children: [
+                TextSpan(
+                  text: "$address",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: normalFontSize,
+                    color: Colors.white,
+                  ),
+                )
+              ]
+          )),
+        ],
+      ),
     );
   }
 }

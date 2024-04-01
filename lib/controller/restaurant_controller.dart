@@ -44,8 +44,10 @@ class RestaurantController{
   static Future<LocationAndRestaurantIds> getLocationAndRestaurantIds()async{
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var data = {
-      "location_id" : _pref.getString("location_id"),
-      "restaurant_id" : _pref.getString("restaurant_id")
+      "location_id" : "${_pref.getString("location_id")}",
+      "location_name" : "${_pref.getString("location_name")}",
+      "restaurant_id" : "${_pref.getString("restaurant_id")}",
+      "restaurant_name" : "${_pref.getString("restaurant_name")}"
     };
     return LocationAndRestaurantIds.fromJson(data);
 

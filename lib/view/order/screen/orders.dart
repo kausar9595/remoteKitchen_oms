@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:oms/controller/order_controller.dart';
 import 'package:oms/controller/restaurant_controller.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/order_status.dart';
 import 'package:oms/view/order/screen/widget/order_list.dart';
 import 'package:oms/widget/new_user.dart';
 
 import '../../../model/order_model/order_list_model.dart';
+import '../../../notifications/notification.dart';
 import '../../../widget/app_drawer.dart';
 import '../../menus/menus.dart';
 
 
 class Orders extends StatefulWidget {
-  const Orders({super.key});
+  final int pageIndex;
+  const Orders({super.key,  this.pageIndex = 0});
 
   @override
   ///
@@ -20,6 +23,7 @@ class Orders extends StatefulWidget {
 
 class _OrdersState extends State<Orders> {
   final _key = GlobalKey<ScaffoldState>();
+
 
   List<OrderResult> _incomingOrdersList = [];
   List<OrderResult> _readyForDelivered = [];
@@ -73,6 +77,7 @@ class _OrdersState extends State<Orders> {
     // TODO: implement initState
     super.initState();
     //get location id and restaurant id
+    NotificationController().initNotification(context);
     _getLocationAndRestaurantId();
     _getIncomingOrders();
 
@@ -80,6 +85,7 @@ class _OrdersState extends State<Orders> {
 
 
     print("this is order page");
+
   }
 
   bool _isNew = true;
@@ -89,19 +95,20 @@ class _OrdersState extends State<Orders> {
     return SafeArea(
         child:DefaultTabController(
           length: 4,
+          initialIndex: widget.pageIndex,
           child: Scaffold(
             key: _key,
             drawer: AppDrawer(currentPage: Orders(),),
             appBar: AppBar(
               backgroundColor: Colors.white,
               elevation: 0.5,
-              title: Text("Orders",style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black,fontSize: 25),),
+              title: Text("Orders",style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black,fontSize: titleFontSize),),
               actions:  [
                 SizedBox(
                   width: MediaQuery.of(context).size.width*.60,
                   child: TabBar(tabs:[
                     Tab(text: "Incoming (${_incomingOrdersList.length})",),
-                    Tab(text: "Competed Today (${_acceptedOrderList.length})",),
+                    Tab(text: "Active Orders (${_acceptedOrderList.length})",),
                     //Tab(text: "Pickup Orders",),
                     Tab(text: "Scheduled Orders",),
                     Tab(text: "Canceled Orders",),

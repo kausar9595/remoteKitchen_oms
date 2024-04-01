@@ -1,15 +1,18 @@
+import 'dart:convert';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:oms/app_config.dart';
+import 'package:oms/controller/auth_controller.dart';
 import 'package:oms/controller/restaurant_controller.dart';
 import 'package:oms/model/restaurant_model/location_list_model.dart';
 import 'package:oms/widget/app_shemmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../model/restaurant_model/restaurantListModel.dart';
 import '../utility/appcolor.dart';
 import '../view/history/history_screen.dart';
-import '../view/menus/menus.dart';
 import '../view/order/screen/orders.dart';
-import '../view/setting_screen/setting_screen.dart';
 
 class AppDrawer extends StatefulWidget {
   final Widget currentPage;
@@ -34,8 +37,11 @@ class _AppDrawerState extends State<AppDrawer> {
   List<LocationResult> _locationList = [];
 
   //restaurant id
-  String _selectedRestaurantId = "";
-  String _selectedLocationId = "";
+  RestaurantResult? _selectedRestaurantId;
+  LocationResult? _selectedLocationId;
+  var selectRsname;
+  var selectLocationName;
+
   String selectedValue = "Restaurant Select";
   String selectedLocationValue = "Location Select";
 
@@ -63,12 +69,28 @@ class _AppDrawerState extends State<AppDrawer> {
     setState(() => _isLocationLoading = false);
   }
 
+  _getLocationAdnRestaurant()async{
+    await RestaurantController.getLocationAndRestaurantIds().then((value){
+      print("value.locationName! === ${value.locationName!}");
+        setState(() {
+          selectLocationName = (value.locationName!);
+          selectRsname = value.restaurantName!;
+        });
+    });
+  }
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _getRestaurantList();
+
+    _getLocationAdnRestaurant();
+
+
+
+
   }
 
 
@@ -78,7 +100,7 @@ class _AppDrawerState extends State<AppDrawer> {
     return Drawer(
       backgroundColor: Colors.white,
       width: MediaQuery.of(context).size.width * 0.30,
-      child: SingleChildScrollView(
+      child:  SingleChildScrollView(
         padding: EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -115,18 +137,18 @@ class _AppDrawerState extends State<AppDrawer> {
               child: _isRestaurantLoading ? AppShimmer(width: 200)
 
                   : DropdownButtonHideUnderline(
-                child: DropdownButton2<String>(
+                child: DropdownButton2<RestaurantResult>(
                   isExpanded: true,
                   hint: Text(
-                    'Restaurant Select',
+                    '${selectRsname != null ? selectRsname : "Restaurant Select"}',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColors.textindigo,
                     ),
                   ),
-                    items: _restaurantList.map((value) {
-                      return DropdownMenuItem<String>(
-                        value: value.id!.toString(),
+                    items: _restaurantList.map<DropdownMenuItem<RestaurantResult>>((value) {
+                      return DropdownMenuItem<RestaurantResult>(
+                        value: value,
                         child: Text(value.name.toString(),
                           style: TextStyle(
                             fontSize: 13
@@ -134,12 +156,12 @@ class _AppDrawerState extends State<AppDrawer> {
                         ),
                       );
                     }).toList(),
-                    value: _selectedRestaurantId.isNotEmpty ? _selectedRestaurantId : null, // Ensure value is null or non-empty
+                    value: _selectedRestaurantId != null ? _selectedRestaurantId : null, // Ensure value is null or non-empty
                     onChanged: (v) {
                       setState(() {
-                        _selectedRestaurantId = v!;
+                        _selectedRestaurantId = v;
                       });
-                      RestaurantController.addSelectedRestaurantInfo(restaurantId: _selectedRestaurantId.toString(), restaurantName: '').then((value){
+                      RestaurantController.addSelectedRestaurantInfo(restaurantId: _selectedRestaurantId!.id.toString(), restaurantName: _selectedRestaurantId!.name.toString()).then((value){
                         //call location list
                         _getLocation();
                       });
@@ -164,18 +186,18 @@ class _AppDrawerState extends State<AppDrawer> {
                 child: _isLocationLoading ? AppShimmer(width: 200,)
 
                     : DropdownButtonHideUnderline(
-                  child: DropdownButton2<String>(
+                  child: DropdownButton2<LocationResult>(
                     isExpanded: true,
                     hint: Text(
-                      'Location Select',
+                      '${selectLocationName != null ? selectLocationName : "Location Select"}',
                       style: TextStyle(
                         fontSize: 14,
                         color: AppColors.textindigo,
                       ),
                     ),
                     items: _locationList.map((value) {
-                      return DropdownMenuItem<String>(
-                        value: value.id!.toString(),
+                      return DropdownMenuItem<LocationResult>(
+                        value: value,
                         child: Text(value.name.toString(),
                           style: TextStyle(
                               fontSize: 13
@@ -183,14 +205,14 @@ class _AppDrawerState extends State<AppDrawer> {
                         ),
                       );
                     }).toList(),
-                    value: _selectedLocationId.isNotEmpty ? _selectedLocationId : null, // Ensure value is null or non-empty
+                    value: _selectedLocationId != null ? _selectedLocationId : null, // Ensure value is null or non-empty
                     onChanged: (v) {
                       setState(() {
                         _selectedLocationId = v!;
                       });
                       //After that back to the
                       ///Get.to(widget.currentPage, transition: Transition.fade);
-                      RestaurantController.addSelectedLocationInfo(locationId: _selectedLocationId, locationName: '').then((value){
+                      RestaurantController.addSelectedLocationInfo(locationId: _selectedLocationId!.id.toString(), locationName: _selectedLocationId!.name.toString()).then((value){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=> widget.currentPage));
                       });
 
@@ -241,48 +263,51 @@ class _AppDrawerState extends State<AppDrawer> {
             SizedBox(
               height: 20,
             ),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  _isMenu = true;
-                  _isOrder = false;
-                  _isHistory = false;
-                  //Navigator.push(context, MaterialPageRoute(builder: (context)=>Menus()));
-                  Get.to(Menus(), transition: Transition.rightToLeft);
-                });
-              },
-              child: Container(
-                padding: EdgeInsets.only(left: 20),
-                alignment: Alignment.centerLeft,
-                height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: _isMenu
-                      ? Border(
-                    left: BorderSide(
-                        color: AppColors.textindigo, width: 6),
-                  )
-                      : Border(left: BorderSide.none),
-                  color: _isMenu ? Colors.grey : Colors.transparent,
-                ),
-                child: Text(
-                  "Menu",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
+
+
+            // InkWell(
+            //   onTap: () {
+            //     setState(() {
+            //       _isMenu = true;
+            //       _isOrder = false;
+            //       _isHistory = false;
+            //       //Navigator.push(context, MaterialPageRoute(builder: (context)=>Menus()));
+            //       Get.to(Menus(), transition: Transition.rightToLeft);
+            //     });
+            //   },
+            //   child: Container(
+            //     padding: EdgeInsets.only(left: 20),
+            //     alignment: Alignment.centerLeft,
+            //     height: 50,
+            //     width: double.infinity,
+            //     decoration: BoxDecoration(
+            //       border: _isMenu
+            //           ? Border(
+            //         left: BorderSide(
+            //             color: AppColors.textindigo, width: 6),
+            //       )
+            //           : Border(left: BorderSide.none),
+            //       color: _isMenu ? Colors.grey : Colors.transparent,
+            //     ),
+            //     child: Text(
+            //       "Menu",
+            //       style: TextStyle(
+            //           fontSize: 20,
+            //           fontWeight: FontWeight.w600,
+            //           color: Colors.black),
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 20,
+            // ),
             InkWell(
               onTap: () {
                 setState(() {
                   _isHistory = true;
                   _isOrder = false;
                   _isMenu = false;
+
                   Get.to(HistoryScreen(), transition: Transition.rightToLeft);
                 });
               },
@@ -312,7 +337,9 @@ class _AppDrawerState extends State<AppDrawer> {
               height: 100,
             ),
             InkWell(
-              onTap: (){},
+              onTap: ()async{
+                _launchInBrowserView(Uri.parse("${AppConfig.DASHBOARD}"));
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -335,33 +362,99 @@ class _AppDrawerState extends State<AppDrawer> {
               height: 10,
             ),
             InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>SettingScreen()));
-              },
-              child: Text(
-                "Settings",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black),
+              onTap: ()=> alert(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Logout",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black),
+                  ),
+                  Icon(Icons.logout,size: 20,color: Colors.black,),
+                  SizedBox(width: 60,),
+
+
+                ],
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: (){},
-              child: Text(
-                "Helps",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black),
-              ),
-            ),
+            // InkWell(
+            //   onTap: (){
+            //     Navigator.push(context, MaterialPageRoute(builder: (context)=>SettingScreen()));
+            //   },
+            //   child: Text(
+            //     "Settings",
+            //     style: TextStyle(
+            //         fontSize: 20,
+            //         fontWeight: FontWeight.w600,
+            //         color: Colors.black),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            // InkWell(
+            //   onTap: (){},
+            //   child: Text(
+            //     "Helps",
+            //     style: TextStyle(
+            //         fontSize: 20,
+            //         fontWeight: FontWeight.w600,
+            //         color: Colors.black),
+            //   ),
+            // ),
           ],
         ),
       ),
     );
   }
+
+  Future<void> _launchInBrowserView(Uri url) async {
+    if (!await launchUrl(url, mode: LaunchMode.inAppBrowserView)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  Future<void> _launchInWebView(Uri url) async {
+    if (!await launchUrl(url, mode: LaunchMode.inAppWebView)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  Future<void> alert() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Are you sure? You want to logout?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () async{
+                AuthController.logout(context);
+              },
+            ),
+            TextButton(
+              child: Text('No'),
+              onPressed: () async{
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  
 }

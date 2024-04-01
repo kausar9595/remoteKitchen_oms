@@ -53,7 +53,7 @@ class Links {
 }
 
 class RestaurantResult {
-  final int? id;
+  late final int? id;
   final List<dynamic>? openingHours;
   final RImage? avatarImage;
   final RImage? bannerImage;

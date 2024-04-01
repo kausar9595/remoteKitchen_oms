@@ -12,6 +12,9 @@ class Api{
         "Authorization" : "token $token"
        }
     );
+    print("API: $url");
+    print("Status Code: ${response.statusCode}");
+    print("Response: ${response.body}");
     return response;
   }
 
@@ -26,6 +29,9 @@ class Api{
         },
       body: body
     );
+    print("API: $url");
+    print("Status Code: ${response.statusCode}");
+    print("Response: ${response.body}");
     return response;
   }
 
@@ -41,6 +47,9 @@ class Api{
         },
         body: body
     );
+    print("API: $url");
+    print("Status Code: ${response.statusCode}");
+    print("Response: ${response.body}");
     return response;
   }
 
@@ -54,6 +63,9 @@ class Api{
         },
         body: body
     );
+    print("API: $url");
+    print("Status Code: ${response.statusCode}");
+    print("Response: ${response.body}");
     return response;
   }
 
@@ -67,6 +79,9 @@ class Api{
         },
         body: body
     );
+    print("API: $url");
+    print("Status Code: ${response.statusCode}");
+    print("Response: ${response.body}");
     return response;
   }
 

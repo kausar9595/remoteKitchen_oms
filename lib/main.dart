@@ -1,14 +1,37 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:oms/view/auth/check_atuh.dart';
-import 'package:oms/view/menus/menus.dart';
+import 'package:oms/firebase_options.dart';
+import 'package:oms/notifications/notification.dart';
 import 'package:oms/view/order/screen/orders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'notifications/local_notoification.dart';
 import 'view/auth/login.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
+ // notificationAccess();
+  LocalNotificationService.initialize();
+
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+
+  NotificationController().requestNotificationPermissions();
   runApp(const MyApp());
+}
+
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  print(message.notification!.title);
+}
+
+Future notificationAccess()async{
+  final _firebaseMesseegin = await FirebaseMessaging.instance;
+  await _firebaseMesseegin.requestPermission();
 }
 
 class MyApp extends StatefulWidget {
@@ -31,19 +54,27 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     getToken();
+
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'OMS',
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-        primarySwatch: Colors.blue,
-      ),
-      home: token == null ? Login() : Orders(),
+    return ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        splitScreenMode: true,
+      builder: (context, child) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'OMS',
+          theme: ThemeData(
+            fontFamily: 'Poppins',
+            primarySwatch: Colors.blue,
+          ),
+          home: token == null ? Login() : Orders(),
+        );
+      }
     );
   }
 }

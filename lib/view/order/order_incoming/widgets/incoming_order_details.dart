@@ -212,7 +212,7 @@ class IncomingOrderDetails extends StatelessWidget {
                 ),
               ),
               ListTile(
-                leading: Text("Tex",
+                leading: Text("Tax",
                   style: TextStyle(fontWeight: FontWeight.w400,
                       fontSize: normalFontSize,color:AppColors.textblack),
                 ),

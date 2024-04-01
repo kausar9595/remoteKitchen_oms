@@ -81,7 +81,7 @@ class OrderResult {
   final DateTime? pickupTime;
   final DateTime? deliveryTime;
   final String? deliveryPlatform;
-  final PickupAddress? pickupAddress;
+  final String? pickupAddress;
   final String? dropoffAddress;
   final DropoffLocation? dropoffLocation;
   final String? dropoffPhoneNumber;
@@ -166,7 +166,7 @@ class OrderResult {
   });
 
   factory OrderResult.fromJson(Map<String, dynamic> json) => OrderResult(
-    id: json["id"],
+    id: int.parse("${json["id"]}"),
     orderitemSet: json["orderitem_set"] == null ? [] : List<OrderitemSet>.from(json["orderitem_set"]!.map((x) => OrderitemSet.fromJson(x))),
     voucher: json["voucher"],
     pickupAddressDetails: json["pickup_address_details"],
@@ -194,7 +194,7 @@ class OrderResult {
     pickupTime: json["pickup_time"] == null ? null : DateTime.parse(json["pickup_time"]),
     deliveryTime: json["delivery_time"] == null ? null : DateTime.parse(json["delivery_time"]),
     deliveryPlatform: json["delivery_platform"]!,
-    pickupAddress: pickupAddressValues.map[json["pickup_address"]]!,
+    pickupAddress: json["pickup_address"]!,
     dropoffAddress: json["dropoff_address"],
     dropoffLocation: json["dropoff_location"] == null ? null : DropoffLocation.fromJson(json["dropoff_location"]),
     dropoffPhoneNumber: json["dropoff_phone_number"],
@@ -251,7 +251,7 @@ class OrderResult {
     "pickup_time": pickupTime?.toIso8601String(),
     "delivery_time": deliveryTime?.toIso8601String(),
     "delivery_platform": deliveryPlatform,
-    "pickup_address": pickupAddressValues.reverse[pickupAddress],
+    "pickup_address": pickupAddress,
     "dropoff_address": dropoffAddress,
     "dropoff_location": dropoffLocation?.toJson(),
     "dropoff_phone_number": dropoffPhoneNumber,
@@ -381,13 +381,7 @@ final itemNameValues = EnumValues({
   "Yellow split pea stew": ItemName.YELLOW_SPLIT_PEA_STEW
 });
 
-enum PickupAddress {
-  THE_3994_SHELBOURNE_ST_103_B_VICTORIA_BC_V8_N_3_E2_CANADA
-}
 
-final pickupAddressValues = EnumValues({
-  "3994 Shelbourne St #103b, Victoria, BC V8N 3E2, Canada": PickupAddress.THE_3994_SHELBOURNE_ST_103_B_VICTORIA_BC_V8_N_3_E2_CANADA
-});
 
 enum SchedulingType {
   ASAP
