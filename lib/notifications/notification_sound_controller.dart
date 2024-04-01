@@ -4,17 +4,19 @@ class NotificationSoundController{
 
   AlarmSettings notificationSound(){
     return AlarmSettings(
-      id: 42,
+      id: 1,
       dateTime: DateTime.now(),
-      assetAudioPath: 'assets/alarm.mp3',
+      assetAudioPath: 'assets/notification-sound.mp3',
       loopAudio: true,
       vibrate: true,
-      volume: 0.8,
+      volume: 1,
       fadeDuration: 3.0,
-      notificationTitle: 'This is the title',
-      notificationBody: 'This is the body',
+      notificationTitle: '',
+      notificationBody: '',
       enableNotificationOnKill: true,
     );
   }
+
+
 
 }

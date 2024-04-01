@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:alarm/alarm.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:oms/controller/auth_controller.dart';
 import 'package:oms/model/order_model/order_list_model.dart';
+import 'package:oms/notifications/notification_sound_controller.dart';
 import 'package:oms/view/order/order_incoming/widgets/incoming_order_details.dart';
 import 'package:oms/view/order/screen/orders.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -24,13 +26,15 @@ class NotificationController{
     // when you click on notification app open from terminated state and you can get notification data in this method
 
     FirebaseMessaging.instance.getInitialMessage().then(
-          (message) {
+          (message) async{
             print("message sdfds === ${message?.data["data"]}");
         if (message != null) {
           //call the orders api
+          //sound NotificationSoundController().notificationSound();
+          await Alarm.set(alarmSettings: NotificationSoundController().notificationSound());
           print("New Notification");
           if (message.data.isNotEmpty) {
-            OrderResult _orderResunt = OrderResult.fromJson(message.data["data"]);
+            OrderResult _orderResunt = OrderResult.fromJson(jsonDecode(message.data["order"]));
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => OrderIncoming(
@@ -47,8 +51,8 @@ class NotificationController{
 
     // 2. This method only call when App in forground it mean app must be opened
     FirebaseMessaging.onMessage.listen(
-          (message) {
-            print("message 2nd === ${message.data["order"]}");
+          (message) async{
+            await Alarm.set(alarmSettings: NotificationSoundController().notificationSound());
             LocalNotificationService.createanddisplaynotification(message);
             if (message.data != null) {
               OrderResult _orderResunt = OrderResult.fromJson(jsonDecode(message.data["order"]));
@@ -66,10 +70,11 @@ class NotificationController{
 
     // 3. This method only call when App in background and not terminated(not closed)
     FirebaseMessaging.onMessageOpenedApp.listen(
-          (message) {
-            print("message 3rd === ${message.data["data"]}");
-        if (message.data != null) {
-          OrderResult _orderResunt = OrderResult.fromJson(message.data["data"]);
+          (message) async{
+            await Alarm.set(alarmSettings: NotificationSoundController().notificationSound());
+
+            if (message.data != null) {
+          OrderResult _orderResunt = OrderResult.fromJson(jsonDecode(message.data["order"]));
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => OrderIncoming(

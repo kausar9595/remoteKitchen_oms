@@ -14,7 +14,8 @@ class OrderListView extends StatelessWidget {
   final String dropOfAddress;
   final OrderResult orderInfo;
   final String status;
-  const OrderListView({super.key, required this.orderId, required this.customerName, required this.qty, required this.itemName, required this.dropOfAddress, required this.orderInfo, required this.status});
+  final bool fromOrderIncoming;
+  const OrderListView({super.key, required this.orderId, required this.customerName, required this.qty, required this.itemName, required this.dropOfAddress, required this.orderInfo, required this.status, this.fromOrderIncoming = false});
 
   @override
   Widget build(BuildContext context) {

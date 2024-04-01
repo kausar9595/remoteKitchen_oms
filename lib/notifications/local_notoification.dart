@@ -47,6 +47,7 @@ class LocalNotificationService{
           "pushnotificationappchannel",
           importance: Importance.max,
           priority: Priority.high,
+          sound: UriAndroidNotificationSound("assets/notification-sound.mp3")
         ),
       );
 

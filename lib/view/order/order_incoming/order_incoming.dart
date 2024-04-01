@@ -1,5 +1,6 @@
 
 
+import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:oms/controller/order_controller.dart';
 import 'package:oms/model/order_model/order_list_model.dart';
@@ -55,7 +56,12 @@ class _OrderIncomingState extends State<OrderIncoming> {
                     fontWeight: FontWeight.w700,color: Colors.white,fontSize: 20,
                   ),),
                   trailing: IconButton(
-                      onPressed: (){Navigator.pop(context);},
+                      onPressed: ()async{
+                        //alarm stop
+                        await Alarm.stop(1);
+
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Orders(pageIndex: 0,)));
+                        },
                       icon: Icon(Icons.cancel_outlined,color: Colors.white,size: 40,),)
 
                 ),
@@ -86,26 +92,26 @@ class _OrderIncomingState extends State<OrderIncoming> {
                           Text("${widget.orderResult!.customer}",
                             style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: Colors.white),
                           ),
-                          SizedBox(width: 10,),
-                          InkWell(
-                            onTap: (){},
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: MediaQuery.of(context).size.height*0.04,
-                              width: MediaQuery.of(context).size.width*0.06,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColors.textindigo,
-                              ),
-                              child: Text("Lvl 01",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: smallFontSize,color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10,),
+                          // SizedBox(width: 10,),
+                          // InkWell(
+                          //   onTap: (){},
+                          //   child: Container(
+                          //     alignment: Alignment.center,
+                          //     height: MediaQuery.of(context).size.height*0.04,
+                          //     width: MediaQuery.of(context).size.width*0.06,
+                          //     decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(10),
+                          //       color: AppColors.textindigo,
+                          //     ),
+                          //     child: Text("Lvl 01",
+                          //       style: TextStyle(
+                          //           fontWeight: FontWeight.w600,
+                          //           fontSize: smallFontSize,color: Colors.white,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          SizedBox(width: 15,),
                           Text("(",style: TextStyle(color: Colors.white),),
                           RichText(text: TextSpan(
                               text: "Accumulated order:",
@@ -164,7 +170,11 @@ class _OrderIncomingState extends State<OrderIncoming> {
                       ),
 
                       SizedBox(height: 10,),
-                      TextButton(onPressed: ()=>_scaffoldKey.currentState?.openEndDrawer(),
+                      TextButton(onPressed: ()async{
+                        //alarm stop
+                        await Alarm.stop(1);
+                        _scaffoldKey.currentState?.openEndDrawer();
+                      },
                         child: Text("View Order Details",
                         style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: AppColors.textindigo),),
                       ),
@@ -215,6 +225,8 @@ class _OrderIncomingState extends State<OrderIncoming> {
   //Order accept
   orderAccept(id) async{
     setState(() => _isAccepting = true);
+    //alarm stop
+    await Alarm.stop(1);
    try{
      await OrderController.changeStatus(id, OrderStatus.accepted).then((value) {
        if(value.statusCode == 200){
@@ -232,6 +244,8 @@ class _OrderIncomingState extends State<OrderIncoming> {
 
   //Order accept
   orderCancelled(id) async{
+    //alarm stop
+    await Alarm.stop(1);
     setState(() => _isRejecting = true);
     await OrderController.changeStatus(id, OrderStatus.cancelled).then((value) {
       if(value.statusCode == 200){

@@ -1,3 +1,4 @@
+import 'package:alarm/service/alarm_storage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:oms/firebase_options.dart';
 import 'package:oms/notifications/notification.dart';
 import 'package:oms/view/order/screen/orders.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'notifications/local_notoification.dart';
@@ -21,7 +23,19 @@ void main() async{
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
 
   NotificationController().requestNotificationPermissions();
+  checkAndroidScheduleExactAlarmPermission();
+  AlarmStorage.init();
   runApp(const MyApp());
+}
+
+Future<void> checkAndroidScheduleExactAlarmPermission() async {
+  final status = await Permission.scheduleExactAlarm.status;
+  print('Schedule exact alarm permission: $status.');
+  if (status.isDenied) {
+    print('Requesting schedule exact alarm permission...');
+    final res = await Permission.scheduleExactAlarm.request();
+    print('Schedule exact alarm permission ${res.isGranted ? '' : 'not'} granted.');
+  }
 }
 
 Future<void> backgroundHandler(RemoteMessage message) async {
