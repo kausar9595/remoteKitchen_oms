@@ -94,7 +94,10 @@ class NotificationController{
     }
  
   Future<void> requestNotificationPermissions() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
     final PermissionStatus status = await Permission.notification.request();
+
     if (status.isGranted) {
       // Notification permissions granted
     } else if (status.isDenied) {

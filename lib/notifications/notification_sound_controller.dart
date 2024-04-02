@@ -13,7 +13,7 @@ class NotificationSoundController{
       fadeDuration: 3.0,
       notificationTitle: '',
       notificationBody: '',
-      enableNotificationOnKill: true,
+      enableNotificationOnKill: false,
     );
   }
 

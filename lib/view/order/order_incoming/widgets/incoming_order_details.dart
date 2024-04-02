@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../model/order_model/order_list_model.dart';
 import '../../../../utility/app_const.dart';
@@ -60,9 +61,16 @@ class IncomingOrderDetails extends StatelessWidget {
                       icon: Icon(Icons.close)
                   )
                 ],
+              ), 
+              SizedBox(height: 10,),
+              Text("Order Date: ${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${orderResult.createdDate}"))}",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: normalFontSize
+                ),
               ),
               SizedBox(height: 10,),
-              orderResult.orderMethod == "pickup"
+              orderResult.orderMethod != "pickup"
                   ? Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
