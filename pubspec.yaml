@@ -49,6 +49,7 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_screenutil: ^5.9.0
   alarm: ^3.0.14
+  instant: ^0.5.1
 
 dev_dependencies:
   flutter_test:

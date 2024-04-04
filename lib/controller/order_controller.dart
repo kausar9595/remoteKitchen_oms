@@ -22,8 +22,9 @@ class OrderController{
     var ids = await RestaurantController.getLocationAndRestaurantIds();
     var response = await Api.getApi(url: AppConfig.ORDER_LIST+"?restaurant=${ids.restaurantId}&location=${ids.locationId}");
     print("orders --- ${response.statusCode}");
-    print("orders --- ${response.body}");
+    // print("orders body --- ${response.body}");
     final decodedBody = utf8.decode(response.bodyBytes);
+    print("jsonDecode(decodedBody) === ${jsonDecode(decodedBody)}");
     return OrderListModel.fromJson(jsonDecode(decodedBody));
   }
 

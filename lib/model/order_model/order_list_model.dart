@@ -77,7 +77,7 @@ class OrderResult {
   final double? tips;
   final Currency? currency;
   final bool? isPaid;
-  final DateTime? receiveDate;
+  final String? receiveDate;
   final DateTime? pickupTime;
   final DateTime? deliveryTime;
   final String? deliveryPlatform;
@@ -96,7 +96,7 @@ class OrderResult {
   final SchedulingType? schedulingType;
   final dynamic scheduledTime;
   final DropoffLocation? extra;
-  final OrderType? orderType;
+  final String? orderType;
   final int? user;
   final int? company;
   final int? restaurant;
@@ -190,7 +190,7 @@ class OrderResult {
     tips: json["tips"],
     currency: currencyValues.map[json["currency"]]!,
     isPaid: json["is_paid"],
-    receiveDate: json["receive_date"] == null ? null : DateTime.parse(json["receive_date"]),
+    receiveDate: json["receive_date"],
     pickupTime: json["pickup_time"] == null ? null : DateTime.parse(json["pickup_time"]),
     deliveryTime: json["delivery_time"] == null ? null : DateTime.parse(json["delivery_time"]),
     deliveryPlatform: json["delivery_platform"]!,
@@ -209,7 +209,7 @@ class OrderResult {
     schedulingType: schedulingTypeValues.map[json["scheduling_type"]]!,
     scheduledTime: json["scheduled_time"],
     extra: json["extra"] == null ? null : DropoffLocation.fromJson(json["extra"]),
-    orderType: orderTypeValues.map[json["order_type"]]!,
+    orderType: json["order_type"]!,
     user: json["user"],
     company: json["company"],
     restaurant: json["restaurant"],
@@ -247,7 +247,7 @@ class OrderResult {
     "tips": tips,
     "currency": currencyValues.reverse[currency],
     "is_paid": isPaid,
-    "receive_date": receiveDate?.toIso8601String(),
+    "receive_date": receiveDate,
     "pickup_time": pickupTime?.toIso8601String(),
     "delivery_time": deliveryTime?.toIso8601String(),
     "delivery_platform": deliveryPlatform,
@@ -266,7 +266,7 @@ class OrderResult {
     "scheduling_type": schedulingTypeValues.reverse[schedulingType],
     "scheduled_time": scheduledTime,
     "extra": extra?.toJson(),
-    "order_type": orderTypeValues.reverse[orderType],
+    "order_type": orderType,
     "user": user,
     "company": company,
     "restaurant": restaurant,
@@ -313,13 +313,9 @@ final orderMethodValues = EnumValues({
   "pickup": OrderMethod.PICKUP
 });
 
-enum OrderType {
-  INTERNAL
-}
 
-final orderTypeValues = EnumValues({
-  "internal": OrderType.INTERNAL
-});
+
+
 
 class OrderitemSet {
   final int? id;

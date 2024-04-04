@@ -11,11 +11,11 @@ class OrderListView extends StatelessWidget {
   final String customerName;
   final String qty;
   final String itemName;
-  final String dropOfAddress;
+  final String orderType;
   final OrderResult orderInfo;
   final String status;
   final bool fromOrderIncoming;
-  const OrderListView({super.key, required this.orderId, required this.customerName, required this.qty, required this.itemName, required this.dropOfAddress, required this.orderInfo, required this.status, this.fromOrderIncoming = false});
+  const OrderListView({super.key, required this.orderId, required this.customerName, required this.qty, required this.itemName, required this.orderType, required this.orderInfo, required this.status, this.fromOrderIncoming = false});
 
   @override
   Widget build(BuildContext context) {
@@ -77,13 +77,26 @@ class OrderListView extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.35,
               child: ListTile(
+                // title: Row(
+                //   children: [
+                //     Container(
+                //       width: 150,
+                //       padding: EdgeInsets.only(left: 10, right: 10, top: 7, bottom: 7),
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(100),
+                //         border: Border.all(width: 1, color: AppColors.grey200)
+                //       ),
+                //       child: Text(
+                //         "$orderType - Order",
+                //         style: TextStyle(
+                //             fontSize: smallFontSize, fontWeight: FontWeight.w600),
+                //       ),
+                //     ),
+                //     SizedBox()
+                //   ],
+                // ),
                 title: Text(
-                  "Drop Address: $dropOfAddress",
-                  style: TextStyle(
-                      fontSize: smallFontSize, fontWeight: FontWeight.w400),
-                ),
-                subtitle: Text(
-                  "$itemName",
+                  itemName.isNotEmpty ? itemName : "No title",
                   style: TextStyle(
                       fontSize: normalFontSize, fontWeight: FontWeight.w700),
                 ),

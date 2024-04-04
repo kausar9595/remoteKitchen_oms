@@ -218,7 +218,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       ),
 
                       SizedBox(height: 10,),
-                      Text("Order Date: ${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${widget.orderResult.createdDate}"))}",
+                      Text("Order Date: ${convertPacificTimeZoon(widget.orderResult.receiveDate)}",
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: normalFontSize

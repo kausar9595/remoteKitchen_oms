@@ -12,6 +12,8 @@ class IncomingOrderDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print("orderResult.receiveDate --- ${orderResult.receiveDate}");
     return Drawer(
       backgroundColor: Colors.white,
       width: MediaQuery.of(context).size.width*.40,
@@ -63,7 +65,8 @@ class IncomingOrderDetails extends StatelessWidget {
                 ],
               ), 
               SizedBox(height: 10,),
-              Text("Order Date: ${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${orderResult.createdDate}"))}",
+
+              Text("Order Date: ${convertPacificTimeZoon(orderResult.receiveDate)}",
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: normalFontSize

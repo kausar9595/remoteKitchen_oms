@@ -141,7 +141,7 @@ class _ScheduledOrderState extends State<ScheduledOrder> {
                       customerName: data.customer!,
                       qty: data.quantity.toString(),
                       itemName: comboItems.join(', '),
-                    dropOfAddress: data.orderitemSet![0].modifiers!.isNotEmpty ? data.orderitemSet![0].modifiers![0].toString() : "",
+                    orderType: data.orderitemSet![0].modifiers!.isNotEmpty ? data.orderitemSet![0].modifiers![0].toString() : "",
                     status: data.status.toString(),
                     orderInfo: data,
                   );

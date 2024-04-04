@@ -170,9 +170,9 @@ class _OrderListState extends State<OrderList> {
                                customerName: data.customer!,
                                qty: data.quantity.toString(),
                                itemName: data.orderitemSet![0].itemName!,
-                               dropOfAddress: data.dropoffAddress!,
+                               orderType: data.orderType!,
                                orderInfo: data,
-                               status: data.status.toString()
+                               status: OrderStatus.setOrderStatus(data.status!)
                            )
                                : _selectedFilter == "Complete Orders" && data.status == OrderStatus.completed
                                 ? OrderListView(
@@ -180,27 +180,27 @@ class _OrderListState extends State<OrderList> {
                                     customerName: data.customer!,
                                     qty: data.quantity.toString(),
                                     itemName: data.orderitemSet![0].itemName!,
-                                    dropOfAddress: data.dropoffAddress!,
+                                    orderType: data.orderType!,
                                     orderInfo: data,
-                                    status: data.status.toString()
+                                    status: OrderStatus.setOrderStatus(data.status!)
                                   ) : _selectedFilter.contains("Ready for pickup") && data.status == OrderStatus.readyForPickup
                                     ? OrderListView(
                                         orderId: data.id!.toString(),
                                         customerName: data.customer!,
                                         qty: data.quantity.toString(),
                                         itemName: data.orderitemSet![0].itemName!,
-                                        dropOfAddress: data.dropoffAddress!,
+                                        orderType: data.orderType!,
                                         orderInfo: data,
-                                        status: data.status.toString()
+                                        status: OrderStatus.setOrderStatus(data.status!)
                                         ) : Center()
                            : OrderListView(
                            orderId: data.id!.toString(),
                            customerName: data.customer!,
                            qty: data.quantity.toString(),
                            itemName: data.orderitemSet![0].itemName!,
-                           dropOfAddress: data.dropoffAddress!,
+                           orderType: data.orderMethod!,
                            orderInfo: data,
-                           status: data.status.toString()
+                           status: OrderStatus.setOrderStatus(data.status!)
                        );
 
                  },
@@ -221,7 +221,7 @@ class _OrderListState extends State<OrderList> {
                        customerName: data.customer!,
                        qty: data.quantity.toString(),
                        itemName: data.orderitemSet![0].itemName!,
-                       dropOfAddress: data.dropoffAddress!,
+                       orderType: data.dropoffAddress!,
                        orderInfo: data,
                        status: data.status.toString()
                    )
@@ -231,7 +231,7 @@ class _OrderListState extends State<OrderList> {
                        customerName: data.customer!,
                        qty: data.quantity.toString(),
                        itemName: data.orderitemSet![0].itemName!,
-                       dropOfAddress: data.dropoffAddress!,
+                       orderType: data.dropoffAddress!,
                        orderInfo: data,
                        status: data.status.toString()
                    ) : _selectedFilter.contains("Ready for pickup") && data.status == OrderStatus.readyForPickup
@@ -240,7 +240,7 @@ class _OrderListState extends State<OrderList> {
                        customerName: data.customer!,
                        qty: data.quantity.toString(),
                        itemName: data.orderitemSet![0].itemName!,
-                       dropOfAddress: data.dropoffAddress!,
+                       orderType: data.dropoffAddress!,
                        orderInfo: data,
                        status: data.status.toString()
                    ) : Center()
@@ -249,7 +249,7 @@ class _OrderListState extends State<OrderList> {
                        customerName: data.customer!,
                        qty: data.quantity.toString(),
                        itemName: data.orderitemSet![0].itemName!,
-                       dropOfAddress: data.dropoffAddress!,
+                       orderType: data.dropoffAddress!,
                        orderInfo: data,
                        status: data.status.toString()
                    ) ;

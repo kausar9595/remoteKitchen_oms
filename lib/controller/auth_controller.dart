@@ -33,6 +33,10 @@ class AuthController{
   static Future logout(context)async{
     SharedPreferences _pref = await SharedPreferences.getInstance();
     _pref.remove("token");
+    _pref.remove("restaurant_id");
+    _pref.remove("location_name");
+    _pref.remove("location_name");
+    _pref.remove("location_id");
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Login()), (route) => false) ;
   }
 
