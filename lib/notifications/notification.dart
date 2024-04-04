@@ -27,43 +27,41 @@ class NotificationController{
 
     FirebaseMessaging.instance.getInitialMessage().then(
           (message) async{
-            print("message sdfds === ${message?.data["data"]}");
-        if (message != null) {
-          //call the orders api
-          //sound NotificationSoundController().notificationSound();
-          await Alarm.set(alarmSettings: NotificationSoundController().notificationSound());
-          print("New Notification");
-          if (message.data.isNotEmpty) {
-            OrderResult _orderResunt = OrderResult.fromJson(jsonDecode(message.data["order"]));
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => OrderIncoming(
-                 orderResult: _orderResunt,
-                ),
+            print("message sdfds === ${message!.data}");
+            print("message sdfds === ${message.data}");
+        //call the orders api
+        //sound NotificationSoundController().notificationSound();
+        //wait Alarm.set(alarmSettings: NotificationSoundController().notificationSound());
+        print("New Notification");
+        if (message.data.isNotEmpty) {
+          OrderResult _orderResunt = OrderResult.fromJson(jsonDecode(message.data["order"]));
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => OrderIncoming(
+               orderResult: _orderResunt,
               ),
-            );
-          }else{
-            print("No data found in the notfication body");
-          }
+            ),
+          );
+        }else{
+          print("No data found in the notfication body");
         }
-      },
+            },
     );
 
     // 2. This method only call when App in forground it mean app must be opened
     FirebaseMessaging.onMessage.listen(
           (message) async{
+            // print("message.data === ${message.data["id"]}");
             await Alarm.set(alarmSettings: NotificationSoundController().notificationSound());
             LocalNotificationService.createanddisplaynotification(message);
-            if (message.data != null) {
-              OrderResult _orderResunt = OrderResult.fromJson(jsonDecode(message.data["order"]));
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => OrderIncoming(
-                    orderResult: _orderResunt,
-                  ),
+            OrderResult _orderResunt = OrderResult.fromJson(jsonDecode(message.data["order"]));
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => OrderIncoming(
+                  orderResult: _orderResunt,
                 ),
-              );
-            }
+              ),
+            );
 
       },
     );

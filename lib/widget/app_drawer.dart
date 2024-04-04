@@ -128,8 +128,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 left: 10,
               ),
               alignment: Alignment.centerLeft,
-              height: MediaQuery.of(context).size.height * 0.06,
-              width: MediaQuery.of(context).size.width * 0.20,
+              height: MediaQuery.of(context).size.height * 0.07,
+              width: MediaQuery.of(context).size.width * 0.27,
               decoration: BoxDecoration(
                 border: Border.all(color: AppColors.textindigo, width: 2),
                 borderRadius: BorderRadius.circular(10),
@@ -177,8 +177,8 @@ class _AppDrawerState extends State<AppDrawer> {
                   left: 10,
                 ),
                 alignment: Alignment.centerLeft,
-                height: MediaQuery.of(context).size.height * 0.06,
-                width: MediaQuery.of(context).size.width * 0.20,
+                height: MediaQuery.of(context).size.height * 0.07,
+                width: MediaQuery.of(context).size.width * 0.27,
                 decoration: BoxDecoration(
                   border: Border.all(color: AppColors.textindigo, width: 2),
                   borderRadius: BorderRadius.circular(10),

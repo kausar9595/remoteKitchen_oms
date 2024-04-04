@@ -133,6 +133,7 @@ class _OrderListState extends State<OrderList> {
                       onChanged: (v) {
                         setState(() {
                           _selectedFilter = v!;
+                          print("value --- $v");
                         });
                       },
                     ),
@@ -161,7 +162,9 @@ class _OrderListState extends State<OrderList> {
                  itemCount: widget.orders!.length,
                  itemBuilder: (_, index){
                    var data = widget.orders[index];
-                       return widget.isCompleteToday ? _selectedFilter == "Accepted Orders" && data.status == OrderStatus.accepted
+                   print("data.status === ${data.status}");
+
+                   return widget.isCompleteToday ? _selectedFilter == "Accepted Orders" && data.status == OrderStatus.accepted
                             ? OrderListView(
                                orderId: data.id!.toString(),
                                customerName: data.customer!,
@@ -210,6 +213,8 @@ class _OrderListState extends State<OrderList> {
                  itemCount: _searchResult.length,
                  itemBuilder: (_, index){
                    var data = _searchResult[index];
+                   print("data.status == ${data.status}");
+
                    return widget.isCompleteToday ? _selectedFilter == "Accepted Orders" && data.status == OrderStatus.accepted
                        ? OrderListView(
                        orderId: data.id!.toString(),

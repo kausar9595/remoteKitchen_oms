@@ -50,7 +50,7 @@ class _OrdersState extends State<Orders> {
           _cancelledOrderList.add(i);
         });
       }
-      if(i.status == OrderStatus.accepted || i.status == OrderStatus.readyForPickup){
+      if(i.status == OrderStatus.accepted || i.status == OrderStatus.readyForPickup || i.status == OrderStatus.completed){
         setState(() {
           _acceptedOrderList.add(i);
         });

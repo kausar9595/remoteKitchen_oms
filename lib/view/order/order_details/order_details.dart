@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/utility/order_status.dart';
@@ -213,6 +214,14 @@ class _OrderDetailState extends State<OrderDetail> {
                               fontSize: 25,
                               fontWeight: FontWeight.w700,
                               color: AppColors.textblack),
+                        ),
+                      ),
+
+                      SizedBox(height: 10,),
+                      Text("Order Date: ${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${widget.orderResult.createdDate}"))}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize
                         ),
                       ),
                       SizedBox(height: 20,),
