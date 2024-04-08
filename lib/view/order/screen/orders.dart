@@ -129,7 +129,8 @@ class _OrdersState extends State<Orders> {
                     OrderList(orders: _scheduleOrderList, onClick: () => _getIncomingOrders(), onRefresh: ()=>_getIncomingOrders(), isLoading: _isLoading,),
                     OrderList(orders: _cancelledOrderList, onClick: () => _getIncomingOrders(), onRefresh: ()=>_getIncomingOrders(), isLoading: _isLoading,),
 
-                            ]),
+            ],
+            ),
           ),
         ),
 
