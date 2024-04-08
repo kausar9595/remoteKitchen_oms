@@ -51,7 +51,7 @@ class IncomingOrderDetails extends StatelessWidget {
                           child: Text(orderResult.orderMethod!,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 18,
+                              fontSize: titleFontSize,
                             ),
                           ),
                         ),
@@ -75,7 +75,7 @@ class IncomingOrderDetails extends StatelessWidget {
               SizedBox(height: 10,),
               orderResult.orderMethod != "pickup"
                   ? Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
 
@@ -109,7 +109,7 @@ class IncomingOrderDetails extends StatelessWidget {
                                     text: "Drop of phone number:",
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: normalFontSize,
+                                      fontSize: smallFontSize,
                                       fontWeight: FontWeight.w400,
                                     )
                                 ),
@@ -132,7 +132,7 @@ class IncomingOrderDetails extends StatelessWidget {
                                     text: "Drop of contact person:",
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: normalFontSize,
+                                      fontSize: smallFontSize,
                                       fontWeight: FontWeight.w400,
                                     )
                                 ),
@@ -156,7 +156,7 @@ class IncomingOrderDetails extends StatelessWidget {
                 children: [
                   Text("${orderResult.quantity} items for - ${orderResult.customer}",
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: titleFontSize,
                         fontWeight: FontWeight.w700,
                         color: AppColors.textblack),
                   ),
@@ -166,7 +166,7 @@ class IncomingOrderDetails extends StatelessWidget {
               SizedBox(height: 20,),
               Text("Items",
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: normalFontSize,
                   fontWeight: FontWeight.w500
                 ),
               ),
@@ -187,12 +187,16 @@ class IncomingOrderDetails extends StatelessWidget {
                         color: AppColors.textindigo,
                       ),
                       child: Text("${items.quantity}",
-                        style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white,fontSize: 16),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                            fontSize: normalFontSize,
+                        ),
                       ),
                     ),
                     title: Text("${items.itemName}",
                       style: TextStyle(
-                        fontSize: normalFontSize,
+                        fontSize: titleFontSize,
                         fontWeight: FontWeight.w700,
                         color: AppColors.textblack,
                       ),

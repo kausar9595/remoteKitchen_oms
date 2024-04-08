@@ -63,6 +63,10 @@ class _SpecialHourState extends State<SpecialHour> {
                                 textAlign: TextAlign.start,
                                 decoration: InputDecoration(
                                   hintText: "2/16/24",
+                                  hintStyle: TextStyle(
+                                      fontSize: smallFontSize,
+                                      fontWeight: FontWeight.w400,
+                                  ),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                   )

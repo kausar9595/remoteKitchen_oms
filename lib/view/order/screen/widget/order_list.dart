@@ -21,7 +21,13 @@ class OrderList extends StatefulWidget {
   final bool isCompleteToday;
   final  Future<void> Function() onRefresh;
 
-  const OrderList({super.key, required this.orders, required this.onClick, required this.isLoading, this.isCompleteToday = false, required this.onRefresh});
+  const OrderList({super.key,
+    required this.orders,
+    required this.onClick,
+    required this.isLoading,
+    this.isCompleteToday = false,
+    required this.onRefresh,
+  });
 
   @override
   State<OrderList> createState() => _OrderListState();
@@ -115,7 +121,7 @@ class _OrderListState extends State<OrderList> {
                       hint: Text(
                         'Location Select',
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: smallFontSize,
                           color: AppColors.textindigo,
                         ),
                       ),

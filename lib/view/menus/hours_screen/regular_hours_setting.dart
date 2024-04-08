@@ -41,7 +41,7 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                       ),
                       SizedBox(width: 10,),
                       Text("Monday",
-                        style: TextStyle(fontSize: normalFontSize,
+                        style: TextStyle(fontSize: titleFontSize,
                             fontWeight: FontWeight.w700,color:AppColors.textblack),
                       ),
                     ],
@@ -148,7 +148,7 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Tuesday",style: TextStyle(fontSize: normalFontSize,
+                      Text("Tuesday",style: TextStyle(fontSize: titleFontSize,
                           fontWeight: FontWeight.w700,color:AppColors.textblack),)
                     ],
                   ),
@@ -248,7 +248,7 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Wednesday",style: TextStyle(fontSize: normalFontSize,
+                      Text("Wednesday",style: TextStyle(fontSize: titleFontSize,
                           fontWeight: FontWeight.w700,color:AppColors.textblack),
                       ),
                     ],
@@ -349,7 +349,7 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Thursday",style: TextStyle(fontSize: normalFontSize,
+                      Text("Thursday",style: TextStyle(fontSize: titleFontSize,
                           fontWeight: FontWeight.w700,color:AppColors.textblack),)
                     ],
                   ),
@@ -449,7 +449,7 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Friday",style: TextStyle(fontSize: normalFontSize,
+                      Text("Friday",style: TextStyle(fontSize: titleFontSize,
                           fontWeight: FontWeight.w700,color:AppColors.textblack),)
                     ],
                   ),
@@ -549,7 +549,7 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Saturday",style: TextStyle(fontSize: normalFontSize,
+                      Text("Saturday",style: TextStyle(fontSize: titleFontSize,
                           fontWeight: FontWeight.w700,color:AppColors.textblack),
                       )
                     ],
@@ -650,7 +650,7 @@ class _RegularHoursSettingState extends State<RegularHoursSetting> {
                         },
                       ),
                       SizedBox(width: 10,),
-                      Text("Sunday",style: TextStyle(fontSize: normalFontSize,
+                      Text("Sunday",style: TextStyle(fontSize: titleFontSize,
                           fontWeight: FontWeight.w700,color:AppColors.textblack),)
                     ],
                   ),

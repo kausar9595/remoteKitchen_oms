@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/view/history/history_screen.dart';
 import 'package:oms/view/menus/widgets/availability.dart';
@@ -61,7 +62,7 @@ class _MenusState extends State<Menus> {
                   Text(
                     "Menu",
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: titleFontSize,
                         fontWeight: FontWeight.w500,
                         color: Colors.black),
                   ),
@@ -93,7 +94,7 @@ class _MenusState extends State<Menus> {
                 width: 300,
                 child: TabBar(
                     labelStyle: TextStyle(
-                        fontSize: 20,
+                        fontSize: titleFontSize,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textblack),
                     tabs: [

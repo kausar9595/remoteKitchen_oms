@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 class AppInput extends StatelessWidget {
   const AppInput({
     super.key,required this.controller,this.title,
@@ -12,7 +13,7 @@ class AppInput extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("${title}",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.black),),
+        Text("${title}",style: TextStyle(fontWeight: FontWeight.w500,fontSize: titleFontSize,color: Colors.black),),
         SizedBox(height: 10,),
         Container(
           alignment: Alignment.center,
@@ -25,7 +26,7 @@ class AppInput extends StatelessWidget {
                   filled: true,
                   fillColor: Colors.white,
                   suffixText: "Show",
-                  suffixStyle: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),
+                  suffixStyle: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w500,color: Colors.black),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide(color: Colors.black,width: 1),

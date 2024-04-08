@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/view/menus/menus.dart';
 import 'package:oms/view/order/screen/orders.dart';
 
@@ -18,7 +19,7 @@ class _CheckAuthState extends State<CheckAuth> {
       body: Column(
         children: [
           Center(
-            child: const Text('CheckAuth',style: TextStyle(fontSize: 30),),
+            child: const Text('CheckAuth',style: TextStyle(fontSize:25),),
           ),
           ElevatedButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>Menus()));

@@ -29,7 +29,7 @@ class _SettingScreenState extends State<SettingScreen> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             title: Text("Settings",
-              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,color: AppColors.textblack),),
+              style: TextStyle(fontSize: titleFontSize,fontWeight: FontWeight.w700,color: AppColors.textblack),),
 
           ),
           body: SingleChildScrollView(
@@ -46,7 +46,11 @@ class _SettingScreenState extends State<SettingScreen> {
                     children: [
                       SizedBox(height: 20,),
                       Text("Store settings",
-                        style: TextStyle(fontWeight: FontWeight.w700,fontSize: 22,color: AppColors.textblack),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: bigFontSize,
+                            color: AppColors.textblack,
+                        ),
                       ),
                      Text("Account information and workflow configuration ",
                        style: TextStyle(fontSize: normalFontSize,
@@ -72,8 +76,8 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       Text("America / Vancouver",
                         style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: bigFontSize,
+                            fontWeight: FontWeight.w500,
+                            fontSize: titleFontSize,
                             color: AppColors.textblack,
                         ),
                       ),
@@ -87,8 +91,8 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       Text("bd@heyremotekitchen.com",
                         style: TextStyle(
-                            fontWeight:FontWeight.w400,
-                            fontSize: bigFontSize,
+                            fontWeight:FontWeight.w500,
+                            fontSize: titleFontSize,
                             color: AppColors.textblack,
                         ),
                       ),
@@ -106,7 +110,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                           child: Text("Sign Out",
                             style: TextStyle(
-                                fontSize: bigFontSize,
+                                fontSize: titleFontSize,
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.textblack,
                             ),
@@ -138,8 +142,8 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       Text("Logout all other sessions",
                         style: TextStyle(
-                          fontSize: bigFontSize,
-                            fontWeight: FontWeight.w400,
+                          fontSize: titleFontSize,
+                            fontWeight: FontWeight.w500,
                             color: AppColors.textblack,
                         ),
                       ),
@@ -165,8 +169,8 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                           child: Text("Reset Password",
                             style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: bigFontSize,
+                                fontWeight: FontWeight.w500,
+                                fontSize: titleFontSize,
                                 color: AppColors.textblack,
                             ),
                           ),
@@ -186,7 +190,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         SizedBox(height: MediaQuery.of(context).size.height*0.13,),
                         Text("Workflow Settings",
                           style: TextStyle(
-                            fontSize: bigFontSize,
+                            fontSize: titleFontSize,
                             fontWeight: FontWeight.w700,
                             color: AppColors.textblack,
                           ),
@@ -233,7 +237,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         SizedBox(height: 10,),
                         Text("Your POS: Revel",
                           style: TextStyle(
-                            fontSize: normalFontSize,
+                            fontSize: titleFontSize,
                             fontWeight: FontWeight.w700,
                             color: AppColors.textblack,
                           ),
@@ -251,8 +255,8 @@ class _SettingScreenState extends State<SettingScreen> {
                             ),
                             child: Text("Edit POS",
                               style: TextStyle(
-                                fontSize: bigFontSize,
-                                fontWeight: FontWeight.w400,
+                                fontSize: titleFontSize,
+                                fontWeight: FontWeight.w500,
                                 color: AppColors.textblack,
                               ),
                             ),
@@ -291,7 +295,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             Text("Full screen notifications",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
-                                fontSize: normalFontSize,
+                                fontSize: titleFontSize,
                                 color: AppColors.textblack,
                               ),
                             ),
@@ -300,7 +304,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         SizedBox(height: 10,),
                         Text("Print prices on receipts",
                           style: TextStyle(
-                            fontSize: normalFontSize,
+                            fontSize: titleFontSize,
                             fontWeight: FontWeight.w400,
                             color: AppColors.textblack,
                           ),
@@ -320,7 +324,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             Text("Show prices on printed tickets",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
-                                fontSize: normalFontSize,
+                                fontSize: titleFontSize,
                                 color: AppColors.textblack,
                               ),
                             ),
@@ -330,7 +334,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         Text("Test Audio",
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: normalFontSize,
+                            fontSize: titleFontSize,
                             color: AppColors.textblack,
                           ),
                         ),
@@ -347,8 +351,8 @@ class _SettingScreenState extends State<SettingScreen> {
                             ),
                             child: Text("Play Test Sound",
                               style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: bigFontSize,
+                                fontWeight: FontWeight.w500,
+                                fontSize: titleFontSize,
                                 color: AppColors.textblack,),
                             ),
 
@@ -357,7 +361,8 @@ class _SettingScreenState extends State<SettingScreen> {
 
 
                       ],
-                    ))
+                    ),
+                ),
               ],
             ),
           ),

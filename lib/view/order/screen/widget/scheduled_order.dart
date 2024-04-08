@@ -126,7 +126,7 @@ class _ScheduledOrderState extends State<ScheduledOrder> {
                     ),
                   );
                 },
-              )
+              ),
 
           ) :  widget.orders!.isNotEmpty ? Expanded(
               child: ListView.builder(

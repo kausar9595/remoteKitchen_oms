@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/view/menus/hours_screen/special_hour.dart';
 
 import '../../../utility/appcolor.dart';
@@ -53,7 +54,7 @@ class _HoursMenusState extends State<HoursMenus> {
                             child: Text(
                               "Regular Hours",
                               style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: normalFontSize,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.textblack),
                             ))),
@@ -82,7 +83,7 @@ class _HoursMenusState extends State<HoursMenus> {
                           child: Text(
                             "Special Hours",
                             style: TextStyle(
-                                fontSize: 16,
+                                fontSize: normalFontSize,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textblack),
                           ),
@@ -108,7 +109,7 @@ class _HoursMenusState extends State<HoursMenus> {
                 child: Text(
                   "Restore settings",
                   style: TextStyle(
-                      fontSize: 16,
+                      fontSize: normalFontSize,
                       fontWeight: FontWeight.w400,
                       color: AppColors.textindigo),
                 ),
@@ -126,7 +127,7 @@ class _HoursMenusState extends State<HoursMenus> {
                   child: Text(
                     "Save Changes",
                     style: TextStyle(
-                        fontSize: 16,
+                        fontSize: normalFontSize,
                         fontWeight: FontWeight.w600,
                         color: Colors.white),
                   ),

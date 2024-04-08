@@ -81,7 +81,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               title: Text(
                 "History",
                 style: TextStyle(
-                    fontWeight: FontWeight.w600, fontSize: 20, color: Colors.black),
+                    fontWeight: FontWeight.w600, fontSize: bigFontSize, color: Colors.black),
               ),
             ),
             body: Padding(
@@ -98,7 +98,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     decoration: InputDecoration(
                         hintText: "Search Order number or Customer name",
                         hintStyle: TextStyle(
-                            fontSize: 15,
+                            fontSize: smallFontSize,
                             fontWeight: FontWeight.w500,
                             color: Colors.grey),
                         prefixIcon: Icon(
@@ -124,7 +124,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       child: ListView.builder(
                         itemCount: 10,
                         itemBuilder: (_, index){
-                          return Container(margin: EdgeInsets.only(bottom:10), child: AppShimmer(width: MediaQuery.of(context).size.width, height: 50,));
+                          return Container(margin: EdgeInsets.only(bottom:10),
+                              child: AppShimmer(width: MediaQuery.of(context).size.width, height: 50,),
+                          );
                         },
                       ),
                     ),
@@ -207,13 +209,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w400,
                                                 color: AppColors.textblack,
-                                                fontSize: smallFontSize)),
+                                                fontSize: smallFontSize,
+                                            ),
+                                        ),
                                         Text(
                                           "${value.customer.toString()}",
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.textblack,
-                                              fontSize: 16),
+                                              fontSize: titleFontSize),
                                         ),
                                       ],
                                     ),
@@ -226,7 +230,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.textblack,
-                                  fontSize: smallFontSize),
+                                  fontSize: titleFontSize),
                             ),
                           )),
                           DataCell( InkWell(
@@ -234,7 +238,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: AppColors.textblack,
-                                    fontSize: smallFontSize)),
+                                    fontSize: titleFontSize)),
                           )),
                           DataCell( InkWell(
                             child: Text("CA\$${value.total.toString()}",
@@ -271,7 +275,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.textblack,
-                                              fontSize: 16),
+                                              fontSize: titleFontSize),
                                         ),
                                       ],
                                     ),
@@ -284,7 +288,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.textblack,
-                                  fontSize: smallFontSize),
+                                  fontSize: normalFontSize),
                             ),
                           )),
                           DataCell( InkWell(
@@ -439,7 +443,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   Text(
                     "${orderResult.quantity} items for Example User Name",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: bigFontSize,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
@@ -449,14 +453,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       "Order Placed",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontSize: titleFontSize,
                           color: Colors.black),
                     ),
                     title: Divider(),
                     trailing: Text(
                       "${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${orderResult.receiveDate}"))}",
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: normalFontSize,
                           fontWeight: FontWeight.w500,
                           color: Colors.black),
                     ),
@@ -491,20 +495,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
                            style: TextStyle(
                                fontWeight: FontWeight.w500,
                                color: Colors.white,
-                               fontSize: 16),
+                               fontSize: normalFontSize),
                          ),
                        ),
                        title: Text(
                          "${items.itemName}",
                          style: TextStyle(
-                             fontSize: 18,
+                             fontSize: titleFontSize,
                              fontWeight: FontWeight.w600,
                              color: Colors.black),
                        ),
                        trailing: Text(
                          "CA\$${items.itemPrice}",
                          style: TextStyle(
-                             fontSize: 14,
+                             fontSize: normalFontSize,
                              fontWeight: FontWeight.w500,
                              color: Colors.black),
                        ),
@@ -519,14 +523,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       "Item Subtotal",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontSize: normalFontSize,
                           color: Colors.black),
                     ),
                     title: Divider(),
                     trailing: Text(
                       "CA\$${orderResult.subtotal}",
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: normalFontSize,
                           fontWeight: FontWeight.w500,
                           color: Colors.black),
                     ),
@@ -536,14 +540,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       "Tax",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontSize: normalFontSize,
                           color: Colors.black),
                     ),
                     title: Divider(),
                     trailing: Text(
                       "CA\$${orderResult.tax}",
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: normalFontSize,
                           fontWeight: FontWeight.w500,
                           color: Colors.black),
                     ),
@@ -557,14 +561,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       "Total",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontSize: normalFontSize,
                           color: Colors.black),
                     ),
                     title: Divider(),
                     trailing: Text(
                       "CA\$${orderResult.total}",
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: normalFontSize,
                           fontWeight: FontWeight.w500,
                           color: Colors.black),
                     ),
@@ -574,14 +578,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       "Order Completed",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontSize: normalFontSize,
                           color: Colors.black),
                     ),
                     title: Divider(),
                     trailing: Text(
                       "${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${orderResult.modifiedDate}"))}",
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: normalFontSize,
                           fontWeight: FontWeight.w500,
                           color: Colors.black),
                     ),

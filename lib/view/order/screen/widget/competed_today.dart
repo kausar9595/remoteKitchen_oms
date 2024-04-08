@@ -126,7 +126,7 @@ class _CompetedTodayState extends State<CompetedToday> {
                     ),
                   );
                 },
-              )
+              ),
 
           ) :  widget.orders!.isNotEmpty ? Expanded(
               child: ListView.builder(

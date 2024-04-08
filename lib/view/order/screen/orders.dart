@@ -4,6 +4,7 @@ import 'package:oms/controller/restaurant_controller.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/order_status.dart';
 import 'package:oms/view/order/screen/widget/order_list.dart';
+import 'package:oms/view/printer_page/printer_page.dart';
 import 'package:oms/widget/new_user.dart';
 
 import '../../../model/order_model/order_list_model.dart';
@@ -102,7 +103,8 @@ class _OrdersState extends State<Orders> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               elevation: 0.5,
-              title: Text("Orders",style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black,fontSize: titleFontSize),),
+              title: Text("Orders",
+                style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black,fontSize: titleFontSize),),
               actions:  [
                 SizedBox(
                   width: MediaQuery.of(context).size.width*.60,
@@ -127,9 +129,12 @@ class _OrdersState extends State<Orders> {
                     OrderList(orders: _scheduleOrderList, onClick: () => _getIncomingOrders(), onRefresh: ()=>_getIncomingOrders(), isLoading: _isLoading,),
                     OrderList(orders: _cancelledOrderList, onClick: () => _getIncomingOrders(), onRefresh: ()=>_getIncomingOrders(), isLoading: _isLoading,),
 
-                            ]),
+            ],
+            ),
           ),
-        ));
+        ),
+
+    );
   }
 
   Future _getLocationAndRestaurantId() async{
