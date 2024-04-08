@@ -97,7 +97,7 @@ class _OrderDetailState extends State<OrderDetail> {
                             ),
                             child: Text("Courier",
                               style:TextStyle(
-                                fontSize: titleFontSize,
+                                fontSize: normalFontSize,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,),
                             ),
@@ -211,7 +211,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       Center(
                         child: Text("${widget.orderResult.quantity} items for ${widget.orderResult.customer}",
                           style: TextStyle(
-                              fontSize: bigFontSize,
+                              fontSize: titleFontSize,
                               fontWeight: FontWeight.w700,
                               color: AppColors.textblack),
                         ),
@@ -257,7 +257,7 @@ class _OrderDetailState extends State<OrderDetail> {
                               ),
                               title: Text("${items.itemName}",
                                 style: TextStyle(
-                                  fontSize: titleFontSize,
+                                  fontSize: normalFontSize,
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.textblack,
                                 ),
@@ -509,7 +509,7 @@ class UserInfo extends StatelessWidget {
           Text("$name",
             style: TextStyle(
               fontWeight: FontWeight.w700,
-              fontSize: titleFontSize,
+              fontSize: normalFontSize,
               color: Colors.white,
             ),
           ),
@@ -538,7 +538,7 @@ class UserInfo extends StatelessWidget {
               text: TextSpan(
               text: "${"Accumulated order: "}",
               style: TextStyle(
-                fontSize: titleFontSize,
+                fontSize: normalFontSize,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textorange,
               ),
@@ -547,7 +547,7 @@ class UserInfo extends StatelessWidget {
                   text: "${isCurirar ? "$phone " : "CAD\$$amount"}",
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    fontSize: titleFontSize,
+                    fontSize: normalFontSize,
                     color: Colors.white,
                   ),
                 )
@@ -581,7 +581,7 @@ class UserInfo extends StatelessWidget {
               text: TextSpan(
               text: "${isCurirar ? "Drop Address: " : "Pickup Address" }",
               style: TextStyle(
-                fontSize: titleFontSize,
+                fontSize: normalFontSize,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textorange,
               ),
@@ -590,7 +590,7 @@ class UserInfo extends StatelessWidget {
                   text: "$address",
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    fontSize: titleFontSize,
+                    fontSize: normalFontSize,
                     color: Colors.white,
                   ),
                 )

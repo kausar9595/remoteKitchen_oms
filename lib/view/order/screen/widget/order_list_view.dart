@@ -52,7 +52,7 @@ class OrderListView extends StatelessWidget {
                 subtitle: Text(
                   "$customerName",
                   style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.w700),
+                      fontSize: normalFontSize, fontWeight: FontWeight.w700),
                 ),
               ),
             ),
@@ -99,7 +99,7 @@ class OrderListView extends StatelessWidget {
                 title: Text(
                   itemName.isNotEmpty ? itemName : "No title",
                   style: TextStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.w700),
+                      fontSize: normalFontSize, fontWeight: FontWeight.w700),
                 ),
               ),
             ),
@@ -128,7 +128,7 @@ class OrderListView extends StatelessWidget {
                               text: " $status",
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: titleFontSize,
+                                  fontSize: normalFontSize,
                                   color: AppColors.textblack),
                             )
                           ])),
