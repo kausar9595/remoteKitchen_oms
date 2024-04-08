@@ -111,7 +111,7 @@ class _OrderDetailState extends State<OrderDetail> {
                     _iscustomer ? UserInfo(
                       orderResult: widget.orderResult,
                       address: " ${widget.orderResult.pickupAddress}",
-                      phone: " ",
+                      phone: "${widget.orderResult.dropoffPhoneNumber}",
                       amount: widget.orderResult.total!.toString(),
                       isCurirar: _iscourier,
                       name: widget.orderResult.customer!,
@@ -532,7 +532,7 @@ class UserInfo extends StatelessWidget {
           RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-              text: "${isCurirar ? "Phone: " : "Accumulated order: "}",
+              text: "${"Accumulated order: "}",
               style: TextStyle(
                 fontSize: normalFontSize,
                 fontWeight: FontWeight.w700,
@@ -549,6 +549,28 @@ class UserInfo extends StatelessWidget {
                 )
               ]
           )),
+          SizedBox(height: 10,),
+          if (isCurirar != true) RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                  text: "Phone Number: ",
+                  style: TextStyle(
+                    fontSize: normalFontSize,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textorange,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: phone,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: normalFontSize,
+                        color: Colors.white,
+                      ),
+                    )
+                  ]
+              )) else Center(),
+
           SizedBox(height: 10,),
           RichText(
               textAlign: TextAlign.center,

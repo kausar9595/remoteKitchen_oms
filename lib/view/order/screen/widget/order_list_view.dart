@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oms/utility/order_status.dart';
 
 import '../../../../model/order_model/order_list_model.dart';
 import '../../../../utility/app_const.dart';
@@ -21,7 +22,7 @@ class OrderListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        if(status != "pending"){
+        if(status != OrderStatus.pending){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderDetail(orderResult: orderInfo,)));
         }else{
           Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderIncoming(orderResult: orderInfo,)));

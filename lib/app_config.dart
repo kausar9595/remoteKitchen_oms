@@ -2,6 +2,7 @@ class AppConfig{
 
   //
   static const String APP_NAME = "OMS";
+  static const String APP_VERSION = "1.0.1";
 
 
 
