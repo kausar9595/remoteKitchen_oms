@@ -97,7 +97,7 @@ class _OrderDetailState extends State<OrderDetail> {
                             ),
                             child: Text("Courier",
                               style:TextStyle(
-                                fontSize: normalFontSize,
+                                fontSize: titleFontSize,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,),
                             ),
@@ -211,7 +211,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       Center(
                         child: Text("${widget.orderResult.quantity} items for ${widget.orderResult.customer}",
                           style: TextStyle(
-                              fontSize: 25,
+                              fontSize: bigFontSize,
                               fontWeight: FontWeight.w700,
                               color: AppColors.textblack),
                         ),
@@ -228,7 +228,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       Text("Items",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: 18,
+                          fontSize: titleFontSize,
                         ),
                       ),
                       SizedBox(height: 10,),
@@ -248,12 +248,16 @@ class _OrderDetailState extends State<OrderDetail> {
                                   color: AppColors.textindigo,
                                 ),
                                 child: Text("${items.quantity}",
-                                  style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white,fontSize: 16),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                      fontSize: normalFontSize,
+                                  ),
                                 ),
                               ),
                               title: Text("${items.itemName}",
                                 style: TextStyle(
-                                  fontSize: normalFontSize,
+                                  fontSize: titleFontSize,
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.textblack,
                                 ),
@@ -346,17 +350,17 @@ class _OrderDetailState extends State<OrderDetail> {
                              bgColor: Colors.red,
                            ) : currentOrderStatus == OrderStatus.readyForPickup || currentOrderStatus == OrderStatus.schedule && widget.orderResult.orderMethod == "pickup"
                          ? StatusButton(
-                       onClick: (){
-                         appPopup(
-                             context: context,
-                             id: widget.orderResult!.id.toString(),
-                             title: "Are you sure?",
-                             child: const Text("Are you sure? This order is Delivered?"),
-                             okClick: ()=> orderStatusChange(OrderStatus.completed)
-                         );
-                       },
-                       text: "Order Delivered",
-                       bgColor: Colors.green,
+                           onClick: (){
+                             appPopup(
+                                 context: context,
+                                 id: widget.orderResult!.id.toString(),
+                                 title: "Are you sure?",
+                                 child: const Text("Are you sure? This order is Delivered?"),
+                                 okClick: ()=> orderStatusChange(OrderStatus.completed)
+                             );
+                           },
+                           text: "Order Delivered",
+                           bgColor: Colors.green,
                      ) :  Column(
                            children: [
                              StatusButton(
@@ -446,7 +450,7 @@ class StatusButton extends StatelessWidget {
           color: bgColor,
         ),
         child: Text("${text}",
-          style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: Colors.white),),
+          style: TextStyle(fontSize: titleFontSize,fontWeight: FontWeight.w600,color: Colors.white),),
       ),
     );
   }
@@ -471,7 +475,7 @@ class UserInfo extends StatelessWidget {
       child: Column(
         children: [
           Text("Order For",style: TextStyle(
-              fontSize: 14,
+              fontSize: normalFontSize,
               fontWeight: FontWeight.w500,
               color: Colors.white
           ),),
@@ -485,7 +489,7 @@ class UserInfo extends StatelessWidget {
             ),
             child: Text("${orderMethod}",
               style: TextStyle(
-                fontSize: 14,
+                fontSize: normalFontSize,
                 fontWeight: FontWeight.w500,
                 color: Colors.white
               ),
@@ -505,7 +509,7 @@ class UserInfo extends StatelessWidget {
           Text("$name",
             style: TextStyle(
               fontWeight: FontWeight.w700,
-              fontSize: normalFontSize,
+              fontSize: titleFontSize,
               color: Colors.white,
             ),
           ),
@@ -521,7 +525,7 @@ class UserInfo extends StatelessWidget {
                 color: AppColors.textindigo,
               ),
               child: Text("Lvl 01",
-                style: TextStyle(fontSize: smallFontSize,
+                style: TextStyle(fontSize: normalFontSize,
                     fontWeight: FontWeight.w600,color: Colors.white),
               ),
             ),
@@ -534,7 +538,7 @@ class UserInfo extends StatelessWidget {
               text: TextSpan(
               text: "${isCurirar ? "Phone: " : "Accumulated order: "}",
               style: TextStyle(
-                fontSize: normalFontSize,
+                fontSize: titleFontSize,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textorange,
               ),
@@ -543,7 +547,7 @@ class UserInfo extends StatelessWidget {
                   text: "${isCurirar ? "$phone " : "CAD\$$amount"}",
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    fontSize: normalFontSize,
+                    fontSize: titleFontSize,
                     color: Colors.white,
                   ),
                 )
@@ -555,7 +559,7 @@ class UserInfo extends StatelessWidget {
               text: TextSpan(
               text: "${isCurirar ? "Drop Address: " : "Pickup Address" }",
               style: TextStyle(
-                fontSize: normalFontSize,
+                fontSize: titleFontSize,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textorange,
               ),
@@ -564,7 +568,7 @@ class UserInfo extends StatelessWidget {
                   text: "$address",
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    fontSize: normalFontSize,
+                    fontSize: titleFontSize,
                     color: Colors.white,
                   ),
                 )

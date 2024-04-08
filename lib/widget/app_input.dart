@@ -31,7 +31,11 @@ class AppInput extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("$title",style: TextStyle(fontWeight: FontWeight.w500,fontSize: normalFontSize,color: Colors.black),),
+          Text("$title",
+            style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: titleFontSize,
+                color: Colors.black),),
           TextFormField(
             readOnly: readOnly,
             obscureText: obscureText,

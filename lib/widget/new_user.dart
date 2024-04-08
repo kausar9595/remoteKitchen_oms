@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oms/assets/app_assets.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/widget/app_button.dart';
 
 
@@ -35,7 +36,7 @@ class NewUser extends StatelessWidget {
             SizedBox(height: 20,),
             Text("Welcome to OMS",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: titleFontSize,
                 fontWeight: FontWeight.w500,
                 color: Colors.black
               ),
@@ -44,14 +45,19 @@ class NewUser extends StatelessWidget {
             Text(mes,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 14,
+                  fontSize: normalFontSize,
                   fontWeight: FontWeight.w400,
                   color: Colors.black
               ),
             ),
             SizedBox(height: 20,),
-            AppButton(text: "Select Restaurant", fontSize: 12, width: 200, height: 50, onClick: onClick)
-
+            AppButton(
+                text: "Select Restaurant",
+                fontSize: normalFontSize,
+                width: 200,
+                height: 50,
+                onClick: onClick,
+            ),
           ],
         ),
       ),

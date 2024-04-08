@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oms/assets/app_assets.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/widget/app_button.dart';
 
 
@@ -29,7 +30,7 @@ class EmptyData extends StatelessWidget {
               SizedBox(height: 20,),
               Text("Data not found",
                 style: TextStyle(
-                    fontSize: 18,
+                    fontSize: titleFontSize,
                     fontWeight: FontWeight.w500,
                     color: Colors.black
                 ),
@@ -44,7 +45,7 @@ class EmptyData extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20,),
-              AppButton(text: "Reload", fontSize: 12, width: 200, height: 50, onClick: onClick)
+              AppButton(text: "Reload", fontSize: normalFontSize, width: 200, height: 50, onClick: onClick)
       
             ],
           ),

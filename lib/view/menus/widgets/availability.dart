@@ -66,7 +66,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                           "${_items[index]}",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: smallFontSize,
+                              fontSize: normalFontSize,
                               color: Colors.black),
                         ),
                       ),
@@ -128,7 +128,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                             "Items",
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16,
+                                fontSize: normalFontSize,
                                 color: Colors.black),
                           ),
                         ),
@@ -154,7 +154,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                             "Modifiers",
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16,
+                                fontSize: normalFontSize,
                                 color: Colors.black),
                           ),
                         ),
@@ -186,7 +186,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                                   width: MediaQuery.of(context).size.width * .30,
                                   child: Text("Category Name 1",
                                       style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: titleFontSize,
                                         fontWeight: FontWeight.w700,
                                         color: AppColors.textblack,
                                       ))),
@@ -200,7 +200,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                               Text(
                                   "Example Item Name Fresh lamb kebab\n(10 skewers)- BOGO Item",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: titleFontSize,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.textblack,
                                   )),
@@ -208,7 +208,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                           ),
                           Text("CA\$35.22",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: normalFontSize,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textblack,
                               )),
@@ -238,7 +238,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                                   }),
                               Text("Example Item Name",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: titleFontSize,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.textblack,
                                   )),
@@ -246,7 +246,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                           ),
                           Text("CA\$35.22",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: normalFontSize,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textblack,
                               )),
@@ -276,7 +276,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                                   }),
                               Text("BOGO Item",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: titleFontSize,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.textblack,
                                   )),
@@ -284,7 +284,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                           ),
                           Text("CA\$35.22",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: normalFontSize,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textblack,
                               )),
@@ -315,7 +315,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                               Text(
                                   "Example Item Name Fresh lamb kebab\n(10 skewers)- BOGO Item",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: titleFontSize,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.textblack,
                                   )),
@@ -323,7 +323,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                           ),
                           Text("CA\$35.22 - CA\$25.45",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: normalFontSize,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textblack,
                               )),
@@ -345,7 +345,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                                 width: MediaQuery.of(context).size.width * .30,
                                 child: Text("Category Name 2",
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: titleFontSize,
                                       fontWeight: FontWeight.w700,
                                       color: AppColors.textblack,
                                     )),
@@ -360,7 +360,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                               Text(
                                   "Example Item Name Fresh lamb kebab\n(10 skewers)- BOGO Item",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: titleFontSize,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.textblack,
                                   )),
@@ -368,7 +368,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                           ),
                           Text("CA\$35.22 - CA\$25.45",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: normalFontSize,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textblack,
                               )),
@@ -399,7 +399,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                               Text(
                                   "Example Item Name Fresh lamb kebab\n(10 skewers)- BOGO Item",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: titleFontSize,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.textblack,
                                   )),
@@ -407,7 +407,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                           ),
                           Text("CA\$35.22 - CA\$25.45",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: normalFontSize,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textblack,
                               )),
@@ -438,7 +438,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                               Text(
                                   "Example Item Name Fresh lamb kebab\n(10 skewers)- BOGO Item",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: titleFontSize,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.textblack,
                                   )),
@@ -446,7 +446,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                           ),
                           Text("CA\$35.22 - CA\$25.45",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: normalFontSize,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textblack,
                               )),
@@ -477,7 +477,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                               Text(
                                   "Example Item Name Fresh lamb kebab\n(10 skewers)- BOGO Item",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: titleFontSize,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.textblack,
                                   )),
@@ -485,7 +485,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                           ),
                           Text("CA\$35.22 - CA\$25.45",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: normalFontSize,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textblack,
                               )),
@@ -513,7 +513,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                     "2 Selected",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 16,
+                      fontSize: normalFontSize,
                       color: AppColors.textblack,
                     ),
                   ),
@@ -538,7 +538,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                       child: Text(
                         "Select All",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: normalFontSize,
                           fontWeight: FontWeight.w500,
                           color: AppColors.textblack,
                         ),
@@ -563,7 +563,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                       child: Text(
                         "Unselect",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: normalFontSize,
                           fontWeight: FontWeight.w500,
                           color: AppColors.textblack,
                         ),
@@ -605,7 +605,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                                 "Change \n Availability",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: bigFontSize,
+                                  fontSize: titleFontSize,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                 ),
@@ -642,7 +642,11 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                                 ),
                                 child: Center(
                                   child: Text("Change for Direct Ordering",
-                                    style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.white),
+                                    style: TextStyle(
+                                        fontSize: titleFontSize,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -666,7 +670,7 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                     "Change Availability",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                        fontSize: titleFontSize,
                         color: Colors.white),
                   ),
                 ),

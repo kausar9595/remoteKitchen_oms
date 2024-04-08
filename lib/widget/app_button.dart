@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 
 import '../utility/appcolor.dart';
 
@@ -13,7 +14,7 @@ class AppButton extends StatelessWidget {
     this.bgColor = AppColors.textindigo,
     required this.onClick,
     this.isLoading = false,
-    this.fontSize = 18
+    this.fontSize = 18,
 
   });
   final String text;
@@ -41,7 +42,7 @@ class AppButton extends StatelessWidget {
           text,
           style: TextStyle(
               fontWeight: FontWeight.w600,
-              fontSize: fontSize,
+              fontSize: titleFontSize,
               color: Colors.white),
         ),
       ),

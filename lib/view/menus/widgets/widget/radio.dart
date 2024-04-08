@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 
 import '../../../../utility/appcolor.dart';
 
@@ -18,7 +19,7 @@ class _RadioListState extends State<RadioList> {
       children: [
         RadioListTile(
           title: Text('Available',
-            style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20,color: Colors.black),
+            style: TextStyle(fontWeight: FontWeight.w600,fontSize: titleFontSize,color: Colors.black),
           ),
           activeColor: AppColors.textindigo,
           value: 'Option 1',
@@ -31,7 +32,7 @@ class _RadioListState extends State<RadioList> {
         ),
         RadioListTile(
           title: Text('Unavailable today',
-            style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20,color: Colors.black),
+            style: TextStyle(fontWeight: FontWeight.w600,fontSize: titleFontSize,color: Colors.black),
           ),
           value: 'Option 2',
           activeColor: AppColors.textindigo,
@@ -44,7 +45,7 @@ class _RadioListState extends State<RadioList> {
         ),
         RadioListTile(
           title: Text('Unavailable indefinitely',
-            style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20,color: Colors.black),
+            style: TextStyle(fontWeight: FontWeight.w600,fontSize: titleFontSize,color: Colors.black),
           ),
           value: 'Option 3',
           activeColor: AppColors.textindigo,

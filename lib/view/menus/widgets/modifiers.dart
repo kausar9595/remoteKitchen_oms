@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oms/utility/app_const.dart';
 
 import '../../../utility/appcolor.dart';
 class Modifiers extends StatefulWidget {
@@ -16,7 +17,13 @@ class _ModifiersState extends State<Modifiers> {
       backgroundColor: Colors.white,
       appBar:AppBar(
         backgroundColor: Colors.white,
-        title: Text("Modifiers",style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black,fontSize: 20),),
+        title: Text("Modifiers",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+            fontSize: titleFontSize,
+          ),
+        ),
       ),
       body: Column(
         children: [

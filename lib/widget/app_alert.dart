@@ -11,7 +11,13 @@ AppSnackBar(context, text, color){
 }
 
 
-Future<void> appPopup({required BuildContext context, required String id,required String title,required Widget child, required VoidCallback okClick} ) async {
+Future<void> appPopup({
+  required BuildContext context,
+  required String id,
+  required String title,
+  required Widget child,
+  required VoidCallback okClick,
+  }) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!

@@ -7,6 +7,7 @@ import 'package:oms/app_config.dart';
 import 'package:oms/controller/auth_controller.dart';
 import 'package:oms/controller/restaurant_controller.dart';
 import 'package:oms/model/restaurant_model/location_list_model.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/widget/app_shemmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../model/restaurant_model/restaurantListModel.dart';
@@ -120,7 +121,7 @@ class _AppDrawerState extends State<AppDrawer> {
               "Current location Selected",
               style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 18,
+                  fontSize: titleFontSize,
                   color: Colors.black),
             ),
             Container(
@@ -142,7 +143,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   hint: Text(
                     '${selectRsname != null ? selectRsname : "Restaurant Select"}',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: normalFontSize,
                       color: AppColors.textindigo,
                     ),
                   ),
@@ -151,7 +152,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         value: value,
                         child: Text(value.name.toString(),
                           style: TextStyle(
-                            fontSize: 13
+                            fontSize: normalFontSize
                           ),
                         ),
                       );
@@ -191,7 +192,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     hint: Text(
                       '${selectLocationName != null ? selectLocationName : "Location Select"}',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: normalFontSize,
                         color: AppColors.textindigo,
                       ),
                     ),
@@ -200,7 +201,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         value: value,
                         child: Text(value.name.toString(),
                           style: TextStyle(
-                              fontSize: 13
+                              fontSize: normalFontSize,
                           ),
                         ),
                       );
@@ -255,7 +256,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 child: Text(
                   "Orders",
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: titleFontSize,
                       fontWeight: FontWeight.w600,color: Colors.black),
                 ),
               ),
@@ -327,7 +328,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 child: Text(
                   "History",
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: titleFontSize,
                       fontWeight: FontWeight.w600,
                       color: Colors.black),
                 ),
@@ -347,7 +348,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   Text(
                     "Dashboard",
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: titleFontSize,
                         fontWeight: FontWeight.w600,
                         color: Colors.black),
                   ),
@@ -370,7 +371,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   Text(
                     "Logout",
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: titleFontSize,
                         fontWeight: FontWeight.w600,
                         color: Colors.black),
                   ),
