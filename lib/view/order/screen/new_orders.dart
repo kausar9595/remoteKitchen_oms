@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
+import 'package:oms/view/order/screen/widget/new_order_list_view.dart';
 import 'package:oms/view/setting_screen/widget/app_input.dart';
 
 import '../../../controller/order_controller.dart';
@@ -204,72 +205,34 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           child: Row(
             children: [
               Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(right: 10),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      right: BorderSide(width: 1, color: Colors.grey)
-                    )
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(width: 3, color: AppColors.textindigo)
-                          )
-                        ),
-                        child: Text("Incoming Orders (10)",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20,),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: 10,
-                          itemBuilder: (_, index){
-                            return Container(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(width: 1, color: AppColors.grey200)
-                                  )
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text("#3242342342342",
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      )
-                                    ],
-                                  )
-
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                child: NewOrdersListView(
+                    title: "Incoming Orders",
+                    orders: _incomingOrdersList,
+                    onClick: (){},
+                    btnText: "Incoming Orders",
+                    btnColor: Colors.blue.shade100
                 )
               ),
               SizedBox(width: 10,),
               Expanded(
-                child: Text("Expand 2"),
+                 child: NewOrdersListView(
+                    title: "Preparing",
+                    orders: _readyForDelivered,
+                    onClick: (){},
+                    btnText: "Ready in 13 Mins",
+                    btnColor: Colors.greenAccent.shade100
+                )
               ),
               SizedBox(width: 10,),
               Expanded(
-                child: Text("Expand 3"),
+                  child: NewOrdersListView(
+                    isLast: true,
+                      title: "Cash Unpaid",
+                      orders: _readyForDelivered,
+                      onClick: (){},
+                      btnText: "Unpaid",
+                      btnColor: Colors.red.shade100
+                  )
               ),
             ],
           ),
