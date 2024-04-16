@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -27,6 +28,17 @@ class NewOrderScreen extends StatefulWidget {
 }
 
 class _NewOrderScreenState extends State<NewOrderScreen> {
+  final List<String> items = [
+    'Item1',
+    'Item2',
+    'Item3',
+    'Item4',
+    'Item5',
+    'Item6',
+    'Item7',
+    'Item8',
+  ];
+  String? selectedValue;
   final _key = GlobalKey<ScaffoldState>();
 
   Timer? _timer;
@@ -152,7 +164,136 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           title: Text("Orders",
             style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black,fontSize: titleFontSize),),
           actions: [
+            InkWell(
+              onTap: () =>showDialog(context: (context), builder: (context)=>AlertDialog(
+                backgroundColor: Colors.white,
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+                alignment: Alignment.centerRight,
+                title: Container(
+                  padding: EdgeInsets.all(15),
+                  //height: MediaQuery.of(context).size.height-200,
+                  width: MediaQuery.of(context).size.width * 0.35,
+                  child: Column(
+                    children: [
+                      Align(
+                          alignment: Alignment.centerRight,
+                          child: IconButton(
+                              onPressed:(){
+                                Navigator.pop(context);
+                              },
+                              icon:Icon(Icons.cancel_outlined, size: 40,color: Colors.red,)
+
+                          )),
+                      SizedBox(height: 30,),
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Text(
+                                "Store Status",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: titleFontSize,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10,),
+                            Container(
+
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: AppColors.grey200),
+                              ),
+                              child: ListTile(
+                                leading: Icon(Icons.open_in_new),
+                                title: Text("Open"),
+                                subtitle: Text("Can't Complete Instraction"),
+                                trailing: Icon(Icons.circle_outlined,),
+                              ),
+                            ),
+                            SizedBox(height: 10,),
+                            Container(
+
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: AppColors.textindigo),
+                              ),
+                              child: ListTile(
+                                leading: Icon(Icons.light_mode),
+                                title: Text("Busy"),
+                                subtitle: Text("Can't Complete Instraction"),
+                                trailing: Icon(Icons.check_circle_outlined,color: AppColors.textindigo,),
+                              ),
+                            ),
+                            SizedBox(height: 10,),
+                            Container(
+
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: AppColors.grey200),
+                              ),
+                              child: ListTile(
+                                leading: Icon(Icons.open_in_new),
+                                title: Text("Paush"),
+                                subtitle: Text("Can't Complete Instraction"),
+                                trailing: Icon(Icons.circle_outlined,),
+                              ),
+                            ),
+                            SizedBox(height: 10,),
+                            Container(
+
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: AppColors.grey200),
+                              ),
+                              child: ListTile(
+                                leading: Icon(Icons.open_in_new),
+                                title: Text("Schedule paush"),
+                                subtitle: Text("Can't Complete Instraction"),
+                                trailing: Icon(Icons.circle_outlined,),
+                              ),
+                            ),
+
+
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )),
+
+              child: Container(
+                margin: EdgeInsets.only(right: 10),
+                padding: EdgeInsets.all(5),
+                height: 40,
+                width: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: AppColors.textindigo),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Busy",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textindigo,
+                        fontSize: normalFontSize,
+                      ),),
+                    Icon(Icons.keyboard_arrow_down_rounded,color:AppColors.textindigo,),
+                  ],
+                ),
+              ),
+            )
             ///TODO:: "Add busy dropdown"
+
           ],
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(100),
@@ -187,6 +328,33 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                     )
                   ),
                   SizedBox(width: 30,),
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2<String>(
+                      isExpanded: true,
+                      hint: Text("No Filter Current Applide"),
+                      items: items
+                          .map((String item) => DropdownMenuItem<String>(
+                        value: item,
+                        child: Text(
+                          item,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )).toList(),
+                      value: selectedValue,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+
+
+                      },
+                    ),
+                  )
                   ///TODO: Add "No Filter Currently Applied dropdown"
 
                 ],
