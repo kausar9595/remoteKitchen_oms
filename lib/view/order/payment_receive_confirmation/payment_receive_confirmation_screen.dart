@@ -185,7 +185,7 @@ class _PaymentReceiveConfirmationScreenState extends State<PaymentReceiveConfirm
                             width: 10,
                           ),
                           Text(
-                            "${items.itemName}",
+                            "${items.menuItem!.name}",
                             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
                           ),
                         ],

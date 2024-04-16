@@ -10,6 +10,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
+import 'package:oms/view/order/screen/widget/new_order_list_view.dart';
 import 'package:oms/view/setting_screen/widget/app_input.dart';
 
 import '../../../controller/order_controller.dart';
@@ -171,13 +172,13 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
               onTap: () =>showDialog(context: (context), builder: (context)=>AlertDialog(
                 backgroundColor: Colors.white,
                 shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.zero,
                 ),
+                alignment: Alignment.centerRight,
                 title: Container(
-                  //padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(15),
                   //height: MediaQuery.of(context).size.height-200,
-                  width: MediaQuery.of(context).size.width * 0.30,
+                  width: MediaQuery.of(context).size.width * 0.35,
                   child: Column(
                     children: [
                       Align(
@@ -186,93 +187,96 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                               onPressed:(){
                                 Navigator.pop(context);
                               },
-                              icon:Icon(Icons.cancel_outlined, size: 30,color: Colors.red,)
+                              icon:Icon(Icons.cancel_outlined, size: 40,color: Colors.red,)
 
                           )),
-                      SizedBox(height: 10,),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: Text(
-                              "Store Status",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: titleFontSize,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
+                      SizedBox(height: 30,),
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Text(
+                                "Store Status",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: titleFontSize,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: 30,),
-                          Container(
+                            SizedBox(height: 10,),
+                            Container(
 
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: AppColors.grey200),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: AppColors.grey200),
+                              ),
+                              child: ListTile(
+                                leading: Icon(Icons.open_in_new),
+                                title: Text("Open"),
+                                subtitle: Text("Can't Complete Instraction"),
+                                trailing: Icon(Icons.circle_outlined,),
+                              ),
                             ),
-                            child: ListTile(
-                              leading: Icon(Icons.open_in_new),
-                              title: Text("Open"),
-                              subtitle: Text("Can't Complete Instraction"),
-                              trailing: Icon(Icons.circle_outlined,),
-                            ),
-                          ),
-                          SizedBox(height: 10,),
-                          Container(
+                            SizedBox(height: 10,),
+                            Container(
 
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: AppColors.textindigo),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: AppColors.textindigo),
+                              ),
+                              child: ListTile(
+                                leading: Icon(Icons.light_mode),
+                                title: Text("Busy"),
+                                subtitle: Text("Can't Complete Instraction"),
+                                trailing: Icon(Icons.check_circle_outlined,color: AppColors.textindigo,),
+                              ),
                             ),
-                            child: ListTile(
-                              leading: Icon(Icons.light_mode),
-                              title: Text("Busy"),
-                              subtitle: Text("Can't Complete Instraction"),
-                              trailing: Icon(Icons.check_circle_outlined,color: AppColors.textindigo,),
-                            ),
-                          ),
-                          SizedBox(height: 10,),
-                          Container(
+                            SizedBox(height: 10,),
+                            Container(
 
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: AppColors.grey200),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: AppColors.grey200),
+                              ),
+                              child: ListTile(
+                                leading: Icon(Icons.pause_circle),
+                                title: Text("Paush"),
+                                subtitle: Text("Can't Complete Instraction"),
+                                trailing: Icon(Icons.circle_outlined,),
+                              ),
                             ),
-                            child: ListTile(
-                              leading: Icon(Icons.pause_circle_outline),
-                              title: Text("Paush"),
-                              subtitle: Text("Can't Complete Instraction"),
-                              trailing: Icon(Icons.circle_outlined,),
+                            SizedBox(height: 10,),
+                            Container(
+
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: AppColors.grey200),
+                              ),
+                              child: ListTile(
+                                leading: Icon(Icons.schedule),
+                                title: Text("Schedule paush"),
+                                subtitle: Text("Can't Complete Instraction"),
+                                trailing: Icon(Icons.circle_outlined,),
+                                onTap: (){
+                                  Navigator.pop(context);
+
+                                },
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 10,),
-                          Container(
-
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: AppColors.grey200),
-                            ),
-                            child: ListTile(
-                              leading: Icon(Icons.schedule),
-                              title: Text("Schedule paush"),
-                              subtitle: Text("Can't Complete Instraction"),
-                              trailing: Icon(Icons.circle_outlined,),
-                              onTap: (){
-                                Navigator.pop(context);
-
-                              },
-                            ),
-                          ),
 
 
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
               )),
+
               child: Container(
                 margin: EdgeInsets.only(right: 10),
                 padding: EdgeInsets.all(5),
@@ -388,72 +392,41 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           child: Row(
             children: [
               Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(right: 10),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      right: BorderSide(width: 1, color: Colors.grey)
-                    )
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(width: 3, color: AppColors.textindigo)
-                          )
-                        ),
-                        child: Text("Incoming Orders (10)",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20,),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: 10,
-                          itemBuilder: (_, index){
-                            return Container(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(width: 1, color: AppColors.grey200)
-                                  )
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text("#3242342342342",
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      )
-                                    ],
-                                  )
+                child: NewOrdersListView(
+                  title: "Incoming Orders",
+                  orders: _incomingOrdersList,
+                  btnText: "Incoming Orders",
+                  btnColor: Colors.blue.shade100,
+                  onClick: () {
 
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                  },
+
                 )
               ),
               SizedBox(width: 10,),
               Expanded(
-                child: Text("Expand 2"),
+                  child: NewOrdersListView(
+                    title: "Preparing",
+                    orders: _incomingOrdersList,
+                    btnText: "Ready in 13 Mins",
+                    btnColor: Colors.greenAccent.shade100,
+                    onClick: () {
+
+                    },
+                  )
               ),
               SizedBox(width: 10,),
               Expanded(
-                child: Text("Expand 3"),
+                  child: NewOrdersListView(
+                    isLast: true,
+                    title: "Cash Unpaid",
+                    orders: _incomingOrdersList,
+                    btnText: "Unpaid",
+                    btnColor: Colors.red.shade100,
+                    onClick: () {
+
+                    },
+                  )
               ),
             ],
           ),
@@ -490,4 +463,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
   }
 }
 
+<<<<<<<<< Temporary merge branch 1
 
+=========
+>>>>>>>>> Temporary merge branch 2

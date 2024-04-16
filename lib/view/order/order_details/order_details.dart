@@ -135,7 +135,7 @@ class _OrderDetailState extends State<OrderDetail> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                               //  items.modifiers!.isEmpty  ? SizedBox(height: 4.5,) : Center(),
-                                Text("${items.itemName}",
+                                Text("${items.menuItem!.name}",
                                   style: TextStyle(
                                     fontSize: normalFontSize,
                                     fontWeight: FontWeight.w700,
@@ -151,7 +151,7 @@ class _OrderDetailState extends State<OrderDetail> {
                             //     color: AppColors.textblack,
                             //   ),
                             // ) : Center(),
-                            trailing: Text("CA\$${items.itemPrice}",
+                            trailing: Text("CA\$${items.menuItem!.name}",
                               style: TextStyle(
                                 fontSize: normalFontSize,
                                 fontWeight: FontWeight.w400,

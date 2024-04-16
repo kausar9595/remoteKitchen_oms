@@ -133,7 +133,7 @@ class _ScheduledOrderState extends State<ScheduledOrder> {
                 itemCount: widget.orders!.length,
                 itemBuilder: (_, index){
                   var data = widget.orders[index];
-                  List<String> comboItems = data.orderitemSet![0].itemName!.split('\n')
+                  List<String> comboItems = data.orderitemSet![0].menuItem!.name!.split('\n')
                       .map((item) => item.trim())
                       .toList();
                   return OrderListView(

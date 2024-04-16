@@ -7,6 +7,7 @@ import 'package:oms/model/order_model/order_list_model.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/utility/order_status.dart';
+import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_alert.dart';
 
@@ -60,7 +61,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
                         //alarm stop
                         await Alarm.stop(1);
 
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Orders(pageIndex: 0,)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>NewOrderScreen()));
                         },
                       icon: Icon(Icons.cancel_outlined,color: Colors.white,size: 40,),)
 
@@ -160,7 +161,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
                                 ),
                               ),
                               SizedBox(width: 10,),
-                              Text("${items.itemName}",
+                              Text("${items.menuItem!.name}",
                                 style: TextStyle(fontSize:16,fontWeight: FontWeight.w700,color: Colors.white),
                               ),
 
