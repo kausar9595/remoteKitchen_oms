@@ -7,6 +7,7 @@ class Api{
   static Future<http.Response> getApi({required String url})async{
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var token = _pref.getString("token");
+    print("Authorization token === ${token}");
     var response = await http.get(Uri.parse(url),
       headers: {
         "Authorization" : "token $token"

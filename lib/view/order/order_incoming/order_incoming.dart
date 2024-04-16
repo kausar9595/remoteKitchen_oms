@@ -132,7 +132,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
                         fontSize: 16,color: Colors.white,fontWeight:FontWeight.w700,
                       ),),
                       SizedBox(height: 10,),
-                      Text("Order for Delivery",
+                      Text("Order for ${widget.orderResult.orderMethod}",
                         style: TextStyle(fontSize: 16,color:Colors.white,fontWeight: FontWeight.w400),
                       ),
                       SizedBox(height: 10,),
