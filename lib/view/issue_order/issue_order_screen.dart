@@ -1,11 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oms/utility/app_const.dart';
-import 'package:oms/view/history/history_details.dart';
-import 'package:oms/widget/app_button.dart';
 import 'package:oms/widget/app_drawer.dart';
 import 'package:oms/widget/app_shemmer.dart';
 import 'package:oms/widget/empty_data.dart';
@@ -15,16 +11,15 @@ import '../../controller/restaurant_controller.dart';
 import '../../model/order_model/order_list_model.dart';
 import '../../utility/appcolor.dart';
 import '../../utility/order_status.dart';
-import '../menus/widgets/widget/radio.dart';
 
-class HistoryScreen extends StatefulWidget {
-  const HistoryScreen({super.key});
+class IssueOrderScreen extends StatefulWidget {
+  const IssueOrderScreen({super.key});
 
   @override
-  State<HistoryScreen> createState() => _HistoryScreenState();
+  State<IssueOrderScreen> createState() => _IssueOrderScreenState();
 }
 
-class _HistoryScreenState extends State<HistoryScreen> {
+class _IssueOrderScreenState extends State<IssueOrderScreen> {
   final _search = TextEditingController();
   var _searchText;
 
@@ -36,9 +31,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
     _history.clear();
     setState(() => _isLoading = true);
     var response = await OrderController.getPendingOrder();
-    if (response!.results!.isNotEmpty) {
-      for (var i in response!.results!) {
-        if (i.status == OrderStatus.completed) {
+    if (response.results!.isNotEmpty) {
+      for (var i in response.results!) {
+        if (i.status == OrderStatus.cancelled) {
           setState(() {
             _history.add(i);
           });
@@ -74,14 +69,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
       child: SafeArea(
           child: Scaffold(
         drawer: AppDrawer(
-          currentPage: HistoryScreen(),
+          currentPage: IssueOrderScreen(),
         ),
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0.3,
           backgroundColor: Colors.white,
           title: Text(
-            "History",
+            "Issue Orders",
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: bigFontSize, color: Colors.black),
           ),
         ),
@@ -204,8 +199,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                             ),
                                                             Text(
                                                               "${value.customer.toString()}",
-                                                              style:
-                                                                  TextStyle(fontWeight: FontWeight.w700, color: AppColors.textblack, fontSize: titleFontSize),
+                                                              style: TextStyle(fontWeight: FontWeight.w500, color: AppColors.textblack, fontSize: 18),
                                                             ),
                                                           ],
                                                         ),
@@ -251,8 +245,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                                     fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
                                                             Text(
                                                               "${value.customer.toString()}",
-                                                              style:
-                                                                  TextStyle(fontWeight: FontWeight.w700, color: AppColors.textblack, fontSize: titleFontSize),
+                                                              style: TextStyle(fontWeight: FontWeight.w500, color: AppColors.textblack, fontSize: 18),
                                                             ),
                                                           ],
                                                         ),
@@ -514,9 +507,9 @@ class HistoryOrderStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // if (orderResult.isPaid! == false) {
-    //   return _buildCard("Unpaid", Colors.red.shade100);
-    // }
+    if (orderResult.isPaid! == false) {
+      return _buildCard("Unpaid", Colors.red.shade100);
+    }
     if (orderResult.status == "completed") {
       return _buildCard("Completed", Colors.green.shade200);
     }

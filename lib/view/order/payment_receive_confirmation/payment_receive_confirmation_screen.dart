@@ -273,7 +273,7 @@ class _PaymentReceiveConfirmationScreenState extends State<PaymentReceiveConfirm
     //alarm stop
     await Alarm.stop(1);
     try {
-      await OrderController.changeStatus(id, OrderStatus.completed).then((value) {
+      await OrderController.paymentReceived(id).then((value) {
         if (value.statusCode == 200) {
           AppSnackBar(context, "Payment Received", Colors.green);
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Orders()), (route) => false);
