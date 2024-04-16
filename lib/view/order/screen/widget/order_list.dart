@@ -175,7 +175,7 @@ class _OrderListState extends State<OrderList> {
                                orderId: data.id!.toString(),
                                customerName: data.customer!,
                                qty: data.quantity.toString(),
-                               itemName: data.orderitemSet![0].itemName!,
+                               itemName: data.orderitemSet![0].menuItem!.name!,
                                orderType: data.orderType!,
                                orderInfo: data,
                                status: OrderStatus.setOrderStatus(data.status!)
@@ -185,8 +185,8 @@ class _OrderListState extends State<OrderList> {
                                     orderId: data.id!.toString(),
                                     customerName: data.customer!,
                                     qty: data.quantity.toString(),
-                                    itemName: data.orderitemSet![0].itemName!,
-                                    orderType: data.orderType!,
+                       itemName: data.orderitemSet![0].menuItem!.name!,
+                       orderType: data.orderType!,
                                     orderInfo: data,
                                     status: OrderStatus.setOrderStatus(data.status!)
                                   ) : _selectedFilter.contains("Ready for pickup") && data.status == OrderStatus.readyForPickup
@@ -194,7 +194,7 @@ class _OrderListState extends State<OrderList> {
                                         orderId: data.id!.toString(),
                                         customerName: data.customer!,
                                         qty: data.quantity.toString(),
-                                        itemName: data.orderitemSet![0].itemName!,
+                       itemName: data.orderitemSet![0].menuItem!.name!,
                                         orderType: data.orderType!,
                                         orderInfo: data,
                                         status: OrderStatus.setOrderStatus(data.status!)
@@ -203,8 +203,8 @@ class _OrderListState extends State<OrderList> {
                            orderId: data.id!.toString(),
                            customerName: data.customer!,
                            qty: data.quantity.toString(),
-                           itemName: data.orderitemSet![0].itemName!,
-                           orderType: data.orderMethod!,
+                       itemName: data.orderitemSet![0].menuItem!.name!,
+                       orderType: data.orderType!,
                            orderInfo: data,
                            status: OrderStatus.setOrderStatus(data.status!)
                        );
@@ -226,7 +226,7 @@ class _OrderListState extends State<OrderList> {
                        orderId: data.id!.toString(),
                        customerName: data.customer!,
                        qty: data.quantity.toString(),
-                       itemName: data.orderitemSet![0].itemName!,
+                       itemName: data.orderitemSet![0].menuItem!.name!,
                        orderType: data.dropoffAddress!,
                        orderInfo: data,
                        status: data.status.toString()
@@ -236,7 +236,7 @@ class _OrderListState extends State<OrderList> {
                        orderId: data.id!.toString(),
                        customerName: data.customer!,
                        qty: data.quantity.toString(),
-                       itemName: data.orderitemSet![0].itemName!,
+                       itemName: data.orderitemSet![0].menuItem!.name!,
                        orderType: data.dropoffAddress!,
                        orderInfo: data,
                        status: data.status.toString()
@@ -245,7 +245,7 @@ class _OrderListState extends State<OrderList> {
                        orderId: data.id!.toString(),
                        customerName: data.customer!,
                        qty: data.quantity.toString(),
-                       itemName: data.orderitemSet![0].itemName!,
+                       itemName: data.orderitemSet![0].menuItem!.name!,
                        orderType: data.dropoffAddress!,
                        orderInfo: data,
                        status: data.status.toString()
@@ -254,7 +254,7 @@ class _OrderListState extends State<OrderList> {
                        orderId: data.id!.toString(),
                        customerName: data.customer!,
                        qty: data.quantity.toString(),
-                       itemName: data.orderitemSet![0].itemName!,
+                       itemName: data.orderitemSet![0].menuItem!.name!,
                        orderType: data.dropoffAddress!,
                        orderInfo: data,
                        status: data.status.toString()
@@ -272,7 +272,7 @@ class _OrderListState extends State<OrderList> {
     _searchResult.clear();
     setState(() {
       for(var i in widget.orders){
-        if(i.customer!.toLowerCase().contains(v.toLowerCase()) ||  i.orderitemSet![0].itemName!.toLowerCase().contains(v)){
+        if(i.customer!.toLowerCase().contains(v.toLowerCase()) ||  i.orderitemSet![0].menuItem!.name!.toLowerCase().contains(v)){
           _searchResult.add(i);
         }
       }

@@ -39,6 +39,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
   List<OrderResult> _cancelledOrderList = [];
   List<OrderResult> _acceptedOrderList = [];
   List<OrderResult> _scheduleOrderList = [];
+  List<OrderResult> _unPaidCash = [];
   bool _isLoading = false;
   Future<void> _getIncomingOrders()async{
     _incomingOrdersList.clear();
@@ -46,9 +47,15 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     _readyForDelivered.clear();
     _cancelledOrderList.clear();
     _scheduleOrderList.clear();
+    _unPaidCash.clear();
     setState(() => _isLoading = true);
     var response = await OrderController.getPendingOrder();
     for(var i in response!.results!){
+      if(i.isPaid != true && i.paymentMethod == "cash"){
+        setState(() {
+          _unPaidCash.add(i);
+        });
+      }
       if(i.status == OrderStatus.pending){
         setState(() {
           _incomingOrdersList.add(i);
@@ -228,7 +235,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   child: NewOrdersListView(
                     isLast: true,
                       title: "Cash Unpaid",
-                      orders: _readyForDelivered,
+                      orders: _unPaidCash,
                       onClick: (){},
                       btnText: "Unpaid",
                       btnColor: Colors.red.shade100

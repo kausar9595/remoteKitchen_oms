@@ -51,7 +51,7 @@ class IncomingOrderDetails extends StatelessWidget {
                           child: Text(orderResult.orderMethod!,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: titleFontSize,
+                              fontSize: normalFontSize,
                             ),
                           ),
                         ),
@@ -156,7 +156,7 @@ class IncomingOrderDetails extends StatelessWidget {
                 children: [
                   Text("${orderResult.quantity} items for - ${orderResult.customer}",
                     style: TextStyle(
-                        fontSize: titleFontSize,
+                        fontSize: normalFontSize,
                         fontWeight: FontWeight.w700,
                         color: AppColors.textblack),
                   ),
@@ -194,14 +194,14 @@ class IncomingOrderDetails extends StatelessWidget {
                         ),
                       ),
                     ),
-                    title: Text("${items.itemName}",
+                    title: Text("${items.menuItem!.name}",
                       style: TextStyle(
-                        fontSize: titleFontSize,
+                        fontSize: normalFontSize,
                         fontWeight: FontWeight.w700,
                         color: AppColors.textblack,
                       ),
                     ),
-                    trailing: Text("CA\$${items.itemPrice}",
+                    trailing: Text("CA\$${items.menuItem!.basePrice}",
                       style: TextStyle(
                         fontSize: normalFontSize,
                         fontWeight: FontWeight.w400,

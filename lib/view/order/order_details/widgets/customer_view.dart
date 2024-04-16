@@ -63,23 +63,23 @@ class UserInfo extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          SizedBox(height: 10,),
-          InkWell(
-            onTap: (){},
-            child: Container(
-              alignment: Alignment.center,
-              height: MediaQuery.of(context).size.height*0.05,
-              width: MediaQuery.of(context).size.width*0.06,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: AppColors.textindigo,
-              ),
-              child: Text("Lvl 01",
-                style: TextStyle(fontSize: normalFontSize,
-                    fontWeight: FontWeight.w600,color: Colors.white),
-              ),
-            ),
-          ),
+          // SizedBox(height: 10,),
+          // InkWell(
+          //   onTap: (){},
+          //   child: Container(
+          //     alignment: Alignment.center,
+          //     height: MediaQuery.of(context).size.height*0.05,
+          //     width: MediaQuery.of(context).size.width*0.06,
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(10),
+          //       color: AppColors.textindigo,
+          //     ),
+          //     child: Text("Lvl 01",
+          //       style: TextStyle(fontSize: normalFontSize,
+          //           fontWeight: FontWeight.w600,color: Colors.white),
+          //     ),
+          //   ),
+          // ),
           ///TODO: Uncomment it
 
           SizedBox(height: 10,),
