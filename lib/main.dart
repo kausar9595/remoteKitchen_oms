@@ -87,7 +87,8 @@ class _MyAppState extends State<MyApp> {
             fontFamily: 'Poppins',
             primarySwatch: Colors.blue,
           ),
-          home: token == null ? Login() : NewOrderScreen(),
+          //home: token == null ? Login() : NewOrderScreen(),
+          home: token == null ? NewOrderScreen() : NewOrderScreen(),
 
         );
       }
