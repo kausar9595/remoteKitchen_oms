@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
@@ -17,6 +19,7 @@ import '../../../notifications/notification.dart';
 import '../../../utility/order_status.dart';
 import '../../../widget/app_drawer.dart';
 import '../../../widget/new_user.dart';
+import '../../menus/widgets/widget/radio.dart';
 import 'orders.dart';
 
 class NewOrderScreen extends StatefulWidget {
@@ -239,7 +242,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                 border: Border.all(color: AppColors.grey200),
                               ),
                               child: ListTile(
-                                leading: Icon(Icons.open_in_new),
+                                leading: Icon(Icons.pause_circle),
                                 title: Text("Paush"),
                                 subtitle: Text("Can't Complete Instraction"),
                                 trailing: Icon(Icons.circle_outlined,),
@@ -253,10 +256,14 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                 border: Border.all(color: AppColors.grey200),
                               ),
                               child: ListTile(
-                                leading: Icon(Icons.open_in_new),
+                                leading: Icon(Icons.schedule),
                                 title: Text("Schedule paush"),
                                 subtitle: Text("Can't Complete Instraction"),
                                 trailing: Icon(Icons.circle_outlined,),
+                                onTap: (){
+                                  Navigator.pop(context);
+
+                                },
                               ),
                             ),
 
@@ -328,31 +335,43 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                     )
                   ),
                   SizedBox(width: 30,),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton2<String>(
-                      isExpanded: true,
-                      hint: Text("No Filter Current Applide"),
-                      items: items
-                          .map((String item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                          overflow: TextOverflow.ellipsis,
+                  Container(
+                    width: 220,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton2<String>(
+                        isExpanded: true,
+                        hint: Text("No Filter Current Applied",
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textblack),
                         ),
-                      )).toList(),
-                      value: selectedValue,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedValue = value;
-                        });
+                        items: items
+                            .map((String item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textblack,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        )).toList(),
+                        value: selectedValue,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedValue = value;
+                          });
 
 
-                      },
+                        },
+                      ),
                     ),
                   )
                   ///TODO: Add "No Filter Currently Applied dropdown"
@@ -473,3 +492,5 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     });
   }
 }
+
+
