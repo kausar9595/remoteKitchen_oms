@@ -7,6 +7,7 @@ import 'package:oms/app_config.dart';
 import 'package:oms/controller/auth_controller.dart';
 import 'package:oms/controller/restaurant_controller.dart';
 import 'package:oms/model/restaurant_model/location_list_model.dart';
+import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/widget/app_shemmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../model/restaurant_model/restaurantListModel.dart';
@@ -235,7 +236,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (context) => Orders())
                   // );
-                  Get.to(Orders(), transition: Transition.rightToLeft);
+                  Get.to(NewOrderScreen(), transition: Transition.rightToLeft);
 
                 });
               },

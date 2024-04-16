@@ -1,15 +1,13 @@
 import 'dart:async';
-import 'dart:ui';
 
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
+import 'package:oms/view/order/screen/widget/new_order_list_view.dart';
 import 'package:oms/view/setting_screen/widget/app_input.dart';
 
 import '../../../controller/order_controller.dart';
@@ -19,7 +17,6 @@ import '../../../notifications/notification.dart';
 import '../../../utility/order_status.dart';
 import '../../../widget/app_drawer.dart';
 import '../../../widget/new_user.dart';
-import '../../menus/widgets/widget/radio.dart';
 import 'orders.dart';
 
 class NewOrderScreen extends StatefulWidget {
@@ -31,17 +28,6 @@ class NewOrderScreen extends StatefulWidget {
 }
 
 class _NewOrderScreenState extends State<NewOrderScreen> {
-  final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
-  ];
-  String? selectedValue;
   final _key = GlobalKey<ScaffoldState>();
 
   Timer? _timer;
@@ -167,140 +153,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           title: Text("Orders",
             style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black,fontSize: titleFontSize),),
           actions: [
-            InkWell(
-              onTap: () =>showDialog(context: (context), builder: (context)=>AlertDialog(
-                backgroundColor: Colors.white,
-                shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-                alignment: Alignment.centerRight,
-                title: Container(
-                  padding: EdgeInsets.all(15),
-                  //height: MediaQuery.of(context).size.height-200,
-                  width: MediaQuery.of(context).size.width * 0.35,
-                  child: Column(
-                    children: [
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: IconButton(
-                              onPressed:(){
-                                Navigator.pop(context);
-                              },
-                              icon:Icon(Icons.cancel_outlined, size: 40,color: Colors.red,)
-
-                          )),
-                      SizedBox(height: 30,),
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: Text(
-                                "Store Status",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: titleFontSize,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10,),
-                            Container(
-
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.grey200),
-                              ),
-                              child: ListTile(
-                                leading: Icon(Icons.open_in_new),
-                                title: Text("Open"),
-                                subtitle: Text("Can't Complete Instraction"),
-                                trailing: Icon(Icons.circle_outlined,),
-                              ),
-                            ),
-                            SizedBox(height: 10,),
-                            Container(
-
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.textindigo),
-                              ),
-                              child: ListTile(
-                                leading: Icon(Icons.light_mode),
-                                title: Text("Busy"),
-                                subtitle: Text("Can't Complete Instraction"),
-                                trailing: Icon(Icons.check_circle_outlined,color: AppColors.textindigo,),
-                              ),
-                            ),
-                            SizedBox(height: 10,),
-                            Container(
-
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.grey200),
-                              ),
-                              child: ListTile(
-                                leading: Icon(Icons.pause_circle),
-                                title: Text("Paush"),
-                                subtitle: Text("Can't Complete Instraction"),
-                                trailing: Icon(Icons.circle_outlined,),
-                              ),
-                            ),
-                            SizedBox(height: 10,),
-                            Container(
-
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.grey200),
-                              ),
-                              child: ListTile(
-                                leading: Icon(Icons.schedule),
-                                title: Text("Schedule paush"),
-                                subtitle: Text("Can't Complete Instraction"),
-                                trailing: Icon(Icons.circle_outlined,),
-                                onTap: (){
-                                  Navigator.pop(context);
-
-                                },
-                              ),
-                            ),
-
-
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )),
-
-              child: Container(
-                margin: EdgeInsets.only(right: 10),
-                padding: EdgeInsets.all(5),
-                height: 40,
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColors.textindigo),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Busy",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textindigo,
-                        fontSize: normalFontSize,
-                      ),),
-                    Icon(Icons.keyboard_arrow_down_rounded,color:AppColors.textindigo,),
-                  ],
-                ),
-              ),
-            )
             ///TODO:: "Add busy dropdown"
-
           ],
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(100),
@@ -335,45 +188,6 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                     )
                   ),
                   SizedBox(width: 30,),
-                  Container(
-                    width: 220,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton2<String>(
-                        isExpanded: true,
-                        hint: Text("No Filter Current Applied",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textblack),
-                        ),
-                        items: items
-                            .map((String item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textblack,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        )).toList(),
-                        value: selectedValue,
-                        onChanged: (value) {
-                          setState(() {
-                            selectedValue = value;
-                          });
-
-
-                        },
-                      ),
-                    ),
-                  )
                   ///TODO: Add "No Filter Currently Applied dropdown"
 
                 ],
@@ -391,72 +205,41 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           child: Row(
             children: [
               Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(right: 10),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      right: BorderSide(width: 1, color: Colors.grey)
-                    )
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(width: 3, color: AppColors.textindigo)
-                          )
-                        ),
-                        child: Text("Incoming Orders (10)",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20,),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: 10,
-                          itemBuilder: (_, index){
-                            return Container(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(width: 1, color: AppColors.grey200)
-                                  )
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text("#3242342342342",
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      )
-                                    ],
-                                  )
+                child: NewOrdersListView(
+                  title: "Incoming Orders",
+                  orders: _incomingOrdersList,
+                  btnText: "Incoming Orders",
+                  btnColor: Colors.blue.shade100,
+                  onClick: () {
 
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                  },
+
                 )
               ),
               SizedBox(width: 10,),
               Expanded(
-                child: Text("Expand 2"),
+                  child: NewOrdersListView(
+                    title: "Preparing",
+                    orders: _incomingOrdersList,
+                    btnText: "Ready in 13 Mins",
+                    btnColor: Colors.greenAccent.shade100,
+                    onClick: () {
+
+                    },
+                  )
               ),
               SizedBox(width: 10,),
               Expanded(
-                child: Text("Expand 3"),
+                  child: NewOrdersListView(
+                    isLast: true,
+                    title: "Cash Unpaid",
+                    orders: _incomingOrdersList,
+                    btnText: "Unpaid",
+                    btnColor: Colors.red.shade100,
+                    onClick: () {
+
+                    },
+                  )
               ),
             ],
           ),
@@ -492,5 +275,4 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     });
   }
 }
-
 
