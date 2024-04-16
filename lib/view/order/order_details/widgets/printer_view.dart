@@ -110,10 +110,7 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
                     onChanged: (_) {},
                   )
                       : SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * .15,
+                    width: MediaQuery.of(context).size.width * .15,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

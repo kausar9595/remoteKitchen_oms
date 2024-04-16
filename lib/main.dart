@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:oms/firebase_options.dart';
 import 'package:oms/notifications/notification.dart';
+import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/view/order/screen/orders.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -86,7 +87,7 @@ class _MyAppState extends State<MyApp> {
             fontFamily: 'Poppins',
             primarySwatch: Colors.blue,
           ),
-          home: token == null ? Login() : Orders(),
+          home: token == null ? Login() : NewOrderScreen(),
         );
       }
     );

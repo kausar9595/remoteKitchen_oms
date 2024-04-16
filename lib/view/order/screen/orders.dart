@@ -159,7 +159,6 @@ class _OrdersState extends State<Orders> {
                     Tab(text: "Canceled Orders",),
                   ]),
                 )
-
               ],
             ),
             body: _isNew ? NewUser(onClick: (){
