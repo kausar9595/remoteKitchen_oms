@@ -172,9 +172,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
               onTap: () =>showDialog(context: (context), builder: (context)=>AlertDialog(
                 backgroundColor: Colors.white,
                 shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.zero,
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
                 ),
-                alignment: Alignment.centerRight,
                 title: Container(
                   padding: EdgeInsets.all(15),
                   //height: MediaQuery.of(context).size.height-200,
@@ -463,7 +463,3 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
   }
 }
 
-<<<<<<<<< Temporary merge branch 1
-
-=========
->>>>>>>>> Temporary merge branch 2
