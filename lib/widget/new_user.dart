@@ -53,8 +53,8 @@ class NewUser extends StatelessWidget {
             SizedBox(height: 20,),
             AppButton(
                 text: "Select Restaurant",
-                fontSize: normalFontSize,
-                width: 200,
+                fontSize: 13,
+                width: 220,
                 height: 50,
                 onClick: onClick,
             ),

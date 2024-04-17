@@ -414,11 +414,11 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                               ),
                             ),
                             title: Text(
-                              "${items.itemName}",
+                              "${items.menuItem?.name}",
                               style: TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.w600, color: Colors.black),
                             ),
                             trailing: Text(
-                              "CA\$${items.itemPrice}",
+                              "CA\$${items.menuItem?.basePrice}",
                               style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                             ),
                           );
@@ -488,7 +488,7 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
       for (var i in _history) {
         //loop for items
         for (var j in i.orderitemSet!) {
-          if (i.customer!.toLowerCase().contains(v.toLowerCase()) || j.itemName!.toLowerCase().contains(v)) {
+          if (i.customer!.toLowerCase().contains(v.toLowerCase()) || j.menuItem!.name!.toLowerCase().contains(v)) {
             _searchHistory.add(i);
           }
         }

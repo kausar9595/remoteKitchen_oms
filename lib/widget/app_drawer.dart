@@ -7,12 +7,13 @@ import 'package:oms/app_config.dart';
 import 'package:oms/controller/auth_controller.dart';
 import 'package:oms/controller/restaurant_controller.dart';
 import 'package:oms/model/restaurant_model/location_list_model.dart';
-import 'package:oms/view/issue_order/issue_order_screen.dart';
+import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/widget/app_shemmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../model/restaurant_model/restaurantListModel.dart';
 import '../utility/appcolor.dart';
 import '../view/history/history_screen.dart';
+import '../view/issue_order/issue_order_screen.dart';
 import '../view/order/screen/orders.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -48,13 +49,12 @@ class _AppDrawerState extends State<AppDrawer> {
 
   void _getRestaurantList() async {
     setState(() => _isRestaurantLoading = true);
-    var res = await RestaurantController.getRestaurantList();
+    var res = await RestaurantController.getRestaurantList(context);
     for (var i in res.results!) {
       setState(() {
         _restaurantList.add(i);
       });
     }
-    print("_restaurantList == ${_restaurantList[0].id}");
     setState(() => _isRestaurantLoading = false);
   }
 
@@ -183,7 +183,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         child: DropdownButton2<LocationResult>(
                           isExpanded: true,
                           hint: Text(
-                            '${selectLocationName != null ? selectLocationName : "Location Select"}',
+                            '${selectLocationName ?? "Location Select"}',
                             style: TextStyle(
                               fontSize: 14,
                               color: AppColors.textindigo,
@@ -194,7 +194,7 @@ class _AppDrawerState extends State<AppDrawer> {
                               value: value,
                               child: Text(
                                 value.name.toString(),
-                                style: TextStyle(fontSize: 13),
+                                style: TextStyle(fontSize: 12),
                               ),
                             );
                           }).toList(),
@@ -226,7 +226,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (context) => Orders())
                   // );
-                  Get.to(Orders(), transition: Transition.rightToLeft);
+                  Get.to(NewOrderScreen(), transition: Transition.rightToLeft);
                 });
               },
               child: Container(

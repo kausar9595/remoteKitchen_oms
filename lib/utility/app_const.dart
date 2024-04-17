@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-double smallFontSize = 4.00.sp;
-double normalFontSize = 5.00.sp;
+double smallFontSize = 3.00.sp;
+double normalFontSize = 4.00.sp;
 double bigFontSize = 10.00.sp;
 double titleFontSize = 7.00.sp;
 
 
 
 String convertPacificTimeZoon(time){
-  String dateTimeString = time;
+  String dateTimeString = time.toString();
   DateTime dateTime = DateTime.parse(dateTimeString);
   DateTime ptTime = convertPSTtoPT(dateTime);
   String formattedDateTime = DateFormat('yyyy-MM-dd hh:mm a').format(ptTime);

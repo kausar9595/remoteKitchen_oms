@@ -7,6 +7,7 @@ import 'package:oms/model/order_model/order_list_model.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/utility/order_status.dart';
+import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_alert.dart';
 
@@ -60,7 +61,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
                         //alarm stop
                         await Alarm.stop(1);
 
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Orders(pageIndex: 0,)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>NewOrderScreen()));
                         },
                       icon: Icon(Icons.cancel_outlined,color: Colors.white,size: 40,),)
 
@@ -132,7 +133,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
                         fontSize: 16,color: Colors.white,fontWeight:FontWeight.w700,
                       ),),
                       SizedBox(height: 10,),
-                      Text("Order for Delivery",
+                      Text("Order for ${widget.orderResult.orderMethod}",
                         style: TextStyle(fontSize: 16,color:Colors.white,fontWeight: FontWeight.w400),
                       ),
                       SizedBox(height: 10,),
@@ -160,7 +161,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
                                 ),
                               ),
                               SizedBox(width: 10,),
-                              Text("${items.itemName}",
+                              Text("${items.menuItem!.name}",
                                 style: TextStyle(fontSize:16,fontWeight: FontWeight.w700,color: Colors.white),
                               ),
 
@@ -231,7 +232,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
      await OrderController.changeStatus(id, OrderStatus.accepted).then((value) {
        if(value.statusCode == 200){
          AppSnackBar(context, "Order has been accepted", Colors.green);
-         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Orders()), (route) => false);
+         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> NewOrderScreen()), (route) => false);
        }else{
          AppSnackBar(context, "Getting some issues to Accept this order.", Colors.red);
        }
@@ -250,7 +251,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
     await OrderController.changeStatus(id, OrderStatus.cancelled).then((value) {
       if(value.statusCode == 200){
         AppSnackBar(context, "Order has be rejected", Colors.green);
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Orders()), (route) => false);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> NewOrderScreen()), (route) => false);
       }else{
         AppSnackBar(context, "Getting some issues to Reject this order.", Colors.red);
       }

@@ -1,7 +1,7 @@
 class AppConfig {
   //
   static const String APP_NAME = "OMS";
-  static const String APP_VERSION = "1.0.1";
+  static const String APP_VERSION = "1.0.4";
 
   static const String DASHBOARD = "https://dashboard.chatchefs.com/dashboard";
   static const String API_DOMAIN = "https://test.api.chatchefs.com";

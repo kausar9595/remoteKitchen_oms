@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:oms/controller/order_controller.dart';
 import 'package:oms/controller/restaurant_controller.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/order_status.dart';
 import 'package:oms/view/order/screen/widget/order_list.dart';
-import 'package:oms/view/printer_page/printer_page.dart';
+import 'package:oms/view/printer/printer_page.dart';
 import 'package:oms/widget/new_user.dart';
 
 import '../../../model/order_model/order_list_model.dart';
@@ -24,6 +26,9 @@ class Orders extends StatefulWidget {
 
 class _OrdersState extends State<Orders> {
   final _key = GlobalKey<ScaffoldState>();
+
+  Timer? _timer;
+
 
 
   List<OrderResult> _incomingOrdersList = [];
@@ -73,6 +78,43 @@ class _OrdersState extends State<Orders> {
   }
 
 
+  void withoutLoadingOrderLoad()async{
+    _incomingOrdersList.clear();
+    _scheduleOrderList.clear();
+    _cancelledOrderList.clear();
+    _readyForDelivered.clear();
+    _acceptedOrderList.clear();
+    var response = await OrderController.getPendingOrder();
+    for(var i in response!.results!){
+      if(i.status == OrderStatus.pending){
+        setState(() {
+          _incomingOrdersList.add(i);
+        });
+      }
+      if(i.status == OrderStatus.cancelled){
+        setState(() {
+          _cancelledOrderList.add(i);
+        });
+      }
+      if(i.status == OrderStatus.accepted || i.status == OrderStatus.readyForPickup || i.status == OrderStatus.completed){
+        setState(() {
+          _acceptedOrderList.add(i);
+        });
+      }
+      if(i.status == OrderStatus.schedule){
+        setState(() {
+          _scheduleOrderList.add(i);
+        });
+      }
+      if(i.status == OrderStatus.readyForPickup){
+        setState(() {
+          _readyForDelivered.add(i);
+        });
+      }
+
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -81,6 +123,7 @@ class _OrdersState extends State<Orders> {
     NotificationController().initNotification(context);
     _getLocationAndRestaurantId();
     _getIncomingOrders();
+    //_startTimerToAutoLoad();
 
     //store incoming orders into "_incomingOrdersList"
 
@@ -116,7 +159,6 @@ class _OrdersState extends State<Orders> {
                     Tab(text: "Canceled Orders",),
                   ]),
                 )
-
               ],
             ),
             body: _isNew ? NewUser(onClick: (){
@@ -139,9 +181,27 @@ class _OrdersState extends State<Orders> {
 
   Future _getLocationAndRestaurantId() async{
     await RestaurantController.getLocationAndRestaurantIds().then((value){
-      if(value.locationId!.isNotEmpty && value!.restaurantId!.isNotEmpty){
+      print("value.locationId == ${value.locationId}");
+      if(value.locationId == "null" && value.restaurantId == "null"){
+        setState(() => _isNew = true);
+      }else{
         setState(() => _isNew = false);
       }
+    });
+  }
+
+  @override
+  void dispose() {
+    // Cancel the timer when the widget is disposed to avoid memory leaks
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _startTimerToAutoLoad() {
+    // Create a timer that runs a function every 5 seconds
+    _timer = Timer.periodic(Duration(seconds: 4), (timer) {
+      // Call your function here
+      withoutLoadingOrderLoad();
     });
   }
 }

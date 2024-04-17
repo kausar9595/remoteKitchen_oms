@@ -38,7 +38,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     var response = await OrderController.getPendingOrder();
     if (response!.results!.isNotEmpty) {
       for (var i in response!.results!) {
-        if (i.status == OrderStatus.completed) {
+        if (i.status == OrderStatus.completed || i.status == OrderStatus.cancelled) {
           setState(() {
             _history.add(i);
           });
@@ -175,110 +175,111 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   ),
                                   DataColumn(
                                     label: Text(
-                                      "Status",
+                                      "View",
                                       style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
                                     ),
                                   ),
                                 ],
                                 rows: _searchHistory.isNotEmpty
                                     ? _searchHistory
-                                        .map((value) => DataRow(
-                                                onLongPress: () {
-                                                  _orderDetails(value);
-                                                },
-                                                cells: [
-                                                  DataCell(Row(
-                                                    children: [
-                                                      InkWell(
-                                                        child: Column(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: [
-                                                            Text(
-                                                              "#${value.id.toString()}",
-                                                              style: TextStyle(
-                                                                fontWeight: FontWeight.w400,
-                                                                color: AppColors.textblack,
-                                                                fontSize: smallFontSize,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              "${value.customer.toString()}",
-                                                              style:
-                                                                  TextStyle(fontWeight: FontWeight.w700, color: AppColors.textblack, fontSize: titleFontSize),
-                                                            ),
-                                                          ],
+                                        .map((value) => DataRow(cells: [
+                                              DataCell(Row(
+                                                children: [
+                                                  InkWell(
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          "#${value.id.toString()}",
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.w400,
+                                                            color: AppColors.textblack,
+                                                            fontSize: smallFontSize,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text(
-                                                      "${selectRsname}",
-                                                      style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: titleFontSize),
+                                                        Text(
+                                                          "${value.customer.toString()}",
+                                                          style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.textblack, fontSize: normalFontSize),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("${selectLocationName}",
-                                                        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: titleFontSize)),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("CA\$${value.total.toString()}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
-                                                  )),
-                                                  DataCell(HistoryOrderStatusCard(orderResult: value)),
-                                                ]))
+                                                  ),
+                                                ],
+                                              )),
+                                              DataCell(InkWell(
+                                                child: Text(
+                                                  "${selectRsname}",
+                                                  style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: titleFontSize),
+                                                ),
+                                              )),
+                                              DataCell(InkWell(
+                                                child: Text("${selectLocationName}",
+                                                    style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: normalFontSize)),
+                                              )),
+                                              DataCell(InkWell(
+                                                child: Text("CA\$${value.total.toString()}",
+                                                    style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                              )),
+                                              DataCell(InkWell(
+                                                child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
+                                                    style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                              )),
+                                              DataCell(AppButton(
+                                                text: "VIEW",
+                                                width: 70,
+                                                fontSize: 13,
+                                                height: 40,
+                                                onClick: () => _orderDetails(value),
+                                              )),
+                                            ]))
                                         .toList()
                                     : _history
-                                        .map((value) => DataRow(
-                                                onLongPress: () {
-                                                  _orderDetails(value);
-                                                },
-                                                cells: [
-                                                  DataCell(Row(
-                                                    children: [
-                                                      InkWell(
-                                                        child: Column(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: [
-                                                            Text("#${value.id.toString()}",
-                                                                style: TextStyle(
-                                                                    fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
-                                                            Text(
-                                                              "${value.customer.toString()}",
-                                                              style:
-                                                                  TextStyle(fontWeight: FontWeight.w700, color: AppColors.textblack, fontSize: titleFontSize),
-                                                            ),
-                                                          ],
+                                        .map((value) => DataRow(cells: [
+                                              DataCell(Row(
+                                                children: [
+                                                  InkWell(
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text("#${value.id.toString()}",
+                                                            style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                        Text(
+                                                          "${value.customer.toString()}",
+                                                          style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.textblack, fontSize: normalFontSize),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text(
-                                                      "${selectRsname}",
-                                                      style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: normalFontSize),
+                                                      ],
                                                     ),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("${selectLocationName}",
-                                                        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: smallFontSize)),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("CA\$${value.total.toString()}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
-                                                  )),
-                                                  DataCell(HistoryOrderStatusCard(orderResult: value)),
-                                                ]))
+                                                  ),
+                                                ],
+                                              )),
+                                              DataCell(InkWell(
+                                                child: Text(
+                                                  "${selectRsname}",
+                                                  style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: normalFontSize),
+                                                ),
+                                              )),
+                                              DataCell(InkWell(
+                                                child: Text("${selectLocationName}",
+                                                    style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: smallFontSize)),
+                                              )),
+                                              DataCell(InkWell(
+                                                child: Text("CA\$${value.total.toString()}",
+                                                    style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                              )),
+                                              DataCell(InkWell(
+                                                child: Text("${convertPacificTimeZoon(value.receiveDate)}",
+                                                    style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                              )),
+                                              DataCell(AppButton(
+                                                text: "VIEW",
+                                                width: 70,
+                                                fontSize: 13,
+                                                height: 40,
+                                                onClick: () => _orderDetails(value),
+                                              )),
+                                            ]))
                                         .toList()),
                           ],
                         ))
@@ -381,7 +382,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       Text(
                         "${orderResult.quantity} items for Example User Name",
                         style: TextStyle(
-                          fontSize: bigFontSize,
+                          fontSize: titleFontSize,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
                         ),
@@ -389,11 +390,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       ListTile(
                         leading: Text(
                           "Order Placed",
-                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: titleFontSize, color: Colors.black),
+                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: normalFontSize, color: Colors.black),
                         ),
                         title: Divider(),
                         trailing: Text(
-                          "${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${orderResult.receiveDate}"))}",
+                          "${convertPacificTimeZoon(orderResult.receiveDate)}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                         ),
                       ),
@@ -409,8 +410,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           return ListTile(
                             leading: Container(
                               alignment: Alignment.center,
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.04,
+                              height: 45,
+                              width: 45,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
                                 color: AppColors.textindigo,
@@ -420,12 +421,45 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: normalFontSize),
                               ),
                             ),
+                            subtitle: items.modifiers!.isNotEmpty
+                                ? ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: items.modifiers![index].modifiersItems!.length,
+                                    itemBuilder: (_, modifiarItem) {
+                                      return Row(
+                                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400,
+                                              color: AppColors.textblack,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            "(CA\$${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.textblack,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  )
+                                : Center(),
                             title: Text(
-                              "${items.itemName}",
-                              style: TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.w600, color: Colors.black),
+                              "${items.menuItem!.name}",
+                              style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w600, color: Colors.black),
                             ),
                             trailing: Text(
-                              "CA\$${items.itemPrice}",
+                              "CA\$${items.menuItem!.basePrice}",
                               style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                             ),
                           );
@@ -456,6 +490,84 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                         ),
                       ),
+                      orderResult.discount != 0.0
+                          ? ListTile(
+                              leading: Text(
+                                "Discount",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                              title: Divider(),
+                              trailing: Text(
+                                "CA\$${orderResult.discount}",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                            )
+                          : Center(),
+                      orderResult.deliveryFee != 0.0
+                          ? ListTile(
+                              leading: Text(
+                                "Delivery Fee",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                              title: Divider(),
+                              trailing: Text(
+                                "CA\$${orderResult.deliveryFee}",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                            )
+                          : Center(),
+                      orderResult.convenienceFee != 0.0
+                          ? ListTile(
+                              leading: Text(
+                                "Convenience Fee",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                              title: Divider(),
+                              trailing: Text(
+                                "CA\$${orderResult.convenienceFee}",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                            )
+                          : Center(),
+                      orderResult.deliveryDiscount != 0.0
+                          ? ListTile(
+                              leading: Text(
+                                "Delivery Discount",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                              title: Divider(),
+                              trailing: Text(
+                                "CA\$${orderResult.deliveryDiscount}",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                            )
+                          : Center(),
+                      orderResult.voucher != null && orderResult.voucher != 0.0
+                          ? ListTile(
+                              leading: Text(
+                                "Voucher",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                              title: Divider(),
+                              trailing: Text(
+                                "CA\$${orderResult.voucher}",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                            )
+                          : Center(),
+                      orderResult.tips != null && orderResult.tips != 0.0
+                          ? ListTile(
+                              leading: Text(
+                                "Tips",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                              title: Divider(),
+                              trailing: Text(
+                                "CA\$${orderResult.tips}",
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
+                              ),
+                            )
+                          : Center(),
                       Divider(
                         thickness: 5,
                         color: Colors.black,
@@ -478,7 +590,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         ),
                         title: Divider(),
                         trailing: Text(
-                          "${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${orderResult.modifiedDate}"))}",
+                          "${convertPacificTimeZoon(orderResult.modifiedDate)}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                         ),
                       ),
@@ -495,7 +607,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       for (var i in _history) {
         //loop for items
         for (var j in i.orderitemSet!) {
-          if (i.customer!.toLowerCase().contains(v.toLowerCase()) || j.itemName!.toLowerCase().contains(v)) {
+          if (i.customer!.toLowerCase().contains(v.toLowerCase()) || j.menuItem!.name!.toLowerCase().contains(v)) {
             _searchHistory.add(i);
           }
         }

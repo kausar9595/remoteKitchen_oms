@@ -39,7 +39,7 @@ class OrderController {
   static Future<http.Response> paymentReceived(id) async {
     var response = await Api.pathch(url: AppConfig.ORDER_STATUS + "?id=${id}", body: {
       "status": OrderStatus.completed,
-      "is_paid": true,
+      "is_paid": "true",
     });
     print("response  ${response.statusCode}");
     print("response  ${response.body}");

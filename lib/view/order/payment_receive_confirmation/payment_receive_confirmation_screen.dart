@@ -4,6 +4,7 @@ import 'package:oms/controller/order_controller.dart';
 import 'package:oms/model/order_model/order_list_model.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/utility/order_status.dart';
+import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_alert.dart';
 import '../../../utility/app_const.dart';
@@ -185,7 +186,7 @@ class _PaymentReceiveConfirmationScreenState extends State<PaymentReceiveConfirm
                             width: 10,
                           ),
                           Text(
-                            "${items.itemName}",
+                            "${items.menuItem!.name}",
                             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
                           ),
                         ],
@@ -276,7 +277,7 @@ class _PaymentReceiveConfirmationScreenState extends State<PaymentReceiveConfirm
       await OrderController.paymentReceived(id).then((value) {
         if (value.statusCode == 200) {
           AppSnackBar(context, "Payment Received", Colors.green);
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Orders()), (route) => false);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const NewOrderScreen()), (route) => false);
         } else {
           AppSnackBar(context, "An error occured!", Colors.red);
         }
@@ -295,7 +296,7 @@ class _PaymentReceiveConfirmationScreenState extends State<PaymentReceiveConfirm
     await OrderController.changeStatus(id, OrderStatus.cancelled).then((value) {
       if (value.statusCode == 200) {
         AppSnackBar(context, "Order has been rejected", Colors.green);
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Orders()), (route) => false);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const NewOrderScreen()), (route) => false);
       } else {
         AppSnackBar(context, "An error occured!", Colors.red);
       }
