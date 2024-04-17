@@ -70,9 +70,9 @@ class AuthController{
   }
 
 
-  Future<List<RestaurantResult>?>  getRestaurantList()async{
+  Future<List<RestaurantResult>?>  getRestaurantList(context)async{
     List<RestaurantResult> _restaurantList = [];
-    var res = await RestaurantController.getRestaurantList();
+    var res = await RestaurantController.getRestaurantList(context);
     for(var i in res.results!){
       _restaurantList.add(i);
     }

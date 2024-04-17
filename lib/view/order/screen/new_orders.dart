@@ -33,14 +33,9 @@ class NewOrderScreen extends StatefulWidget {
 
 class _NewOrderScreenState extends State<NewOrderScreen> {
   final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
+    'Filter Items',
+    'Filter Items',
+    'Filter Items',
   ];
   String? selectedValue;
   final _key = GlobalKey<ScaffoldState>();
@@ -54,6 +49,8 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
   List<OrderResult> _cancelledOrderList = [];
   List<OrderResult> _acceptedOrderList = [];
   List<OrderResult> _scheduleOrderList = [];
+  List<OrderResult> _unpaidCashlist = [];
+  List<OrderResult> _preparingOrderList = [];
   bool _isLoading = false;
   Future<void> _getIncomingOrders()async{
     _incomingOrdersList.clear();
@@ -61,12 +58,24 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     _readyForDelivered.clear();
     _cancelledOrderList.clear();
     _scheduleOrderList.clear();
+    _unpaidCashlist.clear();
+    _preparingOrderList.clear();
     setState(() => _isLoading = true);
     var response = await OrderController.getPendingOrder();
     for(var i in response!.results!){
       if(i.status == OrderStatus.pending){
         setState(() {
           _incomingOrdersList.add(i);
+        });
+      }
+      if(i.isPaid != true && i.paymentMethod == "cash"){
+        setState(() {
+          _unpaidCashlist.add(i);
+        });
+      }
+      if(i.status == OrderStatus.accepted){
+        setState(() {
+          _preparingOrderList.add(i);
         });
       }
       if(i.status == OrderStatus.cancelled){
@@ -144,8 +153,6 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     //_startTimerToAutoLoad();
 
     //store incoming orders into "_incomingOrdersList"
-
-
     print("this is order page");
 
   }
@@ -407,7 +414,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
               Expanded(
                   child: NewOrdersListView(
                     title: "Preparing",
-                    orders: _incomingOrdersList,
+                    orders: _preparingOrderList,
                     btnText: "Ready in 13 Mins",
                     btnColor: Colors.greenAccent.shade100,
                     onClick: () {
@@ -420,7 +427,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   child: NewOrdersListView(
                     isLast: true,
                     title: "Cash Unpaid",
-                    orders: _incomingOrdersList,
+                    orders: _unpaidCashlist,
                     btnText: "Unpaid",
                     btnColor: Colors.red.shade100,
                     onClick: () {

@@ -10,6 +10,7 @@ import 'package:oms/utility/appcolor.dart';
 import 'package:oms/utility/order_status.dart';
 import 'package:oms/view/order/order_details/widgets/customer_info.dart';
 import 'package:oms/view/order/order_details/widgets/printer_view.dart';
+import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_alert.dart';
 import '../../../controller/order_controller.dart';
@@ -144,14 +145,35 @@ class _OrderDetailState extends State<OrderDetail> {
                                 ),
                               ],
                             ),
-                            // subtitle: items.modifiers!.isNotEmpty ? Text("${items.modifiers![0]}",
-                            //   style: TextStyle(
-                            //     fontSize: smallFontSize,
-                            //     fontWeight: FontWeight.w700,
-                            //     color: AppColors.textblack,
-                            //   ),
-                            // ) : Center(),
-                            trailing: Text("CA\$${items.menuItem!.name}",
+                            subtitle: items.modifiers!.isNotEmpty
+                                ? ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: items.modifiers![index].modifiersItems!.length,
+                                  itemBuilder: (_, modifiarItem){
+                                    return Row(
+                                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.textblack,
+                                          ),
+                                        ),
+                                        SizedBox(width: 10,),
+                                        Text("(CA\$${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.textblack,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ) : Center(),
+                            trailing: Text("CA\$${items.menuItem!.basePrice}",
                               style: TextStyle(
                                 fontSize: normalFontSize,
                                 fontWeight: FontWeight.w400,
@@ -187,6 +209,74 @@ class _OrderDetailState extends State<OrderDetail> {
                             fontSize: normalFontSize,color:AppColors.textblack),
                       ),
                     ),
+
+                    widget.orderResult.discount != 0.0 ? ListTile(
+                      leading: Text("Discount",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.discount}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                    ) :Center(),
+                    widget.orderResult.deliveryFee != 0.0 ? ListTile(
+                      leading: Text("Delivery Fee",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.deliveryFee}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color: Colors.black),
+                      ),
+                    ) :Center(),
+                    widget.orderResult.convenienceFee != 0.0 ? ListTile(
+                      leading: Text("Convenience Fee",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.convenienceFee}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color: Colors.black),
+                      ),
+                    ) :Center(),
+                    widget.orderResult.deliveryDiscount != 0.0 ? ListTile(
+                      leading: Text("Delivery Discount",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.deliveryDiscount}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color: Colors.black),
+                      ),
+                    ) :Center(),
+                    widget.orderResult.voucher != null && widget.orderResult.voucher != 0.0 ? ListTile(
+                      leading: Text("Voucher",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.voucher}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color: Colors.black),
+                      ),
+                    ) :Center(),
+                    widget.orderResult.tips != null && widget.orderResult.tips != 0.0 ? ListTile(
+                      leading: Text("Tips",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.tips}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color: Colors.black),
+                      ),
+                    ) :Center(),
+
                     Divider(),
                     ListTile(
                       leading: Text("Total",
@@ -259,7 +349,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                    id: widget.orderResult!.id.toString(),
                                    title: "Are you sure?",
                                    child: Text("Are you sure? Your order is Ready for Pickup?"),
-                                   okClick: ()=> orderStatusChange(OrderStatus.readyForPickup)
+                                   okClick: ()=> orderStatusChange(OrderStatus.completed)
                                );
                              },
                              text: "Mark as Ready",
@@ -298,15 +388,15 @@ class _OrderDetailState extends State<OrderDetail> {
           setState(() => currentOrderStatus = status);
           if(status == OrderStatus.cancelled){
             AppSnackBar(context, "Order has been cancelled", Colors.green);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> Orders(pageIndex: 3,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> NewOrderScreen()));
 
           } else if(status == OrderStatus.completed){
 
             AppSnackBar(context, "Order has been Delivered", Colors.green);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> Orders(pageIndex: 1,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> NewOrderScreen()));
           }else{
             AppSnackBar(context, "Order has been Delivered", Colors.green);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> Orders(pageIndex: 1,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> NewOrderScreen()));
           }
 
         }else{

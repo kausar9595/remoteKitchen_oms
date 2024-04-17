@@ -1,10 +1,10 @@
 class AppConfig {
   //
   static const String APP_NAME = "OMS";
-  static const String APP_VERSION = "1.0.3";
+  static const String APP_VERSION = "1.0.4";
 
   static const String DASHBOARD = "https://dashboard.chatchefs.com/dashboard";
-  static const String API_DOMAIN = "https://test.api.chatchefs.com";
+  static const String API_DOMAIN = "https://api.chatchefs.com";
   static const String API = "api";
   static const String API_VERSION = "v1";
   static const String BASE_URL = "$API_DOMAIN/$API";

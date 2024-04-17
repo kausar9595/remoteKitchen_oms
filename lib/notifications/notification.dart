@@ -48,7 +48,7 @@ class NotificationController{
             },
     );
 
-    // 2. This method only call when App in forground it mean app must be opened
+    // 2. This method only call when App in foreground it mean app must be opened
     FirebaseMessaging.onMessage.listen(
           (message) async{
             // print("message.data === ${message.data["id"]}");

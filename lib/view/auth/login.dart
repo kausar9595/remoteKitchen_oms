@@ -6,6 +6,7 @@ import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/app_text.dart';
 import 'package:oms/view/history/history_screen.dart';
 import 'package:oms/view/menus/menus.dart';
+import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_input.dart';
 import 'package:oms/widget/app_snapcbar.dart';
@@ -154,7 +155,7 @@ class _LoginState extends State<Login> {
         NotificationController().getDeviceToken();
 
         //redirect to the home page
-         Navigator.push(context, MaterialPageRoute(builder: (context)=>Orders()));
+         Navigator.push(context, MaterialPageRoute(builder: (context)=>NewOrderScreen()));
       }else{
         AppSnackBar(context, loginErrorText, Colors.red);
       }
