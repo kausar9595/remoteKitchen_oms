@@ -17,6 +17,7 @@ import '../../../controller/order_controller.dart';
 import '../../../model/order_model/order_curiar_model.dart';
 import '../../../model/order_model/order_list_model.dart';
 import '../../under_constraction.dart';
+import '../screen/widget/calculat_amounts_order_details.dart';
 
 class OrderDetail extends StatefulWidget {
   final OrderResult orderResult;
@@ -36,6 +37,7 @@ class _OrderDetailState extends State<OrderDetail> {
 
    Future<OrderCuriarInfoModel>? getOrderCuriar;
 
+   final modefires = <Widget>[];
 
 
 
@@ -114,6 +116,7 @@ class _OrderDetailState extends State<OrderDetail> {
                         itemCount: widget.orderResult.orderitemSet!.length,
                         itemBuilder: (_, index) {
                           var items = widget.orderResult.orderitemSet![index];
+                          //add modifires
                           return  ListTile(
                             leading: Container(
                               alignment: Alignment.center,
@@ -146,33 +149,41 @@ class _OrderDetailState extends State<OrderDetail> {
                               ],
                             ),
                             subtitle: items.modifiers!.isNotEmpty
-                                ? ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: items.modifiers![index].modifiersItems!.length,
-                                  itemBuilder: (_, modifiarItem){
-                                    return Row(
-                                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.textblack,
+                                ? ListView(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              children: List.generate(items.modifiers!.length, (modifires) {
+                                  return  ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: items.modifiers![modifires].modifiersItems!.length,
+                                    itemBuilder: (_, modifiarItem){
+                                      return Row(
+                                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400,
+                                              color: AppColors.textblack,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(width: 10,),
-                                        Text("(CA\$${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.textblack,
+                                          SizedBox(width: 10,),
+                                          Text("(CA\$${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.textblack,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ) : Center(),
+                                        ],
+                                      );
+                                    },
+                                  );
+                              }),
+                            )
+
+                                : Center(),
                             trailing: Text("CA\$${items.menuItem!.basePrice}",
                               style: TextStyle(
                                 fontSize: normalFontSize,
@@ -210,72 +221,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       ),
                     ),
 
-                    widget.orderResult.discount != 0.0 ? ListTile(
-                      leading: Text("Discount",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color:Colors.black),
-                      ),
-                      title: Divider(),
-                      trailing: Text("CA\$${widget.orderResult.discount}",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color:Colors.black),
-                      ),
-                    ) :Center(),
-                    widget.orderResult.deliveryFee != 0.0 ? ListTile(
-                      leading: Text("Delivery Fee",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color:Colors.black),
-                      ),
-                      title: Divider(),
-                      trailing: Text("CA\$${widget.orderResult.deliveryFee}",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color: Colors.black),
-                      ),
-                    ) :Center(),
-                    widget.orderResult.convenienceFee != 0.0 ? ListTile(
-                      leading: Text("Convenience Fee",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color:Colors.black),
-                      ),
-                      title: Divider(),
-                      trailing: Text("CA\$${widget.orderResult.convenienceFee}",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color: Colors.black),
-                      ),
-                    ) :Center(),
-                    widget.orderResult.deliveryDiscount != 0.0 ? ListTile(
-                      leading: Text("Delivery Discount",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color:Colors.black),
-                      ),
-                      title: Divider(),
-                      trailing: Text("CA\$${widget.orderResult.deliveryDiscount}",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color: Colors.black),
-                      ),
-                    ) :Center(),
-                    widget.orderResult.voucher != null && widget.orderResult.voucher != 0.0 ? ListTile(
-                      leading: Text("Voucher",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color:Colors.black),
-                      ),
-                      title: Divider(),
-                      trailing: Text("CA\$${widget.orderResult.voucher}",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color: Colors.black),
-                      ),
-                    ) :Center(),
-                    widget.orderResult.tips != null && widget.orderResult.tips != 0.0 ? ListTile(
-                      leading: Text("Tips",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color:Colors.black),
-                      ),
-                      title: Divider(),
-                      trailing: Text("CA\$${widget.orderResult.tips}",
-                        style: TextStyle(fontWeight: FontWeight.w500,
-                            fontSize: normalFontSize,color: Colors.black),
-                      ),
-                    ) :Center(),
+                    CalculatOrdersAmount(orderResult: widget.orderResult),
 
                     Divider(),
                     ListTile(

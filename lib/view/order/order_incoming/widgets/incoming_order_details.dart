@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../../model/order_model/order_list_model.dart';
 import '../../../../utility/app_const.dart';
 import '../../../../utility/appcolor.dart';
+import '../../screen/widget/calculat_amounts_order_details.dart';
 
 class IncomingOrderDetails extends StatelessWidget {
   final OrderResult orderResult;
@@ -195,15 +196,19 @@ class IncomingOrderDetails extends StatelessWidget {
                       ),
                     ),
                     subtitle: items.modifiers!.isNotEmpty
-                        ? ListView.builder(
+                        ? ListView(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      children: List.generate(items.modifiers!.length, (modifires) {
+                        return  ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: items.modifiers![index].modifiersItems!.length,
+                          itemCount: items.modifiers![modifires].modifiersItems!.length,
                           itemBuilder: (_, modifiarItem){
                             return Row(
                               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
+                                Text("${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w400,
@@ -211,7 +216,7 @@ class IncomingOrderDetails extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(width: 10,),
-                                Text("(CA\$${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
+                                Text("(CA\$${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,
@@ -221,7 +226,11 @@ class IncomingOrderDetails extends StatelessWidget {
                               ],
                             );
                           },
-                        ) : Center(),
+                        );
+                      }),
+                    )
+
+                        : Center(),
                     title: Text("${items.menuItem!.name}",
                       style: TextStyle(
                         fontSize: normalFontSize,
@@ -271,81 +280,16 @@ class IncomingOrderDetails extends StatelessWidget {
                       color: Colors.black),
                 ),
               ),
-              orderResult.discount != 0.0 ? ListTile(
-                leading: Text("Discount",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color:Colors.black),
-                ),
-                title: Divider(),
-                trailing: Text("CA\$${orderResult.discount}",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color:Colors.black),
-                ),
-              ) :Center(),
-              orderResult.deliveryFee != 0.0 ? ListTile(
-                leading: Text("Delivery Fee",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color:Colors.black),
-                ),
-                title: Divider(),
-                trailing: Text("CA\$${orderResult.deliveryFee}",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color: Colors.black),
-                ),
-              ) :Center(),
-              orderResult.convenienceFee != 0.0 ? ListTile(
-                leading: Text("Convenience Fee",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color:Colors.black),
-                ),
-                title: Divider(),
-                trailing: Text("CA\$${orderResult.convenienceFee}",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color: Colors.black),
-                ),
-              ) :Center(),
-              orderResult.deliveryDiscount != 0.0 ? ListTile(
-                leading: Text("Delivery Discount",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color:Colors.black),
-                ),
-                title: Divider(),
-                trailing: Text("CA\$${orderResult.deliveryDiscount}",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color: Colors.black),
-                ),
-              ) :Center(),
-              orderResult.voucher != null && orderResult.voucher != 0.0 ? ListTile(
-                leading: Text("Voucher",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color:Colors.black),
-                ),
-                title: Divider(),
-                trailing: Text("CA\$${orderResult.voucher}",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color: Colors.black),
-                ),
-              ) :Center(),
-              orderResult.tips != null && orderResult.tips != 0.0 ? ListTile(
-                leading: Text("Tips",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color:Colors.black),
-                ),
-                title: Divider(),
-                trailing: Text("CA\$${orderResult.tips}",
-                  style: TextStyle(fontWeight: FontWeight.w500,
-                      fontSize: normalFontSize,color: Colors.black),
-                ),
-              ) :Center(),
+              CalculatOrdersAmount(orderResult: orderResult),
               Divider(),
               ListTile(
                 leading: Text("Total",
-                  style: TextStyle(fontWeight: FontWeight.w400,
+                  style: TextStyle(fontWeight: FontWeight.w500,
                       fontSize: normalFontSize,color:AppColors.textblack),
                 ),
                 title: Divider(),
                 trailing: Text("CA\$${orderResult.total}",
-                  style: TextStyle(fontWeight: FontWeight.w400,
+                  style: TextStyle(fontWeight: FontWeight.w500,
                       fontSize: normalFontSize,color:AppColors.textblack),
                 ),
               ),
