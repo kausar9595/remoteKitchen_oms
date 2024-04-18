@@ -15,11 +15,13 @@ class AllItemsTabBarView extends StatefulWidget {
     required this.onMenuSelect,
     required this.menuItemSearch,
     required this.menuitemSetFiltered,
+    required this.loadingMenuItems,
   });
   final List<MenuListResult> menuList;
   final List<MenuitemSet> menuitemSet;
   final List<MenuitemSet> menuitemSetFiltered;
   final bool loadingMenu;
+  final bool loadingMenuItems;
   final MenuListResult? selectedMenu;
   final VoidCallback onRefresh;
   final Function(int id) onMenuSelect;
@@ -58,49 +60,55 @@ class _AllItemsTabBarViewState extends State<AllItemsTabBarView> {
               ),
               SizedBox(width: 20),
               SizedBox(
-                width: 200,
-                child: DropdownButtonFormField(
-                  decoration: _dropdownDecoration(),
-                  value: widget.selectedMenu?.id,
-                  items: widget.menuList.map((e) => DropdownMenuItem(value: e.id!, child: Text(e.title!))).toList(),
-                  onChanged: (value) {
-                    if (value != widget.selectedMenu?.id) {
-                      widget.onMenuSelect(value!);
-                    }
-                    widget.onMenuSelect(value!);
-                  },
-                ),
+                width: 300,
+                child: widget.loadingMenu
+                    ? const Text("Loading")
+                    : DropdownButtonFormField(
+                        decoration: _dropdownDecoration(),
+                        value: widget.selectedMenu?.id,
+                        items: widget.menuList.map((e) => DropdownMenuItem(value: e.id!, child: Text(e.title!))).toList(),
+                        onChanged: (value) {
+                          if (value != widget.selectedMenu?.id) {
+                            widget.onMenuSelect(value!);
+                          }
+                          widget.onMenuSelect(value!);
+                        },
+                      ),
               ),
             ],
           ),
           const SizedBox(height: 12),
-          widget.menuitemSetFiltered.isEmpty && isSearchEmpty == true
-              ? Expanded(
-                  child: ListView.separated(
-                    itemCount: widget.menuitemSet.length + 1,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return Text("${widget.menuitemSet.length} Items");
-                      }
-                      return AllItemsListTile(menuitemSet: widget.menuitemSet[index - 1]);
-                    },
-                    separatorBuilder: (context, index) => const Divider(),
-                  ),
+          widget.loadingMenuItems
+              ? const Center(
+                  child: Text("Loading"),
                 )
-              : Expanded(
-                  child: ListView.separated(
-                    itemCount: widget.menuitemSetFiltered.length + 1,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return Text("${widget.menuitemSetFiltered.length} Items");
-                      }
-                      return AllItemsListTile(menuitemSet: widget.menuitemSetFiltered[index - 1]);
-                    },
-                    separatorBuilder: (context, index) => const Divider(),
-                  ),
-                ),
+              : widget.menuitemSetFiltered.isEmpty && isSearchEmpty == true
+                  ? Expanded(
+                      child: ListView.separated(
+                        itemCount: widget.menuitemSet.length + 1,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            return Text("${widget.menuitemSet.length} Items");
+                          }
+                          return AllItemsListTile(menuitemSet: widget.menuitemSet[index - 1]);
+                        },
+                        separatorBuilder: (context, index) => const Divider(),
+                      ),
+                    )
+                  : Expanded(
+                      child: ListView.separated(
+                        itemCount: widget.menuitemSetFiltered.length + 1,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            return Text("${widget.menuitemSetFiltered.length} Items");
+                          }
+                          return AllItemsListTile(menuitemSet: widget.menuitemSetFiltered[index - 1]);
+                        },
+                        separatorBuilder: (context, index) => const Divider(),
+                      ),
+                    ),
         ],
       ),
     );

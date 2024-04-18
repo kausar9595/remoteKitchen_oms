@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oms/view/menus/tab_views/all_items_tab_bar_view.dart';
-import 'package:oms/view/menus/tab_views/menu_tab_bar_view.dart';
+import 'package:oms/view/menus/tab_views/sold_out_tab_bar_view.dart';
 import 'package:oms/widget/app_drawer.dart';
 
 import '../../controller/menu_controller.dart';
@@ -20,28 +20,34 @@ class _NewMenuScreenState extends State<NewMenuScreen> {
   MenuListResult? _selectedMenu;
   final List<MenuitemSet> _menuitemSet = [];
   List<MenuitemSet> _menuitemSetFiltered = [];
+  List<MenuitemSet> get _menuItemSetSoldOut => [];
+
   bool _loadingMenu = false;
+  bool _loadingMenuItem = false;
   _loadMenuList() async {
     _loadingMenu = true;
+    _loadingMenuItem = true;
     setState(() {});
 
     final menuList = await MenusController.getMenuList();
     _menuList.clear();
     _menuList.addAll(menuList.results ?? []);
+    _loadingMenu = false;
     setState(() {});
 
     if (_menuList.isEmpty) {
-      _loadingMenu = false;
+      _loadingMenuItem = false;
       setState(() {});
       return;
     } else {
       _selectedMenu = _menuList.first;
+      setState(() {});
     }
 
     final menuItemsList = await MenusController.getMenuItemsList(_menuList.first.id!);
     _menuitemSet.clear();
     _menuitemSet.addAll(menuItemsList.menuitemSet);
-    _loadingMenu = false;
+    _loadingMenuItem = false;
     setState(() {});
   }
 
@@ -79,7 +85,7 @@ class _NewMenuScreenState extends State<NewMenuScreen> {
               child: const Row(
                 children: [
                   Text(
-                    "Menu",
+                    "Menus",
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500, color: Colors.black),
                   ),
                 ],
@@ -93,7 +99,7 @@ class _NewMenuScreenState extends State<NewMenuScreen> {
                     text: "All Items",
                   ),
                   Tab(
-                    text: "Menu",
+                    text: "Sold Out",
                   ),
                 ]),
               ),
@@ -117,11 +123,17 @@ class _NewMenuScreenState extends State<NewMenuScreen> {
                   },
                   selectedMenu: _selectedMenu,
                   loadingMenu: _loadingMenu,
+                  loadingMenuItems: _loadingMenuItem,
                   menuList: _menuList,
                   menuitemSet: _menuitemSet,
                   menuitemSetFiltered: _menuitemSetFiltered,
                 ),
-                const MenuTabBarView(),
+                SoldOutTabBarView(
+                  menuItemSetSoldOut: _menuItemSetSoldOut,
+                  menuList: _menuList,
+                  onMenuSelect: _loadMenuItemList,
+                  selectedMenu: _selectedMenu,
+                ),
               ],
             ),
           ),
