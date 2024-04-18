@@ -68,48 +68,42 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
       onRefresh: () => _getIncomingOrders(),
       child: SafeArea(
           child: Scaffold(
-        drawer: AppDrawer(
+        drawer: const AppDrawer(
           currentPage: IssueOrderScreen(),
         ),
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0.3,
           backgroundColor: Colors.white,
-          title: Text(
+          title: const Text(
             "Issue Orders",
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: bigFontSize, color: Colors.black),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24, color: Colors.black),
           ),
         ),
         body: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               TextFormField(
-                controller: _search,
                 onChanged: (v) {
                   setState(() {
                     _searchOrder(v);
                   });
                 },
-                decoration: InputDecoration(
-                    hintText: "Search Order number or Customer name",
-                    hintStyle: TextStyle(fontSize: smallFontSize, fontWeight: FontWeight.w500, color: Colors.grey),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 30,
-                      color: Colors.black,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    )),
+                decoration: const InputDecoration(
+                  hintText: "Search By Customer Name",
+                  hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                  ),
+                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(10))),
+                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.blue), borderRadius: BorderRadius.all(Radius.circular(10))),
+                  border: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(10))),
+                ),
               ),
-              Divider(),
+              const Divider(),
               _isLoading
                   ? Expanded(
                       child: Container(
@@ -117,7 +111,7 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                           itemCount: 10,
                           itemBuilder: (_, index) {
                             return Container(
-                              margin: EdgeInsets.only(bottom: 10),
+                              margin: const EdgeInsets.only(bottom: 10),
                               child: AppShimmer(
                                 width: MediaQuery.of(context).size.width,
                                 height: 50,
@@ -135,43 +129,43 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                                 columnSpacing: 70,
                                 dividerThickness: 1,
                                 dataRowMaxHeight: 60,
-                                columns: [
+                                columns: const [
                                   DataColumn(
                                     label: Expanded(
                                       child: Text(
                                         "Order",
-                                        style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                       ),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       "Restaurant",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       "Location",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       "Total",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       "Placed",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       "Status",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                     ),
                                   ),
                                 ],
@@ -191,15 +185,15 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                                                           children: [
                                                             Text(
                                                               "#${value.id.toString()}",
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                 fontWeight: FontWeight.w400,
                                                                 color: AppColors.textblack,
-                                                                fontSize: smallFontSize,
+                                                                fontSize: 14,
                                                               ),
                                                             ),
                                                             Text(
                                                               "${value.customer.toString()}",
-                                                              style: TextStyle(fontWeight: FontWeight.w500, color: AppColors.textblack, fontSize: 18),
+                                                              style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.textblack, fontSize: 18),
                                                             ),
                                                           ],
                                                         ),
@@ -209,20 +203,20 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                                                   DataCell(InkWell(
                                                     child: Text(
                                                       "${selectRsname}",
-                                                      style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: titleFontSize),
+                                                      style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14),
                                                     ),
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("${selectLocationName}",
-                                                        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: titleFontSize)),
+                                                        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("CA\$${value.total.toString()}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                        style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                        style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(HistoryOrderStatusCard(orderResult: value)),
                                                 ]))
@@ -241,11 +235,10 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: [
                                                             Text("#${value.id.toString()}",
-                                                                style: TextStyle(
-                                                                    fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                                style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                             Text(
                                                               "${value.customer.toString()}",
-                                                              style: TextStyle(fontWeight: FontWeight.w500, color: AppColors.textblack, fontSize: 18),
+                                                              style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.textblack, fontSize: 18),
                                                             ),
                                                           ],
                                                         ),
@@ -260,15 +253,15 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("${selectLocationName}",
-                                                        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                        style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("CA\$${value.total.toString()}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                        style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                        style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(HistoryOrderStatusCard(orderResult: value)),
                                                 ]))
@@ -288,7 +281,7 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
         context: (context),
         builder: (context) => AlertDialog(
               backgroundColor: Colors.white,
-              shape: OutlineInputBorder(
+              shape: const OutlineInputBorder(
                 borderRadius: BorderRadius.zero,
               ),
               alignment: Alignment.centerRight,
@@ -308,18 +301,18 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                           border: Border.all(color: Colors.grey),
                         ),
                         child: DropdownButton<String>(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.keyboard_arrow_down_rounded,
                             size: 35,
                             color: Colors.black,
                           ),
                           elevation: 0,
                           underline: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               border: Border(bottom: BorderSide.none),
                             ),
                           ),
-                          hint: Row(
+                          hint: const Row(
                             children: [
                               Icon(
                                 Icons.print,
@@ -348,15 +341,15 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.cancel_outlined,
                             color: Colors.black,
                             size: 50,
                           )),
                     ],
                   ),
-                  Divider(),
-                  SizedBox(
+                  const Divider(),
+                  const SizedBox(
                     height: 30,
                   ),
                 ],
@@ -364,7 +357,7 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
               content: SingleChildScrollView(
                 child: Container(
                   //margin: EdgeInsets.only(top: 30, bottom: 30),
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   width: MediaQuery.of(context).size.width * .45,
 
                   child: Column(
@@ -382,20 +375,20 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                       ListTile(
                         leading: Text(
                           "Order Placed",
-                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: titleFontSize, color: Colors.black),
+                          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: Colors.black),
                         ),
-                        title: Divider(),
+                        title: const Divider(),
                         trailing: Text(
                           "${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${orderResult.receiveDate}"))}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: orderResult.orderitemSet!.length,
                         itemBuilder: (_, index) {
                           var items = orderResult.orderitemSet![index];
@@ -414,17 +407,17 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                               ),
                             ),
                             title: Text(
-                              "${items.menuItem?.name}",
-                              style: TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.w600, color: Colors.black),
+                              "${items.menuItem!.name}",
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
                             ),
                             trailing: Text(
-                              "CA\$${items.menuItem?.basePrice}",
+                              "CA\$${items.menuItem!.basePrice}",
                               style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                             ),
                           );
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       ListTile(
@@ -432,7 +425,7 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                           "Item Subtotal",
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: normalFontSize, color: Colors.black),
                         ),
-                        title: Divider(),
+                        title: const Divider(),
                         trailing: Text(
                           "CA\$${orderResult.subtotal}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
@@ -443,13 +436,13 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                           "Tax",
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: normalFontSize, color: Colors.black),
                         ),
-                        title: Divider(),
+                        title: const Divider(),
                         trailing: Text(
                           "CA\$${orderResult.tax}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                         ),
                       ),
-                      Divider(
+                      const Divider(
                         thickness: 5,
                         color: Colors.black,
                       ),
@@ -458,7 +451,7 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                           "Total",
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: normalFontSize, color: Colors.black),
                         ),
-                        title: Divider(),
+                        title: const Divider(),
                         trailing: Text(
                           "CA\$${orderResult.total}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
@@ -469,7 +462,7 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                           "Order Completed",
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: normalFontSize, color: Colors.black),
                         ),
-                        title: Divider(),
+                        title: const Divider(),
                         trailing: Text(
                           "${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${orderResult.modifiedDate}"))}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
