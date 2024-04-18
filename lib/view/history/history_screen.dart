@@ -97,22 +97,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   });
                 },
                 decoration: InputDecoration(
-                    hintText: "Search Order number or Customer name",
-                    hintStyle: TextStyle(fontSize: smallFontSize, fontWeight: FontWeight.w500, color: Colors.grey),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 30,
-                      color: Colors.black,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    )),
+                  hintText: "Search By Item Name",
+                  hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                  ),
+                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(10))),
+                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.blue), borderRadius: BorderRadius.all(Radius.circular(10))),
+                  border: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(10))),
+                ),
               ),
               Divider(),
               _isLoading
@@ -145,38 +140,38 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     label: Expanded(
                                       child: Text(
                                         "Order",
-                                        style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                       ),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       "Restaurant",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       "Location",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       "Total",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       "Placed",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                     ),
                                   ),
                                   DataColumn(
                                     label: Text(
                                       "Status",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: smallFontSize, color: AppColors.textblack),
+                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                     ),
                                   ),
                                 ],
@@ -199,7 +194,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                               style: TextStyle(
                                                                 fontWeight: FontWeight.w400,
                                                                 color: AppColors.textblack,
-                                                                fontSize: smallFontSize,
+                                                                fontSize: 14,
                                                               ),
                                                             ),
                                                             Text(
@@ -224,11 +219,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("CA\$${value.total.toString()}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(HistoryOrderStatusCard(orderResult: value)),
                                                 ]))
@@ -247,8 +242,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: [
                                                             Text("#${value.id.toString()}",
-                                                                style: TextStyle(
-                                                                    fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                                style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                             Text(
                                                               "${value.customer.toString()}",
                                                               style:
@@ -267,15 +261,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("${selectLocationName}",
-                                                        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("CA\$${value.total.toString()}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("${convertPacificTimeZoon(value.receiveDate)}",
-                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: smallFontSize)),
+                                                        style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(HistoryOrderStatusCard(orderResult: value)),
                                                 ]))
