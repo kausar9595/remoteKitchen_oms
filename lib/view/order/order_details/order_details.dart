@@ -1,22 +1,17 @@
-import 'package:bluetooth_print/bluetooth_print.dart';
-import 'package:bluetooth_print/bluetooth_print_model.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:oms/controller/printer_controller.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/utility/order_status.dart';
 import 'package:oms/view/order/order_details/widgets/customer_info.dart';
 import 'package:oms/view/order/order_details/widgets/printer_view.dart';
-import 'package:oms/view/order/screen/orders.dart';
+import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/widget/app_alert.dart';
 import 'package:oms/widget/app_button.dart';
 import '../../../controller/order_controller.dart';
 import '../../../model/order_model/order_curiar_model.dart';
 import '../../../model/order_model/order_list_model.dart';
-import '../../under_constraction.dart';
+import '../screen/widget/calculat_amounts_order_details.dart';
 
 class OrderDetail extends StatefulWidget {
   final OrderResult orderResult;
@@ -36,6 +31,7 @@ class _OrderDetailState extends State<OrderDetail> {
 
    Future<OrderCuriarInfoModel>? getOrderCuriar;
 
+   final modefires = <Widget>[];
 
 
 
@@ -122,6 +118,7 @@ class _OrderDetailState extends State<OrderDetail> {
                         itemCount: widget.orderResult.orderitemSet!.length,
                         itemBuilder: (_, index) {
                           var items = widget.orderResult.orderitemSet![index];
+                          //add modifires
                           return  ListTile(
                             leading: Container(
                               alignment: Alignment.center,
@@ -153,14 +150,43 @@ class _OrderDetailState extends State<OrderDetail> {
                                 ),
                               ],
                             ),
-                            // subtitle: items.modifiers!.isNotEmpty ? Text("${items.modifiers![0]}",
-                            //   style: TextStyle(
-                            //     fontSize: smallFontSize,
-                            //     fontWeight: FontWeight.w700,
-                            //     color: AppColors.textblack,
-                            //   ),
-                            // ) : Center(),
-                            trailing: Text("CA\$${items.menuItem!.name}",
+                            subtitle: items.modifiers!.isNotEmpty
+                                ? ListView(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              children: List.generate(items.modifiers!.length, (modifires) {
+                                  return  ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: items.modifiers![modifires].modifiersItems!.length,
+                                    itemBuilder: (_, modifiarItem){
+                                      return Row(
+                                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w400,
+                                              color: AppColors.textblack,
+                                            ),
+                                          ),
+                                          SizedBox(width: 10,),
+                                          Text("(CA\$${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.textblack,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                              }),
+                            )
+
+                                : Center(),
+                            trailing: Text("CA\$${items.menuItem!.basePrice}",
                               style: TextStyle(
                                 fontSize: normalFontSize,
                                 fontWeight: FontWeight.w400,
@@ -196,6 +222,9 @@ class _OrderDetailState extends State<OrderDetail> {
                             fontSize: normalFontSize,color:AppColors.textblack),
                       ),
                     ),
+
+                    CalculatOrdersAmount(orderResult: widget.orderResult),
+
                     Divider(),
                     ListTile(
                       leading: Text("Total",
@@ -268,7 +297,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                    id: widget.orderResult!.id.toString(),
                                    title: "Are you sure?",
                                    child: Text("Are you sure? Your order is Ready for Pickup?"),
-                                   okClick: ()=> orderStatusChange(OrderStatus.readyForPickup)
+                                   okClick: ()=> orderStatusChange(OrderStatus.completed)
                                );
                              },
                              text: "Mark as Ready",
@@ -307,15 +336,15 @@ class _OrderDetailState extends State<OrderDetail> {
           setState(() => currentOrderStatus = status);
           if(status == OrderStatus.cancelled){
             AppSnackBar(context, "Order has been cancelled", Colors.green);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> Orders(pageIndex: 3,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> NewOrderScreen()));
 
           } else if(status == OrderStatus.completed){
 
             AppSnackBar(context, "Order has been Delivered", Colors.green);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> Orders(pageIndex: 1,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> NewOrderScreen()));
           }else{
             AppSnackBar(context, "Order has been Delivered", Colors.green);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> Orders(pageIndex: 1,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> NewOrderScreen()));
           }
 
         }else{

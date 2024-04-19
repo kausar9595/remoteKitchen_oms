@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/view/history/history_details.dart';
+import 'package:oms/view/order/screen/widget/calculat_amounts_order_details.dart';
 import 'package:oms/widget/app_button.dart';
 import 'package:oms/widget/app_drawer.dart';
 import 'package:oms/widget/app_shemmer.dart';
@@ -37,7 +38,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     var response = await OrderController.getPendingOrder();
     if(response!.results!.isNotEmpty){
       for (var i in response!.results!) {
-        if (i.status == OrderStatus.completed) {
+        if (i.status == OrderStatus.completed || i.status == OrderStatus.cancelled) {
           setState(() {
             _history.add(i);
           });
@@ -217,7 +218,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.textblack,
-                                              fontSize: titleFontSize),
+                                              fontSize: normalFontSize),
                                         ),
                                       ],
                                     ),
@@ -238,7 +239,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: AppColors.textblack,
-                                    fontSize: titleFontSize)),
+                                    fontSize: normalFontSize)),
                           )),
                           DataCell( InkWell(
                             child: Text("CA\$${value.total.toString()}",
@@ -275,7 +276,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                           style: TextStyle(
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.textblack,
-                                              fontSize: titleFontSize),
+                                              fontSize: normalFontSize),
                                         ),
                                       ],
                                     ),
@@ -306,7 +307,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     fontSize: smallFontSize)),
                           )),
                           DataCell( InkWell(
-                            child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
+                            child: Text(   "${convertPacificTimeZoon(value.receiveDate)}",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     color: AppColors.textblack,
@@ -443,7 +444,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   Text(
                     "${orderResult.quantity} items for Example User Name",
                     style: TextStyle(
-                      fontSize: bigFontSize,
+                      fontSize: titleFontSize,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
@@ -453,12 +454,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       "Order Placed",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: titleFontSize,
+                          fontSize: normalFontSize,
                           color: Colors.black),
                     ),
                     title: Divider(),
                     trailing: Text(
-                      "${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${orderResult.receiveDate}"))}",
+                      "${convertPacificTimeZoon(orderResult.receiveDate)}",
                       style: TextStyle(
                           fontSize: normalFontSize,
                           fontWeight: FontWeight.w500,
@@ -477,14 +478,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                      return  ListTile(
                        leading: Container(
                          alignment: Alignment.center,
-                         height: MediaQuery.of(context)
-                             .size
-                             .height *
-                             0.06,
-                         width: MediaQuery.of(context)
-                             .size
-                             .width *
-                             0.04,
+                         height: 45,
+                         width: 45,
                          decoration: BoxDecoration(
                            borderRadius:
                            BorderRadius.circular(100),
@@ -498,10 +493,46 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                fontSize: normalFontSize),
                          ),
                        ),
+                       subtitle: items.modifiers!.isNotEmpty
+                           ? ListView(
+                         physics: NeverScrollableScrollPhysics(),
+                         shrinkWrap: true,
+                         children: List.generate(items.modifiers!.length, (modifires) {
+                           return  ListView.builder(
+                             shrinkWrap: true,
+                             physics: NeverScrollableScrollPhysics(),
+                             itemCount: items.modifiers![modifires].modifiersItems!.length,
+                             itemBuilder: (_, modifiarItem){
+                               return Row(
+                                 //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 children: [
+                                   Text("${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
+                                     style: TextStyle(
+                                       fontSize: 13,
+                                       fontWeight: FontWeight.w400,
+                                       color: AppColors.textblack,
+                                     ),
+                                   ),
+                                   SizedBox(width: 10,),
+                                   Text("(CA\$${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
+                                     style: TextStyle(
+                                       fontSize: 13,
+                                       fontWeight: FontWeight.w600,
+                                       color: AppColors.textblack,
+                                     ),
+                                   ),
+                                 ],
+                               );
+                             },
+                           );
+                         }),
+                       )
+
+                           : Center(),
                        title: Text(
                          "${items.menuItem!.name}",
                          style: TextStyle(
-                             fontSize: titleFontSize,
+                             fontSize: normalFontSize,
                              fontWeight: FontWeight.w600,
                              color: Colors.black),
                        ),
@@ -552,6 +583,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           color: Colors.black),
                     ),
                   ),
+                  CalculatOrdersAmount(orderResult: orderResult),
+
                   Divider(
                     thickness: 5,
                     color: Colors.black,
@@ -583,7 +616,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     ),
                     title: Divider(),
                     trailing: Text(
-                      "${DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.parse("${orderResult.modifiedDate}"))}",
+                      "${convertPacificTimeZoon(orderResult.modifiedDate)}",
                       style: TextStyle(
                           fontSize: normalFontSize,
                           fontWeight: FontWeight.w500,

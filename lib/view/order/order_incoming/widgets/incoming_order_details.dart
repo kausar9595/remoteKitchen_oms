@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../../model/order_model/order_list_model.dart';
 import '../../../../utility/app_const.dart';
 import '../../../../utility/appcolor.dart';
+import '../../screen/widget/calculat_amounts_order_details.dart';
 
 class IncomingOrderDetails extends StatelessWidget {
   final OrderResult orderResult;
@@ -194,6 +195,42 @@ class IncomingOrderDetails extends StatelessWidget {
                         ),
                       ),
                     ),
+                    subtitle: items.modifiers!.isNotEmpty
+                        ? ListView(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      children: List.generate(items.modifiers!.length, (modifires) {
+                        return  ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: items.modifiers![modifires].modifiersItems!.length,
+                          itemBuilder: (_, modifiarItem){
+                            return Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.textblack,
+                                  ),
+                                ),
+                                SizedBox(width: 10,),
+                                Text("(CA\$${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.textblack,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }),
+                    )
+
+                        : Center(),
                     title: Text("${items.menuItem!.name}",
                       style: TextStyle(
                         fontSize: normalFontSize,
@@ -227,25 +264,32 @@ class IncomingOrderDetails extends StatelessWidget {
                 ),
               ),
               ListTile(
-                leading: Text("Tax",
-                  style: TextStyle(fontWeight: FontWeight.w400,
-                      fontSize: normalFontSize,color:AppColors.textblack),
+                leading: Text(
+                  "Tax",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: normalFontSize,
+                      color: Colors.black),
                 ),
                 title: Divider(),
-                trailing: Text("CA\$${orderResult.tax}",
-                  style: TextStyle(fontWeight: FontWeight.w400,
-                      fontSize: normalFontSize,color:AppColors.textblack),
+                trailing: Text(
+                  "CA\$${orderResult.tax}",
+                  style: TextStyle(
+                      fontSize: normalFontSize,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
                 ),
               ),
+              CalculatOrdersAmount(orderResult: orderResult),
               Divider(),
               ListTile(
                 leading: Text("Total",
-                  style: TextStyle(fontWeight: FontWeight.w400,
+                  style: TextStyle(fontWeight: FontWeight.w500,
                       fontSize: normalFontSize,color:AppColors.textblack),
                 ),
                 title: Divider(),
                 trailing: Text("CA\$${orderResult.total}",
-                  style: TextStyle(fontWeight: FontWeight.w400,
+                  style: TextStyle(fontWeight: FontWeight.w500,
                       fontSize: normalFontSize,color:AppColors.textblack),
                 ),
               ),

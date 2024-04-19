@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:oms/app_config.dart';
 import 'package:oms/controller/api.dart';
 import 'package:oms/model/restaurant_model/restaurantListModel.dart';
+import 'package:oms/view/auth/login.dart';
+import 'package:oms/widget/app_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/restaurant_model/locationAndRestaurantIds.dart';
@@ -12,10 +15,14 @@ import '../model/restaurant_model/location_list_model.dart';
 class RestaurantController{
 
   //get all restaurant
-  static Future<RestaurantListModel> getRestaurantList()async{
+  static Future<RestaurantListModel> getRestaurantList(context)async{
     var response = await Api.getApi(url: AppConfig.RESTAURANT_LIST);
     print("data === ${response.body}");
     print("data === ${response.statusCode}");
+    if(response.statusCode == 401){
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Login() ), (route) => false);
+      AppSnackBar(context, "Your login is expire. You need to login again to continue.", Colors.green);
+    }
     return RestaurantListModel.fromJson(jsonDecode(response.body));
   }
 

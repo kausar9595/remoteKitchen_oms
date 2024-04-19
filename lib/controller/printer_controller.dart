@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/services.dart';
+import 'package:oms/model/order_model/order_list_model.dart';
 
 class PrinterController{
   static BluetoothPrint bluetoothPrint = BluetoothPrint.instance;
@@ -14,31 +15,56 @@ class PrinterController{
   }
 
   //receipt print
-  static Future printReceipt()async{
+  static Future printReceipt(OrderResult orderResult, BluetoothDevice selectedDevice)async{
+      bluetoothPrint.connect(selectedDevice);
     Map<String, dynamic> config = Map();
 
     List<LineText> list = [];
 
     list.add(LineText(type: LineText.TYPE_TEXT, content: '**********************************************', weight: 1, align: LineText.ALIGN_CENTER,linefeed: 1));
-    list.add(LineText(type: LineText.TYPE_TEXT, content: '打印单据头', weight: 1, align: LineText.ALIGN_CENTER, fontZoom: 2, linefeed: 1));
+    list.add(LineText(type: LineText.TYPE_TEXT, content: 'ChatChef', weight: 1, align: LineText.ALIGN_CENTER, fontZoom: 2, linefeed: 1));
     list.add(LineText(linefeed: 1));
 
-    list.add(LineText(type: LineText.TYPE_TEXT, content: '----------------------明细---------------------', weight: 1, align: LineText.ALIGN_CENTER, linefeed: 1));
-    list.add(LineText(type: LineText.TYPE_TEXT, content: '物资名称规格型号', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 0));
-    list.add(LineText(type: LineText.TYPE_TEXT, content: '单位', weight: 1, align: LineText.ALIGN_LEFT, x: 350, relativeX: 0, linefeed: 0));
-    list.add(LineText(type: LineText.TYPE_TEXT, content: '数量', weight: 1, align: LineText.ALIGN_LEFT, x: 500, relativeX: 0, linefeed: 1));
+    list.add(LineText(type: LineText.TYPE_TEXT, content: '------------------- Order Details ---------------------', weight: 1, align: LineText.ALIGN_CENTER, linefeed: 1));
+    list.add(LineText(type: LineText.TYPE_TEXT, content: 'Order Id: ${orderResult.orderId}', weight: 1, align: LineText.ALIGN_LEFT, linefeed: 1));
+    list.add(LineText(type: LineText.TYPE_TEXT, content: 'Order Type: ${orderResult.orderType}', weight: 1, align: LineText.ALIGN_LEFT, linefeed: 1));
+    if(orderResult.orderType != "pickup"){
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery Platform: ${orderResult.deliveryPlatform}', weight: 1, align: LineText.ALIGN_LEFT, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery address: ${orderResult.dropoffAddress}', weight: 1, align: LineText.ALIGN_LEFT, linefeed: 1));
+    }
+    list.add(LineText(linefeed: 1));
 
-    list.add(LineText(type: LineText.TYPE_TEXT, content: '混凝土C30', align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 0));
-    list.add(LineText(type: LineText.TYPE_TEXT, content: '吨', align: LineText.ALIGN_LEFT, x: 350, relativeX: 0, linefeed: 0));
-    list.add(LineText(type: LineText.TYPE_TEXT, content: '12.0', align: LineText.ALIGN_LEFT, x: 500, relativeX: 0, linefeed: 1));
+    list.add(LineText(type: LineText.TYPE_TEXT, content: '------------------- Order Items ---------------------', weight: 1, align: LineText.ALIGN_CENTER, linefeed: 1));
+
+    //show order detisl in loop
+    for(var i =0; i<orderResult.orderitemSet!.length; i++){
+      //order item details
+      list.add(LineText(type: LineText.TYPE_TEXT, content: '${orderResult.orderitemSet![i]!.menuItem!.name}', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 0));
+      //order item printer
+      list.add(LineText(type: LineText.TYPE_TEXT, content: '${orderResult.orderitemSet![i]!.quantity} X ${orderResult.currency} \$${orderResult.orderitemSet![i]!.menuItem!.basePrice}', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 0));
+
+    }
+    list.add(LineText(linefeed: 1));
+    list.add(LineText(type: LineText.TYPE_TEXT, content: '-------------------------------------------', weight: 1, align: LineText.ALIGN_CENTER, linefeed: 1));
+    list.add(LineText(linefeed: 1));
+
+    list.add(LineText(type: LineText.TYPE_TEXT, content: 'Subtotal: ', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 1));
+    list.add(LineText(type: LineText.TYPE_TEXT, content: '${orderResult.currency} \$${orderResult.subtotal}', weight: 1, align: LineText.ALIGN_RIGHT, x: 350, relativeX: 0, linefeed: 1));
+    // list.add(LineText(type: LineText.TYPE_TEXT, content: 'Tax: ', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 1));
+    // list.add(LineText(type: LineText.TYPE_TEXT, content: '${orderResult.currency} \$${orderResult.tax}', weight: 1, align: LineText.ALIGN_RIGHT, x: 350, relativeX: 0, linefeed: 1));
+
+    list.add(LineText(type: LineText.TYPE_TEXT, content: 'Total: ', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 1));
+    list.add(LineText(type: LineText.TYPE_TEXT, content: '${orderResult.total} \$${orderResult.subtotal}', weight: 1, align: LineText.ALIGN_RIGHT, x: 350, relativeX: 0, linefeed: 1));
+
+    list.add(LineText(linefeed: 1));
+    list.add(LineText(type: LineText.TYPE_TEXT, content: '-------------------------------------------', weight: 1, align: LineText.ALIGN_CENTER, linefeed: 1));
+    list.add(LineText(linefeed: 1));
+
+    list.add(LineText(type: LineText.TYPE_TEXT, content: 'Thank you! Hope you enjoy your meal.', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 1));
+
 
     list.add(LineText(type: LineText.TYPE_TEXT, content: '**********************************************', weight: 1, align: LineText.ALIGN_CENTER,linefeed: 1));
     list.add(LineText(linefeed: 1));
-
-    ByteData data = await rootBundle.load("assets/images/bluetooth_print.png");
-    List<int> imageBytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-    String base64Image = base64Encode(imageBytes);
-    // list.add(LineText(type: LineText.TYPE_IMAGE, content: base64Image, align: LineText.ALIGN_CENTER, linefeed: 1));
 
     await bluetoothPrint.printReceipt(config, list);
   }

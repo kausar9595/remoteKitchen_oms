@@ -162,7 +162,7 @@ class NewOrdersListView extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(height: 5,),
-                              Text(data.orderitemSet![0].menuItem!.name.toString(),
+                              Text(data.orderitemSet![0].menuItem != null ? data.orderitemSet![0].menuItem!.name! : "",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(

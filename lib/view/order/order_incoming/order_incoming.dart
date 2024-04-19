@@ -232,7 +232,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
      await OrderController.changeStatus(id, OrderStatus.accepted).then((value) {
        if(value.statusCode == 200){
          AppSnackBar(context, "Order has been accepted", Colors.green);
-         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Orders()), (route) => false);
+         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> NewOrderScreen()), (route) => false);
        }else{
          AppSnackBar(context, "Getting some issues to Accept this order.", Colors.red);
        }
@@ -251,7 +251,7 @@ class _OrderIncomingState extends State<OrderIncoming> {
     await OrderController.changeStatus(id, OrderStatus.cancelled).then((value) {
       if(value.statusCode == 200){
         AppSnackBar(context, "Order has be rejected", Colors.green);
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Orders()), (route) => false);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> NewOrderScreen()), (route) => false);
       }else{
         AppSnackBar(context, "Getting some issues to Reject this order.", Colors.red);
       }
