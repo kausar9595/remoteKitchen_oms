@@ -38,9 +38,6 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     'Item3',
     'Item4',
     'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
   ];
   String? selectedValue;
   final _key = GlobalKey<ScaffoldState>();
@@ -169,114 +166,123 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
             style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black,fontSize: titleFontSize),),
           actions: [
             InkWell(
-              onTap: () =>showDialog(context: (context), builder: (context)=>AlertDialog(
+              onTap: () =>showDialog(
+                barrierDismissible: false,
+                context: (context), builder: (context)=>AlertDialog(
+                icon: Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(onPressed: (){
+                    Navigator.pop(context);
+                  },
+                      icon: Icon(Icons.cancel_outlined,color: AppColors.textred,size: 30,)
+                  ),
+                ),
+                title: Center(
+                  child: Text(
+                    "Store Status",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: titleFontSize,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
                 backgroundColor: Colors.white,
                 shape: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide.none,
                 ),
-                title: Container(
-                  padding: EdgeInsets.all(15),
+                content: Container(
+                  padding: EdgeInsets.all(10),
                   //height: MediaQuery.of(context).size.height-200,
                   width: MediaQuery.of(context).size.width * 0.35,
-                  child: Column(
-                    children: [
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: IconButton(
-                              onPressed:(){
-                                Navigator.pop(context);
-                              },
-                              icon:Icon(Icons.cancel_outlined, size: 40,color: Colors.red,)
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10,),
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListTile(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
 
-                          )),
-                      SizedBox(height: 30,),
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: Text(
-                                "Store Status",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: titleFontSize,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
                                 ),
-                              ),
-                            ),
-                            SizedBox(height: 10,),
-                            Container(
-
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.grey200),
-                              ),
-                              child: ListTile(
                                 leading: Icon(Icons.open_in_new),
-                                title: Text("Open"),
-                                subtitle: Text("Can't Complete Instraction"),
+                                title: Text("Open",
+                                  style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600),
+                                ),
+                                subtitle: Text("Can't Complete Instruction",
+                                  style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400),
+                                ),
                                 trailing: Icon(Icons.circle_outlined,),
+                                onTap: (){},
                               ),
-                            ),
-                            SizedBox(height: 10,),
-                            Container(
-
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.textindigo),
+                              SizedBox(height: 10,),
+                              ListTile(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: AppColors.textindigo),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                leading: Icon(Icons.refresh),
+                                title: Text("Busy",
+                                  style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600),
+                                ),
+                                subtitle: Text("Can't Complete Instruction",
+                                  style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400),
+                                ),
+                                trailing: Icon(Icons.task_alt,color: AppColors.textindigo,),
+                                onTap: (){},
                               ),
-                              child: ListTile(
-                                leading: Icon(Icons.light_mode),
-                                title: Text("Busy"),
-                                subtitle: Text("Can't Complete Instraction"),
-                                trailing: Icon(Icons.check_circle_outlined,color: AppColors.textindigo,),
-                              ),
-                            ),
-                            SizedBox(height: 10,),
-                            Container(
-
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.grey200),
-                              ),
-                              child: ListTile(
-                                leading: Icon(Icons.pause_circle),
-                                title: Text("Paush"),
-                                subtitle: Text("Can't Complete Instraction"),
+                              SizedBox(height: 10,),
+                              ListTile(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                leading: Icon(Icons.pause_circle_outline_outlined),
+                                title: Text("Pause",
+                                  style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600),
+                                ),
+                                subtitle: Text("Can't Complete Instruction",
+                                  style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400),
+                                ),
                                 trailing: Icon(Icons.circle_outlined,),
+                                onTap: (){},
                               ),
-                            ),
-                            SizedBox(height: 10,),
-                            Container(
+                              SizedBox(height: 10,),
+                              ListTile(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10),
 
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.grey200),
-                              ),
-                              child: ListTile(
+                                ),
                                 leading: Icon(Icons.schedule),
-                                title: Text("Schedule paush"),
-                                subtitle: Text("Can't Complete Instraction"),
+                                title: Text("Schedule pause",
+                                  style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600),
+                                ),
+                                subtitle: Text("Can't Complete Instruction",
+                                  style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400),
+                                ),
                                 trailing: Icon(Icons.circle_outlined,),
                                 onTap: (){
                                   Navigator.pop(context);
-
+                                  _dialogBuilder(context);
                                 },
                               ),
-                            ),
-
-
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              )),
-
+              ),
+              ),
               child: Container(
                 margin: EdgeInsets.only(right: 10),
                 padding: EdgeInsets.all(5),
@@ -337,7 +343,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   ),
                   SizedBox(width: 30,),
                   Container(
+                    height: 55,
                     width: 220,
+                    //padding: EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(10),
@@ -369,12 +377,10 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                           setState(() {
                             selectedValue = value;
                           });
-
-
                         },
                       ),
                     ),
-                  )
+                  ),
                   ///TODO: Add "No Filter Currently Applied dropdown"
 
                 ],
@@ -386,48 +392,47 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           _key.currentState!.openDrawer();
         }, mes: "You are new here. You need to Choose Restaurant & Location")
             :  Container(
-          margin: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 20),
-          height: size.height,
-          width: size.width,
-          child: Row(
-            children: [
-              Expanded(
-                child: NewOrdersListView(
-                  title: "Incoming Orders",
-                  orders: _incomingOrdersList,
-                  btnText: "Incoming Orders",
-                  btnColor: Colors.blue.shade100,
-                  onClick: () {
+              margin: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 20),
+              height: size.height,
+              width: size.width,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: NewOrdersListView(
+                      title: "Incoming Orders",
+                      orders: _incomingOrdersList,
+                      btnText: "Incoming Orders",
+                      btnColor: Colors.blue.shade100,
+                      onClick: () {
 
-                  },
-
-                )
+                      },
+                ),
               ),
-              SizedBox(width: 10,),
-              Expanded(
-                  child: NewOrdersListView(
-                    title: "Preparing",
-                    orders: _incomingOrdersList,
-                    btnText: "Ready in 13 Mins",
-                    btnColor: Colors.greenAccent.shade100,
-                    onClick: () {
+                SizedBox(width: 10,),
+                Expanded(
+                    child: NewOrdersListView(
+                      title: "Preparing",
+                      orders: _incomingOrdersList,
+                      btnText: "Ready in 13 Mins",
+                      btnColor: Colors.greenAccent.shade100,
+                      onClick: () {
 
-                    },
-                  )
-              ),
-              SizedBox(width: 10,),
-              Expanded(
-                  child: NewOrdersListView(
-                    isLast: true,
-                    title: "Cash Unpaid",
-                    orders: _incomingOrdersList,
-                    btnText: "Unpaid",
-                    btnColor: Colors.red.shade100,
-                    onClick: () {
+                      },
+                    )
+                ),
+                SizedBox(width: 10,),
+                Expanded(
+                    child: NewOrdersListView(
+                      isLast: true,
+                      title: "Cash Unpaid",
+                      orders: _incomingOrdersList,
+                      btnText: "Unpaid",
+                      btnColor: Colors.red.shade100,
+                      onClick: () {
 
-                    },
-                  )
-              ),
+                      },
+                    )
+                ),
             ],
           ),
         )
@@ -461,5 +466,128 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
       withoutLoadingOrderLoad();
     });
   }
+
+  /*----Schedule pause AlertDialog----*/
+
+  Future<void>_dialogBuilder(BuildContext context){
+    return showDialog(
+      barrierDismissible: false,
+        context: context, builder: (context) {
+      return AlertDialog(
+        icon: Align(
+          alignment: Alignment.centerRight,
+          child: IconButton(
+              onPressed: (){
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.cancel_outlined,color:AppColors.textred,size: 30,),
+          ),
+        ),
+        title: Center(
+          child: Text(
+            "Select Pause Time",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: titleFontSize,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        backgroundColor: Colors.white,
+        shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+        content: Container(
+          padding: EdgeInsets.all(10),
+          width: MediaQuery.of(context).size.width * 0.35,
+          child: Column(
+            children: [
+              SizedBox(height: 20,),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: AppColors.grey200),
+                  borderRadius: BorderRadius.circular(10),
+
+                ),
+                title: Text("15 Minutes",
+                  style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600),
+                ),
+                subtitle: Text("For Pause",
+                  style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400),
+                ),
+                trailing: Icon(Icons.circle_outlined,),
+                onTap: (){},
+              ),
+              SizedBox(height: 10,),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: AppColors.textindigo),
+                  borderRadius: BorderRadius.circular(10),
+
+                ),
+                title: Text("30 Minutes",
+                  style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600),
+                ),
+                subtitle: Text("For Pause"
+                  ,style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400),
+                ),
+                trailing: Icon(Icons.task_alt,color: AppColors.textindigo,),
+                onTap: (){},
+              ),
+              SizedBox(height: 10,),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: AppColors.grey200),
+                  borderRadius: BorderRadius.circular(10),
+
+                ),
+                title: Text("45 Minutes",
+                  style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600),
+                ),
+                subtitle: Text("For Pause",
+                  style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400),
+                ),
+                trailing: Icon(Icons.circle_outlined,),
+                onTap: (){},
+              ),
+              SizedBox(height: 10,),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: AppColors.grey200),
+                  borderRadius: BorderRadius.circular(10),
+
+                ),
+                title: Text("60 Minutes",
+                  style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600),),
+                subtitle: Text("For Pause",
+                  style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400),
+                ),
+                trailing: Icon(Icons.circle_outlined,),
+                onTap: (){},
+              ),
+              SizedBox(height: 20,),
+              InkWell(
+                onTap: (){},
+                child: Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.textindigo,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(child: Text("Pause",
+                    style: TextStyle(color: Colors.white,fontSize: normalFontSize),
+                  ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
 }
+
 

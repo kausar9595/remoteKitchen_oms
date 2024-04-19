@@ -12,6 +12,7 @@ import 'package:oms/view/order/order_details/widgets/customer_info.dart';
 import 'package:oms/view/order/order_details/widgets/printer_view.dart';
 import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_alert.dart';
+import 'package:oms/widget/app_button.dart';
 import '../../../controller/order_controller.dart';
 import '../../../model/order_model/order_curiar_model.dart';
 import '../../../model/order_model/order_list_model.dart';
@@ -74,6 +75,14 @@ class _OrderDetailState extends State<OrderDetail> {
                         ///TODO: Uncomment it
                         PrinterViewPage(orderResult: widget.orderResult,),
                         Center(),
+                        AppButton(
+                          bgColor: AppColors.adjbutton,
+                            text: "Adjust Order",
+                            width: 110,
+                            height: 50,
+                            onClick: (){},
+                        ),
+
                         IconButton(onPressed: (){
                           Navigator.pop(context);
                         }, icon: Icon(Icons.cancel_outlined,color: Colors.black,size: 50,)
@@ -341,6 +350,43 @@ class StatusButton extends StatelessWidget {
           style: TextStyle(fontSize: titleFontSize,fontWeight: FontWeight.w600,color: Colors.white),),
       ),
     );
+  }
+  /*---Adjust Order---*/
+  Future<void>_adjustBulder(BuildContext contex){
+    return showDialog(context: contex, builder: (contex){
+      return AlertDialog(
+        icon: Align(
+          alignment: Alignment.topRight,
+          child: IconButton(onPressed: (){}, icon: Icon(Icons.cancel_outlined,color: Colors.red,),
+          ),
+        ),
+        title: Text("Adjust Order",
+          style: TextStyle(fontSize: titleFontSize,fontWeight: FontWeight.w600,color: AppColors.textblack),
+        ),
+        content: Column(
+          children: [
+            ListTile(
+              leading: Icon(Icons.cancel_outlined,color: AppColors.textblack,),
+              title: Text("Can’t Complete Instruction",
+                style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w500,color:AppColors.textblack),
+              ),
+              trailing: Icon(Icons.arrow_forward_ios_sharp,color: AppColors.textblack,),
+              onTap: (){},
+            ),
+            ListTile(
+              leading: Icon(Icons.monetization_on_outlined,color: AppColors.textblack,),
+              title: Text("Update Price",
+                style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w500,color: AppColors.textblack),
+              ),
+              trailing: Icon(Icons.arrow_forward_ios_sharp,color: AppColors.textblack,),
+              onTap: (){},
+            ),
+
+          ],
+        ),
+
+      );
+    });
   }
 }
 
