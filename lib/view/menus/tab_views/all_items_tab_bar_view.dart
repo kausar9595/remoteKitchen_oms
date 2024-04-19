@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:oms/controller/menu_controller.dart';
 import '../../../model/menu_model/menu_items_list_model.dart';
 import '../../../model/menu_model/menu_list_model.dart';
 import '../../../utility/appcolor.dart';
+import '../../../widget/app_alert.dart';
 
 class AllItemsTabBarView extends StatefulWidget {
   const AllItemsTabBarView({
@@ -16,6 +18,7 @@ class AllItemsTabBarView extends StatefulWidget {
     required this.menuItemSearch,
     required this.menuitemSetFiltered,
     required this.loadingMenuItems,
+    required this.changeMenuItemAvailableStatus,
   });
   final List<MenuListResult> menuList;
   final List<MenuitemSet> menuitemSet;
@@ -26,6 +29,7 @@ class AllItemsTabBarView extends StatefulWidget {
   final VoidCallback onRefresh;
   final Function(int id) onMenuSelect;
   final Function(String value) menuItemSearch;
+  final Function(int id, bool value) changeMenuItemAvailableStatus;
   @override
   State<AllItemsTabBarView> createState() => _AllItemsTabBarViewState();
 }
@@ -91,7 +95,10 @@ class _AllItemsTabBarViewState extends State<AllItemsTabBarView> {
                           if (index == 0) {
                             return Text("${widget.menuitemSet.length} Items");
                           }
-                          return AllItemsListTile(menuitemSet: widget.menuitemSet[index - 1]);
+                          return AllItemsListTile(
+                            menuitemSet: widget.menuitemSet[index - 1],
+                            changeMenuItemAvailableStatus: widget.changeMenuItemAvailableStatus,
+                          );
                         },
                         separatorBuilder: (context, index) => const Divider(),
                       ),
@@ -104,7 +111,10 @@ class _AllItemsTabBarViewState extends State<AllItemsTabBarView> {
                           if (index == 0) {
                             return Text("${widget.menuitemSetFiltered.length} Items");
                           }
-                          return AllItemsListTile(menuitemSet: widget.menuitemSetFiltered[index - 1]);
+                          return AllItemsListTile(
+                            menuitemSet: widget.menuitemSetFiltered[index - 1],
+                            changeMenuItemAvailableStatus: widget.changeMenuItemAvailableStatus,
+                          );
                         },
                         separatorBuilder: (context, index) => const Divider(),
                       ),
@@ -145,9 +155,11 @@ class AllItemsListTile extends StatelessWidget {
   const AllItemsListTile({
     super.key,
     required this.menuitemSet,
+    required this.changeMenuItemAvailableStatus,
   });
 
   final MenuitemSet menuitemSet;
+  final Function(int id, bool value) changeMenuItemAvailableStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -159,21 +171,25 @@ class AllItemsListTile extends StatelessWidget {
         onTap: () {
           showDialog(
             context: (context),
-            builder: (context) => const ItemAvailabilityPopup(),
+            builder: (context) => ItemAvailabilityPopup(
+              id: menuitemSet.id,
+              available: menuitemSet.isAvailable,
+              changeMenuItemAvailableStatus: changeMenuItemAvailableStatus,
+            ),
           );
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.blue),
+            border: Border.all(color: menuitemSet.isAvailable ? Colors.blue : Colors.red),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: const Row(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "In Stock",
-                style: TextStyle(fontSize: 16, color: Colors.blue),
+                menuitemSet.isAvailable ? "In Stock" : "Sold Out",
+                style: TextStyle(fontSize: 16, color: menuitemSet.isAvailable ? Colors.blue : Colors.red),
               ),
               SizedBox(width: 10),
               Icon(Icons.keyboard_arrow_down),
@@ -188,14 +204,21 @@ class AllItemsListTile extends StatelessWidget {
 class ItemAvailabilityPopup extends StatefulWidget {
   const ItemAvailabilityPopup({
     super.key,
+    required this.id,
+    required this.available,
+    required this.changeMenuItemAvailableStatus,
   });
+
+  final int id;
+  final bool available;
+  final Function(int id, bool value) changeMenuItemAvailableStatus;
 
   @override
   State<ItemAvailabilityPopup> createState() => _ItemAvailabilityPopupState();
 }
 
 class _ItemAvailabilityPopupState extends State<ItemAvailabilityPopup> {
-  String _selectedText = "in_stock";
+  late String _selectedText = widget.available ? "in_stock" : "sold_out_today";
   void changeSelect(String value) {
     _selectedText = value;
     setState(() {});
@@ -288,34 +311,38 @@ class _ItemAvailabilityPopupState extends State<ItemAvailabilityPopup> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {
-                changeSelect("sold_out_indefinately");
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: _selectedText == "sold_out_indefinately" ? AppColors.textindigo : AppColors.grey200),
-                ),
-                child: ListTile(
-                  title: const Text("Sold Out Indefinately"),
-                  trailing: _selectedText == "sold_out_indefinately"
-                      ? const Icon(
-                          Icons.check_circle_outlined,
-                          color: AppColors.textindigo,
-                        )
-                      : const Icon(
-                          Icons.circle_outlined,
-                        ),
-                ),
-              ),
-            ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // InkWell(
+            //   onTap: () {
+            //     changeSelect("sold_out_indefinately");
+            //   },
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(10),
+            //       border: Border.all(color: _selectedText == "sold_out_indefinately" ? AppColors.textindigo : AppColors.grey200),
+            //     ),
+            //     child: ListTile(
+            //       title: const Text("Sold Out Indefinately"),
+            //       trailing: _selectedText == "sold_out_indefinately"
+            //           ? const Icon(
+            //               Icons.check_circle_outlined,
+            //               color: AppColors.textindigo,
+            //             )
+            //           : const Icon(
+            //               Icons.circle_outlined,
+            //             ),
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: _isLoading ? null : _changeAvailability,
               child: const Text("Change"),
             ),
             const SizedBox(height: 20),
@@ -323,5 +350,27 @@ class _ItemAvailabilityPopupState extends State<ItemAvailabilityPopup> {
         ),
       ),
     );
+  }
+
+  bool _isLoading = false;
+
+  _changeAvailability() async {
+    if (widget.available == (_selectedText == "in_stock")) {
+      return;
+    }
+    _isLoading = true;
+    setState(() {});
+
+    final response = await MenusController.changeAvailability([widget.id], _selectedText == "in_stock");
+
+    _isLoading = false;
+    setState(() {});
+
+    if (response == 200) {
+      widget.changeMenuItemAvailableStatus(widget.id, _selectedText == "in_stock");
+      Navigator.pop(context);
+    } else {
+      AppSnackBar(context, "Failed To Change Status", Colors.red);
+    }
   }
 }

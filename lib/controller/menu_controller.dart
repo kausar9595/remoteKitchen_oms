@@ -29,4 +29,16 @@ class MenusController {
     final decodedBody = utf8.decode(response.bodyBytes);
     return MenuItemsListModel.fromJson(jsonDecode(decodedBody));
   }
+
+  static Future<int> changeAvailability(List<int> menuItemIds, bool isAvailable) async {
+    final json = {
+      "itemId": menuItemIds,
+      "today": isAvailable,
+    };
+    const url = "${AppConfig.BASE_URL}/food/v1/menu-item/availability/";
+    print(menuItemIds);
+    print(isAvailable);
+    final response = await Api.pathch(url: url, body: json);
+    return response.statusCode;
+  }
 }

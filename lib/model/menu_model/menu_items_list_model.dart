@@ -75,7 +75,7 @@ class MenuitemSet {
   final String name;
   final String description;
   final double basePrice;
-  final bool isAvailable;
+  bool isAvailable;
   final ImageModel? originalImage;
   final int likeCount;
   final dynamic isCurrentUserLiked;

@@ -20,7 +20,7 @@ class _NewMenuScreenState extends State<NewMenuScreen> {
   MenuListResult? _selectedMenu;
   final List<MenuitemSet> _menuitemSet = [];
   List<MenuitemSet> _menuitemSetFiltered = [];
-  List<MenuitemSet> get _menuItemSetSoldOut => [];
+  List<MenuitemSet> get _menuItemSetSoldOut => _menuitemSet.where((element) => element.isAvailable == false).toList();
 
   bool _loadingMenu = false;
   bool _loadingMenuItem = false;
@@ -61,6 +61,12 @@ class _NewMenuScreenState extends State<NewMenuScreen> {
 
   _menuItemsSearch(String value) {
     _menuitemSetFiltered = _menuitemSet.where((element) => element.name.toLowerCase().contains(value.toLowerCase())).toList();
+    setState(() {});
+  }
+
+  _changeMenuItemAvailableStatus(int menuItemId, bool value) {
+    final menuItem = _menuitemSet.firstWhere((element) => element.id == menuItemId);
+    menuItem.isAvailable = value;
     setState(() {});
   }
 
@@ -127,12 +133,15 @@ class _NewMenuScreenState extends State<NewMenuScreen> {
                   menuList: _menuList,
                   menuitemSet: _menuitemSet,
                   menuitemSetFiltered: _menuitemSetFiltered,
+                  changeMenuItemAvailableStatus: _changeMenuItemAvailableStatus,
                 ),
                 SoldOutTabBarView(
                   menuItemSetSoldOut: _menuItemSetSoldOut,
                   menuList: _menuList,
                   onMenuSelect: _loadMenuItemList,
                   selectedMenu: _selectedMenu,
+                  changeMenuItemAvailableStatus: _changeMenuItemAvailableStatus,
+                  menuItemSearch: _menuItemsSearch,
                 ),
               ],
             ),
