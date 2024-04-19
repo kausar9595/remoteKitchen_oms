@@ -1,22 +1,15 @@
-import 'package:bluetooth_print/bluetooth_print.dart';
-import 'package:bluetooth_print/bluetooth_print_model.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:oms/controller/printer_controller.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/utility/order_status.dart';
 import 'package:oms/view/order/order_details/widgets/customer_info.dart';
 import 'package:oms/view/order/order_details/widgets/printer_view.dart';
 import 'package:oms/view/order/screen/new_orders.dart';
-import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_alert.dart';
 import '../../../controller/order_controller.dart';
 import '../../../model/order_model/order_curiar_model.dart';
 import '../../../model/order_model/order_list_model.dart';
-import '../../under_constraction.dart';
 import '../screen/widget/calculat_amounts_order_details.dart';
 
 class OrderDetail extends StatefulWidget {

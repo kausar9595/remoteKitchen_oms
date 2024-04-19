@@ -342,7 +342,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                       ),
                     )
                   ),
-                  SizedBox(width: 30,),
+                  const SizedBox(width: 30,),
                   Container(
                     width: 220,
                     decoration: BoxDecoration(

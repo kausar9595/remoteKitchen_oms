@@ -1,6 +1,7 @@
 import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/material.dart';
+import 'package:oms/widget/app_alert.dart';
 
 import '../../../../controller/printer_controller.dart';
 import '../../../../model/order_model/order_list_model.dart';
@@ -20,6 +21,7 @@ class PrinterViewPage extends StatefulWidget {
 
 class _PrinterViewPageState extends State<PrinterViewPage> {
   List<BluetoothDevice> _devices = [];
+  late BluetoothDevice _selectedDevice;
   BluetoothPrint bluetoothPrint = BluetoothPrint.instance;
 
   bool _isScanning = false;
@@ -51,11 +53,11 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
       children: [
         Container(
           alignment: Alignment.center,
-          height: 50,
+          height: 60,
           width: MediaQuery
               .of(context)
               .size
-              .width * .22,
+              .width * .20,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
@@ -69,27 +71,15 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator(),);
                 } else if (snapshot.hasData) {
-                  _devices = snapshot.data!;
-                  print("printer list === ${_devices}");
-                  print("printer result ===== ${snapshot.data}");
-                  return _devices.isNotEmpty ? DropdownButton<String>(
-                    icon: Icon(Icons.keyboard_arrow_down_rounded, size: 35,
-                      color: Colors.black,),
-                    elevation: 0,
-                    underline: Container(
-                      decoration: BoxDecoration(
-                        border: Border(bottom: BorderSide.none),
-                      ),
-                    ),
-                    hint: SizedBox(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * .15,
+                  return _devices.isNotEmpty ? InkWell(
+                    onTap: ()=>_choosePrinterPopup(),
+                    child: SizedBox(
+                      height: 60,
+                      width: MediaQuery.of(context).size.width * .15,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(Icons.print, color: Colors.black, size: 35,),
+                        Icon(Icons.print, size: 30,),
                           Text("Choose Printer",
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
@@ -99,19 +89,11 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
                         ],
                       ),
                     ),
-                    items: snapshot.data!.map((d) {
-                      return DropdownMenuItem<String>(
-                        value: d.name ?? "",
-                        child: snapshot.data!.isEmpty
-                            ? Text("No printer found")
-                            : Text("${d.address}"),
-                      );
-                    }).toList(),
-                    onChanged: (_) {},
                   )
                       : SizedBox(
-                    width: MediaQuery.of(context).size.width * .15,
-                    child: Row(
+                          height: 60,
+                          width: MediaQuery.of(context).size.width * .15,
+                          child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
@@ -134,8 +116,8 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
                             color: AppColors.textblack,
                           ),),
                       ],
-                    ),
-                  ); //SCAN PRINTER
+                                          ),
+                                        ); //SCAN PRINTER
                 } else {
                   return Center(child: Text("no printer found"),);
                 }
@@ -144,9 +126,13 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
         ),
         SizedBox(width: 15,),
         InkWell(
-          onTap: () =>
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => UnderConstractions())),
+          onTap: (){
+            if(_devices.isNotEmpty && _selectedDevice != null && _selectedDevice.address != null){
+              PrinterController.printReceipt(widget.orderResult, _selectedDevice);
+            }else{
+              AppSnackBar(context, "No printer is connected", Colors.red);
+            }
+          },
           child: Container(
             width: 150,
             height: 60,
@@ -162,6 +148,49 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
           ),
         ),
       ],
+    );
+  }
+
+  Future<void> _choosePrinterPopup() {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: SizedBox(
+            height: 40,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Select Printer'),
+                InkWell(
+                  onTap: ()=>Navigator.pop(context),
+                  child: Icon(Icons.close, color: Colors.red,),
+                )
+              ],
+            ),
+          ),
+          content: SizedBox(
+            height: MediaQuery.of(context).size.height*.50,
+            width: MediaQuery.of(context).size.width * .30,
+            child: _devices.isNotEmpty ? ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: _devices.length,
+              itemBuilder: (_, index){
+                return ListTile(
+                  onTap: (){
+                    _selectedDevice = _devices[index];
+                  },
+                  leading: Icon(Icons.print, ),
+                  title: Text("${_devices[index].name}"),
+                  subtitle: Text("${_devices[index].address}"),
+                );
+              },
+            ) : Center(child: Text("No printer is online."),),
+          ),
+        );
+      },
     );
   }
 }
