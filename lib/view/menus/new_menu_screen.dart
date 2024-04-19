@@ -60,7 +60,7 @@ class _NewMenuScreenState extends State<NewMenuScreen> {
   }
 
   _menuItemsSearch(String value) {
-    _menuitemSetFiltered = _menuitemSet.where((element) => element.name.contains(value)).toList();
+    _menuitemSetFiltered = _menuitemSet.where((element) => element.name.toLowerCase().contains(value.toLowerCase())).toList();
     setState(() {});
   }
 

@@ -27,6 +27,7 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   final _search = TextEditingController();
   var _searchText;
+  bool isSearchEmpty = true;
 
   List<OrderResult> _history = [];
   List<OrderResult> _searchHistory = [];
@@ -93,11 +94,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 controller: _search,
                 onChanged: (v) {
                   setState(() {
+                    isSearchEmpty = v.isEmpty;
                     _searchOrder(v);
                   });
                 },
                 decoration: InputDecoration(
-                  hintText: "Search By Item Name",
+                  hintText: "Search By Customer Name or Order ID",
                   hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
                   contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                   prefixIcon: Icon(
@@ -175,7 +177,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     ),
                                   ),
                                 ],
-                                rows: _searchHistory.isNotEmpty
+                                rows: _searchHistory.isNotEmpty || isSearchEmpty == false
                                     ? _searchHistory
                                         .map((value) => DataRow(
                                                 onLongPress: () {
@@ -199,8 +201,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                             ),
                                                             Text(
                                                               "${value.customer.toString()}",
-                                                              style:
-                                                                  TextStyle(fontWeight: FontWeight.w700, color: AppColors.textblack, fontSize: normalFontSize),
+                                                              style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.textblack, fontSize: 14),
                                                             ),
                                                           ],
                                                         ),
@@ -210,12 +211,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                   DataCell(InkWell(
                                                     child: Text(
                                                       "${selectRsname}",
-                                                      style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: titleFontSize),
+                                                      style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14),
                                                     ),
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("${selectLocationName}",
-                                                        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: normalFontSize)),
+                                                        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14)),
                                                   )),
                                                   DataCell(InkWell(
                                                     child: Text("CA\$${value.total.toString()}",
@@ -245,8 +246,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                                 style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                             Text(
                                                               "${value.customer.toString()}",
-                                                              style:
-                                                                  TextStyle(fontWeight: FontWeight.w700, color: AppColors.textblack, fontSize: normalFontSize),
+                                                              style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.textblack, fontSize: 14),
                                                             ),
                                                           ],
                                                         ),
@@ -256,7 +256,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                   DataCell(InkWell(
                                                     child: Text(
                                                       "${selectRsname}",
-                                                      style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: normalFontSize),
+                                                      style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14),
                                                     ),
                                                   )),
                                                   DataCell(InkWell(
@@ -595,17 +595,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   void _searchOrder(String v) {
-    _searchHistory.clear();
-    setState(() {
-      for (var i in _history) {
-        //loop for items
-        for (var j in i.orderitemSet!) {
-          if (i.customer!.toLowerCase().contains(v.toLowerCase()) || j.menuItem!.name!.toLowerCase().contains(v)) {
-            _searchHistory.add(i);
-          }
-        }
-      }
-    });
+    _searchHistory = _history.where((element) {
+      return element.customer!.toLowerCase().contains(v.toLowerCase()) || element.id.toString().toLowerCase().contains(v.toLowerCase());
+    }).toList();
+    setState(() {});
+    // _searchHistory.clear();
+    // setState(() {
+    //   for (var i in _history) {
+    //     //loop for items
+    //     for (var j in i.orderitemSet!) {
+    //       if (i.customer!.toLowerCase().contains(v.toLowerCase()) || j.menuItem!.name!.toLowerCase().contains(v)) {
+    //         _searchHistory.add(i);
+    //       }
+    //     }
+    //   }
+    // });
   }
 }
 
