@@ -25,6 +25,7 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
   BluetoothPrint bluetoothPrint = BluetoothPrint.instance;
 
   bool _isScanning = false;
+  bool _isPrinting = false;
 
   void initBluetoothPrinter()async{
     // begin scan
@@ -80,7 +81,12 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                         Icon(Icons.print, size: 30,),
-                          Text("Choose Printer",
+                          _selectedDevice != null ? Text("Choose Printer",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: smallFontSize,
+                              color: AppColors.textblack,
+                            ),):  Text("${_selectedDevice.name}",
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: smallFontSize,
@@ -127,11 +133,14 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
         SizedBox(width: 15,),
         InkWell(
           onTap: (){
+            setState(() => _isPrinting = true);
             if(_devices.isNotEmpty && _selectedDevice != null && _selectedDevice.address != null){
-              PrinterController.printReceipt(widget.orderResult, _selectedDevice);
+              PrinterController.printReceipt(context, widget.orderResult, _selectedDevice);
             }else{
-              AppSnackBar(context, "No printer is connected", Colors.red);
+              AppSnackBar(context, "Printer is connected but face some issues to print", Colors.red);
             }
+            setState(() => _isPrinting = false);
+
           },
           child: Container(
             width: 150,
@@ -140,7 +149,7 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
                 color: Colors.blue,
                 borderRadius: BorderRadius.circular(10)
             ),
-            child: const Center(child: Text("Print Recipe",
+            child:  Center(child: _isPrinting ? CircularProgressIndicator(color: Colors.white,) : Text("Print Recipe",
               style: TextStyle(
                   color: Colors.white
               ),
@@ -170,24 +179,39 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
               ],
             ),
           ),
-          content: SizedBox(
-            height: MediaQuery.of(context).size.height*.50,
-            width: MediaQuery.of(context).size.width * .30,
-            child: _devices.isNotEmpty ? ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: _devices.length,
-              itemBuilder: (_, index){
-                return ListTile(
-                  onTap: (){
-                    _selectedDevice = _devices[index];
+          content: StatefulBuilder(
+            builder: (context, setState) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height*.50,
+                width: MediaQuery.of(context).size.width * .30,
+                child: _devices.isNotEmpty ? ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: _devices.length,
+                  itemBuilder: (_, index){
+                    return ListTile(
+                      onTap: (){
+                        setState(() {
+                          bluetoothPrint.connect(_devices[index]).then((value) {
+                            if(value){
+                              AppSnackBar(context, "Printer is connected: ${_selectedDevice.name}", Colors.green);
+                            }else{
+                              AppSnackBar(context, "Printer is not connected", Colors.red);
+                            }
+                          });
+
+                          _selectedDevice = _devices[index];
+                        });
+                        Navigator.pop(context);
+                      },
+                      leading: Icon(Icons.print, ),
+                      title: Text("${_devices[index].name}"),
+                      subtitle: Text("${_devices[index].address}"),
+                    );
                   },
-                  leading: Icon(Icons.print, ),
-                  title: Text("${_devices[index].name}"),
-                  subtitle: Text("${_devices[index].address}"),
-                );
-              },
-            ) : Center(child: Text("No printer is online."),),
+                ) : Center(child: Text("No printer is online."),),
+              );
+            }
           ),
         );
       },
