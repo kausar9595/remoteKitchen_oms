@@ -139,6 +139,7 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
             ),
             child:  Center(child: _isPrinting ? CircularProgressIndicator(color: Colors.white,) : Text("Print Recipe",
               style: TextStyle(
+                fontSize: 13,
                   color: Colors.white
               ),
             ),),
