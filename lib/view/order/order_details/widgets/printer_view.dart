@@ -2,6 +2,7 @@ import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/material.dart';
 import 'package:oms/widget/app_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../controller/printer_controller.dart';
 import '../../../../model/order_model/order_list_model.dart';
@@ -31,13 +32,36 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
     // begin scan
     bluetoothPrint.startScan(timeout: Duration(seconds: 2));
     if(!mounted) return;
-    bluetoothPrint.scanResults.listen((event) {
-      print("event === ${event}");
+    bluetoothPrint.scanResults.listen((event) async {
       setState(() {
         _devices = event;
       });
-      print("bluetooth printer list == ${_devices}");
+      print("event[0].name! ==== ${event[0].name!}");
+      await bluetoothPrint.isConnected.then((value) {
+        if(value == true){
+          print("Printer is connected");
+          PrinterController.savePrinterConnection(event[0].name!);
+          getPrinterName();
+        }else{
+          if(_devices.isNotEmpty){
+            bluetoothPrint.connect(_devices[0]);
+            PrinterController.savePrinterConnection(_devices[0].name!);
+            getPrinterName();
+            print("bluetooth printer list == ${_devices}");
+          }
+        }
+      });
+
     });
+  }
+
+  String printerName = "No Printer found";
+  void getPrinterName()async{
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setState(() {
+      printerName = _pref.getString("printer_name")!;
+    });
+    print("printerName ==== ${printerName}");
   }
 
   @override
@@ -45,6 +69,7 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) => initBluetoothPrinter());
+    getPrinterName();
 
   }
 
@@ -65,7 +90,7 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
             color: Colors.white,
             border: Border.all(color: Colors.grey),
           ),
-          child: _devices.isNotEmpty ? InkWell(
+          child:  printerName != null ? InkWell(
             onTap: ()=>_choosePrinterPopup(),
             child: SizedBox(
               height: 60,
@@ -74,17 +99,30 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.print, size: 30,),
-                  _selectedDevice == null ? Text("Choose Printer",
+                  Text("$printerName",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: smallFontSize,
                       color: AppColors.textblack,
-                    ),):  Text("${_selectedDevice!.name}",
+                    ),)
+                ],
+              ),
+            ),
+          ) : _devices.isNotEmpty ? InkWell(
+            onTap: ()=>_choosePrinterPopup(),
+            child: SizedBox(
+              height: 60,
+              width: MediaQuery.of(context).size.width * .15,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(Icons.print, size: 30,),
+                 Text("Choose Printer",
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: smallFontSize,
                       color: AppColors.textblack,
-                    ),),
+                    ),)
                 ],
               ),
             ),
@@ -120,10 +158,10 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
         ),
         SizedBox(width: 15,),
         InkWell(
-          onTap: (){
+          onTap: ()async{
             setState(() => _isPrinting = true);
-            if(_devices.isNotEmpty && _selectedDevice != null && _selectedDevice!.address != null){
-              PrinterController.printReceipt(context, widget.orderResult, _selectedDevice!);
+            if(await bluetoothPrint.isConnected == true){
+              PrinterController.printReceipt(context, widget.orderResult);
             }else{
               AppSnackBar(context, "Printer is connected but face some issues to print", Colors.red);
             }
@@ -181,6 +219,7 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
                     return ListTile(
                       onTap: (){
                         setState(() {
+                         
                           bluetoothPrint.connect(_devices[index]).then((value) {
                             print("value ===${value}");
                             if(value){
@@ -191,6 +230,8 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
                           });
 
                           _selectedDevice = _devices[index];
+                          PrinterController.savePrinterConnection(_devices[index].name!);
+                          getPrinterName();
                         });
                         Navigator.pop(context);
                       },

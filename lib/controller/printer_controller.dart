@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:oms/model/order_model/order_list_model.dart';
@@ -16,7 +17,7 @@ class PrinterController{
   }
 
   //receipt print
-  static Future printReceipt(BuildContext context, OrderResult orderResult, BluetoothDevice selectedDevice)async{
+  static Future printReceipt(BuildContext context, OrderResult orderResult)async{
     try{
       SharedPreferences _pref = await SharedPreferences.getInstance();
       var resturantName = _pref.getString("restaurant_name");
@@ -68,8 +69,12 @@ class PrinterController{
       // Add your text elements with adjusted positions
       list.add(LineText(type: LineText.TYPE_TEXT, content: 'Subtotal: ', weight: 0, align: LineText.ALIGN_LEFT, x: leftAlignX, relativeX: 0, y: startY, linefeed: 0));
       list.add(LineText(type: LineText.TYPE_TEXT, content: '\$${orderResult.subtotal}', weight: 0, align: LineText.ALIGN_RIGHT, x: rightAlignX, relativeX: 0, y: startY, linefeed: 1));
-      // list.add(LineText(type: LineText.TYPE_TEXT, content: 'Tax: ', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 1));
-      // list.add(LineText(type: LineText.TYPE_TEXT, content: '${orderResult.currency} \$${orderResult.tax}', weight: 1, align: LineText.ALIGN_RIGHT, x: 350, relativeX: 0, linefeed: 1));
+
+      // list.add(LineText(type: LineText.TYPE_TEXT, content: 'Tax: ', weight: 0,align: LineText.ALIGN_LEFT, x: leftAlignX, relativeX: 0, y: startY, linefeed: 0));
+      // list.add(LineText(type: LineText.TYPE_TEXT, content: '\$${orderResult.tax}', weight: 0, align: LineText.ALIGN_RIGHT, x: rightAlignX, relativeX: 0, y: startY, linefeed: 1));
+      //
+      // list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery Fee: ', weight: 0,align: LineText.ALIGN_LEFT, x: leftAlignX, relativeX: 0, y: startY, linefeed: 0));
+      // list.add(LineText(type: LineText.TYPE_TEXT, content: '\$${orderResult.tax}', weight: 0, align: LineText.ALIGN_RIGHT, x: rightAlignX, relativeX: 0, y: startY, linefeed: 1));
 
       list.add(LineText(type: LineText.TYPE_TEXT, content: 'Total: ', weight: 0, align: LineText.ALIGN_LEFT, x: leftAlignX, relativeX: 0, y: startY, linefeed: 0));
       list.add(LineText(type: LineText.TYPE_TEXT, content: '\$${orderResult.total}', weight: 0, align: LineText.ALIGN_RIGHT, x: rightAlignX, relativeX: 0, y: startY, linefeed: 1));
@@ -95,6 +100,21 @@ class PrinterController{
       AppSnackBar(context, "Printer error: $e", Colors.green);
     }
   }
+
+
+  //save printer connection
+  static Future savePrinterConnection(String printerName)async{
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    _pref.setString("printer_name", printerName);
+  }
+
+  //save printer connection
+  static Future<String> getSavePrinter()async{
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    return _pref.getString("printer_name").toString();
+  }
+
+
 
 
 
