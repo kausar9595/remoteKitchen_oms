@@ -376,7 +376,7 @@ class _OrderDetailState extends State<OrderDetail> {
               borderRadius: BorderRadius.circular(15),
             ),
             content: Container(
-              height: MediaQuery.of(context).size.height*0.40,
+              height: MediaQuery.of(context).size.height*0.45,
               width: MediaQuery.of(context).size.width * 0.30,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
