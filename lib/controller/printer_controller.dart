@@ -21,49 +21,51 @@ class PrinterController{
 
       List<LineText> list = [];
 
-      list.add(LineText(type: LineText.TYPE_TEXT, content: '**********************************************', weight: 1, align: LineText.ALIGN_CENTER,linefeed: 1));
-      list.add(LineText(type: LineText.TYPE_TEXT, content: 'ChatChef', weight: 1, align: LineText.ALIGN_CENTER, fontZoom: 2, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'ChatChef', weight: 3, align: LineText.ALIGN_CENTER, fontZoom: 2, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: '******************************', weight: 1, align: LineText.ALIGN_CENTER,linefeed: 1));
       list.add(LineText(linefeed: 1));
 
-      list.add(LineText(type: LineText.TYPE_TEXT, content: '------------------- Order Details ---------------------', weight: 1, align: LineText.ALIGN_CENTER, linefeed: 1));
-      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Order Id: ${orderResult.orderId}', weight: 1, align: LineText.ALIGN_LEFT, linefeed: 1));
-      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Order Type: ${orderResult.orderType}', weight: 1, align: LineText.ALIGN_LEFT, linefeed: 1));
-      if(orderResult.orderType != "pickup"){
-        list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery Platform: ${orderResult.deliveryPlatform}', weight: 1, align: LineText.ALIGN_LEFT, linefeed: 1));
-        list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery address: ${orderResult.dropoffAddress}', weight: 1, align: LineText.ALIGN_LEFT, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Order Id: ${orderResult.orderId}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Order Type: ${orderResult.orderMethod}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
+      if(orderResult.orderMethod != "pickup"){
+        list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery Platform: ${orderResult.deliveryPlatform}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
+        list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery address: ${orderResult.dropoffAddress}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
       }
       list.add(LineText(linefeed: 1));
 
-      list.add(LineText(type: LineText.TYPE_TEXT, content: '------------------- Order Items ---------------------', weight: 1, align: LineText.ALIGN_CENTER, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: '--------- Order Items ---------', weight: 3, align: LineText.ALIGN_CENTER, linefeed: 1));
+      list.add(LineText(linefeed: 1));
 
       //show order detisl in loop
       for(var i =0; i<orderResult.orderitemSet!.length; i++){
         //order item details
-        list.add(LineText(type: LineText.TYPE_TEXT, content: '${orderResult.orderitemSet![i]!.menuItem!.name}', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 0));
+        list.add(LineText(
+            type: LineText.TYPE_TEXT, content: '${orderResult.orderitemSet![i]!.menuItem!.name}   -   ', weight: 0,  align: LineText.ALIGN_LEFT));
         //order item printer
-        list.add(LineText(type: LineText.TYPE_TEXT, content: '${orderResult.orderitemSet![i]!.quantity} X ${orderResult.currency} \$${orderResult.orderitemSet![i]!.menuItem!.basePrice}', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 0));
+        list.add(LineText(
+            type: LineText.TYPE_TEXT, content: '${orderResult.orderitemSet![i]!.quantity} X \$${orderResult.orderitemSet![i]!.menuItem!.basePrice}', weight: 0,  align: LineText.ALIGN_LEFT,linefeed: 1));
 
       }
-      list.add(LineText(linefeed: 1));
-      list.add(LineText(type: LineText.TYPE_TEXT, content: '-------------------------------------------', weight: 1, align: LineText.ALIGN_CENTER, linefeed: 1));
+       list.add(LineText(linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: '-------------------------------', weight: 1, align: LineText.ALIGN_CENTER, linefeed: 1));
       list.add(LineText(linefeed: 1));
 
-      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Subtotal: ', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 1));
-      list.add(LineText(type: LineText.TYPE_TEXT, content: '${orderResult.currency} \$${orderResult.subtotal}', weight: 1, align: LineText.ALIGN_RIGHT, x: 350, relativeX: 0, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Subtotal: ', weight: 0, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 0));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: '\$${orderResult.subtotal}', weight: 1, align: LineText.ALIGN_RIGHT, x: 320, relativeX: 0, linefeed: 1));
       // list.add(LineText(type: LineText.TYPE_TEXT, content: 'Tax: ', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 1));
       // list.add(LineText(type: LineText.TYPE_TEXT, content: '${orderResult.currency} \$${orderResult.tax}', weight: 1, align: LineText.ALIGN_RIGHT, x: 350, relativeX: 0, linefeed: 1));
 
-      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Total: ', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 1));
-      list.add(LineText(type: LineText.TYPE_TEXT, content: '${orderResult.total} \$${orderResult.subtotal}', weight: 1, align: LineText.ALIGN_RIGHT, x: 350, relativeX: 0, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Total: ', weight: 0, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 0));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: '\$${orderResult.subtotal}', weight: 1, align: LineText.ALIGN_RIGHT, x: 320, relativeX: 0, linefeed: 1));
 
       list.add(LineText(linefeed: 1));
-      list.add(LineText(type: LineText.TYPE_TEXT, content: '-------------------------------------------', weight: 1, align: LineText.ALIGN_CENTER, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: '-------------------------------', weight: 1, align: LineText.ALIGN_CENTER, linefeed: 1));
       list.add(LineText(linefeed: 1));
 
-      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Thank you! Hope you enjoy your meal.', weight: 1, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Thank you! Hope you enjoy your meal.', weight: 0, align: LineText.ALIGN_LEFT, x: 0,relativeX: 0, linefeed: 1));
 
 
-      list.add(LineText(type: LineText.TYPE_TEXT, content: '**********************************************', weight: 1, align: LineText.ALIGN_CENTER,linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: '******************************************', weight: 1, align: LineText.ALIGN_CENTER,linefeed: 1));
       list.add(LineText(linefeed: 1));
 
       await bluetoothPrint.printReceipt(config, list).then((value) {

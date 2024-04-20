@@ -21,7 +21,7 @@ class PrinterViewPage extends StatefulWidget {
 
 class _PrinterViewPageState extends State<PrinterViewPage> {
   List<BluetoothDevice> _devices = [];
-  late BluetoothDevice _selectedDevice;
+  BluetoothDevice? _selectedDevice;
   BluetoothPrint bluetoothPrint = BluetoothPrint.instance;
 
   bool _isScanning = false;
@@ -32,6 +32,7 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
     bluetoothPrint.startScan(timeout: Duration(seconds: 2));
     if(!mounted) return;
     bluetoothPrint.scanResults.listen((event) {
+      print("event === ${event}");
       setState(() {
         _devices = event;
       });
@@ -64,78 +65,65 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
             color: Colors.white,
             border: Border.all(color: Colors.grey),
           ),
-          child: StreamBuilder<List<BluetoothDevice>>(
-              stream: bluetoothPrint.scanResults,
-              builder: (context, snapshot) {
-                print("bluetoothPrint.scanResults === ${bluetoothPrint
-                    .scanResults}");
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator(),);
-                } else if (snapshot.hasData) {
-                  return _devices.isNotEmpty ? InkWell(
-                    onTap: ()=>_choosePrinterPopup(),
-                    child: SizedBox(
-                      height: 60,
-                      width: MediaQuery.of(context).size.width * .15,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                        Icon(Icons.print, size: 30,),
-                          _selectedDevice != null ? Text("Choose Printer",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: smallFontSize,
-                              color: AppColors.textblack,
-                            ),):  Text("${_selectedDevice.name}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: smallFontSize,
-                              color: AppColors.textblack,
-                            ),),
-                        ],
-                      ),
-                    ),
-                  )
-                      : SizedBox(
-                          height: 60,
-                          width: MediaQuery.of(context).size.width * .15,
-                          child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                            icon: _isScanning ? Container(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(),
-                            ) : Icon(Icons.refresh, color: Colors.black,
-                              size: 25,),
-                            onPressed: () {
-                              setState(() => _isScanning = true);
-                              PrinterController.scanPrinter().then((value) {
-                                setState(() => _isScanning = false);
-                              });
-                            }),
-                        Text("No printer found",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: smallFontSize,
-                            color: AppColors.textblack,
-                          ),),
-                      ],
-                                          ),
-                                        ); //SCAN PRINTER
-                } else {
-                  return Center(child: Text("no printer found"),);
-                }
-              }
-          ),
+          child: _devices.isNotEmpty ? InkWell(
+            onTap: ()=>_choosePrinterPopup(),
+            child: SizedBox(
+              height: 60,
+              width: MediaQuery.of(context).size.width * .15,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(Icons.print, size: 30,),
+                  _selectedDevice == null ? Text("Choose Printer",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: smallFontSize,
+                      color: AppColors.textblack,
+                    ),):  Text("${_selectedDevice!.name}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: smallFontSize,
+                      color: AppColors.textblack,
+                    ),),
+                ],
+              ),
+            ),
+          )
+              : SizedBox(
+            height: 60,
+            width: MediaQuery.of(context).size.width * .15,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    icon: _isScanning ? Container(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(),
+                    ) : Icon(Icons.refresh, color: Colors.black,
+                      size: 25,),
+                    onPressed: () {
+                      setState(() => _isScanning = true);
+                      PrinterController.scanPrinter().then((value) {
+                        setState(() => _isScanning = false);
+                      });
+                    }),
+                Text("No printer found",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: smallFontSize,
+                    color: AppColors.textblack,
+                  ),),
+              ],
+            ),
+          )
         ),
         SizedBox(width: 15,),
         InkWell(
           onTap: (){
             setState(() => _isPrinting = true);
-            if(_devices.isNotEmpty && _selectedDevice != null && _selectedDevice.address != null){
-              PrinterController.printReceipt(context, widget.orderResult, _selectedDevice);
+            if(_devices.isNotEmpty && _selectedDevice != null && _selectedDevice!.address != null){
+              PrinterController.printReceipt(context, widget.orderResult, _selectedDevice!);
             }else{
               AppSnackBar(context, "Printer is connected but face some issues to print", Colors.red);
             }
@@ -193,8 +181,9 @@ class _PrinterViewPageState extends State<PrinterViewPage> {
                       onTap: (){
                         setState(() {
                           bluetoothPrint.connect(_devices[index]).then((value) {
+                            print("value ===${value}");
                             if(value){
-                              AppSnackBar(context, "Printer is connected: ${_selectedDevice.name}", Colors.green);
+                              AppSnackBar(context, "Printer is connected: ${_selectedDevice!.name}", Colors.green);
                             }else{
                               AppSnackBar(context, "Printer is not connected", Colors.red);
                             }
