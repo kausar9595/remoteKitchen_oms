@@ -12,6 +12,8 @@ class AppColors{
   static const Color textred = Color(0xffF44336);
   static const Color textorange = Color(0xffFB8A00);
   static const Color grey100 = Color(0xff5A5A5A);
+  static const Color adjbutton = Color(0xff42C2FF);
+  static const Color popupbutton = Color(0xff24FF0066);
 
 
 

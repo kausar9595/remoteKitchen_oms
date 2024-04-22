@@ -350,7 +350,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                           border:
                               OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(10)))),
                     )),
-                    SizedBox(
+                    const SizedBox(
                       width: 30,
                     ),
                     Container(

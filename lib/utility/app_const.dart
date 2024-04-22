@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 double smallFontSize = 3.00.sp;
 double normalFontSize = 4.00.sp;
 double bigFontSize = 10.00.sp;
-double titleFontSize = 7.00.sp;
+double titleFontSize = 5.00.sp;
 
 
 

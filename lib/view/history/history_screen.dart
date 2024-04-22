@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/view/history/history_details.dart';
+import 'package:oms/view/order/screen/widget/calculat_amounts_order_details.dart';
 import 'package:oms/widget/app_button.dart';
 import 'package:oms/widget/app_drawer.dart';
 import 'package:oms/widget/app_shemmer.dart';
@@ -16,6 +17,7 @@ import '../../model/order_model/order_list_model.dart';
 import '../../utility/appcolor.dart';
 import '../../utility/order_status.dart';
 import '../menus/widgets/widget/radio.dart';
+import '../order/order_details/widgets/printer_view.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -299,51 +301,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        alignment: Alignment.center,
-                        height: MediaQuery.of(context).size.height * 0.07,
-                        width: MediaQuery.of(context).size.width * 0.20,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: DropdownButton<String>(
-                          icon: Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            size: 35,
-                            color: Colors.black,
-                          ),
-                          elevation: 0,
-                          underline: Container(
-                            decoration: BoxDecoration(
-                              border: Border(bottom: BorderSide.none),
-                            ),
-                          ),
-                          hint: Row(
-                            children: [
-                              Icon(
-                                Icons.print,
-                                color: Colors.black,
-                                size: 35,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text("Reprint Ticket"),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                          items: <String>['A', 'B', 'C', 'D'].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (_) {},
-                        ),
+                      PrinterViewPage(
+                        orderResult: orderResult,
                       ),
                       IconButton(
                           onPressed: () {

@@ -585,7 +585,6 @@ class _AvailabilityMenusState extends State<AvailabilityMenus> {
                     width: MediaQuery.of(context).size.width * 0.35,
                     child: Column(
                       children: [
-
                         Align(
                             alignment: Alignment.centerRight,
                             child: IconButton(

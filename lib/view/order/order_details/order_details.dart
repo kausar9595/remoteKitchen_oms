@@ -1,22 +1,19 @@
-import 'package:bluetooth_print/bluetooth_print.dart';
-import 'package:bluetooth_print/bluetooth_print_model.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:oms/controller/printer_controller.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/utility/order_status.dart';
+import 'package:oms/view/order/order_details/widgets/custom_popup.dart';
 import 'package:oms/view/order/order_details/widgets/customer_info.dart';
 import 'package:oms/view/order/order_details/widgets/printer_view.dart';
 import 'package:oms/view/order/screen/new_orders.dart';
-import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_alert.dart';
+import 'package:oms/widget/app_button.dart';
 import '../../../controller/order_controller.dart';
 import '../../../model/order_model/order_curiar_model.dart';
 import '../../../model/order_model/order_list_model.dart';
-import '../../under_constraction.dart';
+import '../../../utility/appcolor.dart';
+import '../screen/widget/calculat_amounts_order_details.dart';
 
 class OrderDetail extends StatefulWidget {
   final OrderResult orderResult;
@@ -34,12 +31,16 @@ class _OrderDetailState extends State<OrderDetail> {
 
   Future<OrderCuriarInfoModel>? getOrderCuriar;
 
+  final modefires = <Widget>[];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     currentOrderStatus = widget.orderResult.status!;
   }
+
+  int _quantity = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +139,7 @@ class _OrderDetailState extends State<OrderDetail> {
                             children: [
                               //  items.modifiers!.isEmpty  ? SizedBox(height: 4.5,) : Center(),
                               Text(
-                                "${items.menuItem?.name}",
+                                "${items.menuItem!.name}",
                                 style: TextStyle(
                                   fontSize: normalFontSize,
                                   fontWeight: FontWeight.w700,
@@ -181,7 +182,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                 )
                               : Center(),
                           trailing: Text(
-                            "CA\$${items.menuItem?.basePrice}",
+                            "CA\$${items.menuItem!.basePrice}",
                             style: TextStyle(
                               fontSize: normalFontSize,
                               fontWeight: FontWeight.w400,
@@ -375,7 +376,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                                             id: widget.orderResult!.id.toString(),
                                                             title: "Are you sure?",
                                                             child: Text("Are you sure? Your order is Ready for Pickup?"),
-                                                            okClick: () => orderStatusChange(OrderStatus.readyForPickup));
+                                                            okClick: () => orderStatusChange(OrderStatus.completed));
                                                       },
                                                       text: "Mark as Ready",
                                                       bgColor: AppColors.textindigo,
@@ -426,6 +427,381 @@ class _OrderDetailState extends State<OrderDetail> {
         Navigator.pop(context);
       }
     });
+  }
+
+  /*---Adjust Order---*/
+  Future<void> _adjustBuilder(BuildContext context) async {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return Container(
+            height: 300,
+            child: AlertDialog(
+              insetPadding: EdgeInsets.only(bottom: 20, top: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              content: Container(
+                height: MediaQuery.of(context).size.height * 0.40,
+                width: MediaQuery.of(context).size.width * 0.30,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Adjust Order",
+                          style: TextStyle(
+                            fontSize: titleFontSize,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textblack,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.cancel_outlined,
+                              color: Colors.red,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.cancel_outlined,
+                        color: AppColors.textblack,
+                      ),
+                      title: Text(
+                        "Can’t Complete Instruction",
+                        style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w600, color: AppColors.textblack),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_sharp,
+                        color: AppColors.textblack,
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.monetization_on_outlined,
+                        color: AppColors.textblack,
+                      ),
+                      title: Text(
+                        "Update Price",
+                        style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w600, color: AppColors.textblack),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_sharp,
+                        color: AppColors.textblack,
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        CustomPopup(
+                          context: context,
+                          Texttitle: Column(
+                            children: [
+                              Text(
+                                "Update Price",
+                                style: TextStyle(fontWeight: FontWeight.w600, fontSize: titleFontSize, color: AppColors.textblack),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Current subtotal",
+                                    style: TextStyle(fontSize: normalFontSize, color: AppColors.textblack, fontWeight: FontWeight.w400),
+                                  ),
+                                  Text(
+                                    "CA \$23.47",
+                                    style: TextStyle(fontSize: normalFontSize, color: AppColors.textblack, fontWeight: FontWeight.w400),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Price Adjust",
+                                    style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w400, color: AppColors.textblack),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.grey.shade300,
+                                    ),
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                _quantity++;
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(color: AppColors.textblack, width: 1),
+                                              ),
+                                              child: Center(
+                                                  child: Icon(
+                                                Icons.add,
+                                                size: 15,
+                                                color: Colors.black,
+                                              )),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Text(
+                                              "${_quantity}",
+                                              style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w600, color: AppColors.textblack),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                _quantity--;
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(color: AppColors.textblack, width: 1),
+                                              ),
+                                              child: Center(
+                                                  child: Icon(
+                                                Icons.remove,
+                                                size: 15,
+                                                color: Colors.black,
+                                              )),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              AppButton(text: "Continue", width: 260, height: 40, bgColor: AppColors.popupbutton, onClick: () {})
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.access_time_sharp,
+                        color: AppColors.textblack,
+                      ),
+                      title: Text(
+                        "Update Ready Time",
+                        style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w600, color: AppColors.textblack),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_sharp,
+                        color: AppColors.textblack,
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        CustomPopup(
+                          context: context,
+                          Texttitle: Center(
+                            child: Text(
+                              "Ready Time",
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: titleFontSize, color: AppColors.textblack),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                "A delivery person will pickup\n the order around the\n time the order is Ready",
+                                style: TextStyle(
+                                  fontSize: normalFontSize,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textblack,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              SizedBox(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          _quantity++;
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(color: AppColors.textblack, width: 2),
+                                        ),
+                                        child: Center(
+                                            child: Icon(
+                                          Icons.add,
+                                          size: 18,
+                                          color: Colors.black,
+                                        )),
+                                      ),
+                                    ),
+                                    Text(
+                                      "${_quantity} MIN",
+                                      style: TextStyle(fontSize: titleFontSize, fontWeight: FontWeight.w600, color: AppColors.textblack),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          _quantity--;
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(color: AppColors.textblack, width: 2),
+                                        ),
+                                        child: Center(
+                                            child: Icon(
+                                          Icons.remove,
+                                          size: 18,
+                                          color: Colors.black,
+                                        )),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 35,
+                              ),
+                              AppButton(
+                                text: "Ready",
+                                width: 260,
+                                height: 40,
+                                bgColor: AppColors.popupbutton,
+                                onClick: () {},
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.phone,
+                        color: AppColors.textblack,
+                      ),
+                      title: Text(
+                        "Call Customer Or Support",
+                        style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w600, color: AppColors.textblack),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios_sharp,
+                        color: AppColors.textblack,
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        CustomPopup(
+                          context: context,
+                          Texttitle: Center(
+                            child: Text(
+                              "Call",
+                              style: TextStyle(fontWeight: FontWeight.w600, fontSize: titleFontSize, color: AppColors.textblack),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 300,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  border: Border.all(color: AppColors.textindigo),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Customer : ( Customer Number)",
+                                    style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: AppColors.textindigo),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                height: 60,
+                                width: 300,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  border: Border.all(color: AppColors.textindigo),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Support Centre : +1 236-239-6988",
+                                    style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: AppColors.textindigo),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
 
