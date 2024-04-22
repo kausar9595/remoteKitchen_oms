@@ -25,9 +25,13 @@ void main() async{
   NotificationController().requestNotificationPermissions();
   checkAndroidScheduleExactAlarmPermission();
   AlarmStorage.init();
+  removePrinter();
   runApp(const MyApp());
 }
-
+Future removePrinter()async{
+SharedPreferences _pref = await SharedPreferences.getInstance();
+_pref.remove("printer_name");
+}
 Future<void> checkAndroidScheduleExactAlarmPermission() async {
   final status = await Permission.scheduleExactAlarm.status;
   print('Schedule exact alarm permission: $status.');

@@ -10,14 +10,17 @@ abstract class PaymentStatusReminder {
     reminders[orderResult.id ?? 0] = Timer(
       Duration(minutes: minutes),
       () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PaymentReceiveConfirmationScreen(
-              orderResult: orderResult,
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          await Future.delayed(const Duration(seconds: 3));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PaymentReceiveConfirmationScreen(
+                orderResult: orderResult,
+              ),
             ),
-          ),
-        );
+          );
+        });
       },
     );
   }

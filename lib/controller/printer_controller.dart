@@ -42,10 +42,12 @@ class PrinterController{
       list.add(LineText(linefeed: 1));
 
       list.add(LineText(type: LineText.TYPE_TEXT, content: 'Order Id: ${orderResult.orderId}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Order Time: ${orderResult.receiveDate}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
       list.add(LineText(type: LineText.TYPE_TEXT, content: 'Order Type: ${orderResult.orderMethod}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
       if(orderResult.orderMethod != "pickup"){
         list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery Platform: ${orderResult.deliveryPlatform}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
         list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery address: ${orderResult.dropoffAddress}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
+        list.add(LineText(type: LineText.TYPE_TEXT, content: 'Customer Name: ${orderResult.customer}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
       }
       list.add(LineText(linefeed: 1));
 

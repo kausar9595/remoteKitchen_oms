@@ -41,6 +41,7 @@ class AuthController{
     _pref.remove("restaurant_name");
     _pref.remove("location_name");
     _pref.remove("location_id");
+    _pref.remove("printer_name");
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Login()), (route) => false) ;
   }
 

@@ -76,7 +76,8 @@ class _OrderDetailState extends State<OrderDetail> {
                       children: [
                         ///TODO: Uncomment it
                         PrinterViewPage(orderResult: widget.orderResult,),
-                        SizedBox(width: 10,),
+                        Center(),
+
                         AppButton(
                           bgColor: AppColors.adjbutton,
                             text: "Adjust Order",
@@ -88,7 +89,7 @@ class _OrderDetailState extends State<OrderDetail> {
 
                             },
                         ),
-                        SizedBox(width: 10,),
+
                         IconButton(onPressed: (){
                           Navigator.pop(context);
                         }, icon: Icon(Icons.cancel_outlined,color: Colors.black,size: 50,)
@@ -375,7 +376,7 @@ class _OrderDetailState extends State<OrderDetail> {
               borderRadius: BorderRadius.circular(15),
             ),
             content: Container(
-              height: MediaQuery.of(context).size.height*0.45,
+              height: MediaQuery.of(context).size.height*0.40,
               width: MediaQuery.of(context).size.width * 0.30,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
