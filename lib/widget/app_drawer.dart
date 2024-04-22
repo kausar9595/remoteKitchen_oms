@@ -10,6 +10,7 @@ import 'package:oms/model/restaurant_model/location_list_model.dart';
 import 'package:oms/view/menus/menus.dart';
 import 'package:oms/view/menus/new_menu_screen.dart';
 import 'package:oms/view/order/screen/new_orders.dart';
+import 'package:oms/view/report/report_screen.dart';
 import 'package:oms/widget/app_shemmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../model/restaurant_model/restaurantListModel.dart';
@@ -341,6 +342,21 @@ class _AppDrawerState extends State<AppDrawer> {
                 width: double.infinity,
                 child: Text(
                   "Menus",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Get.to(ReportScreen(), transition: Transition.rightToLeft);
+              },
+              child: Container(
+                padding: EdgeInsets.only(left: 20),
+                alignment: Alignment.centerLeft,
+                height: 50,
+                width: double.infinity,
+                child: Text(
+                  "Report",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
                 ),
               ),
