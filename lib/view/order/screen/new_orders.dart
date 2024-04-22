@@ -10,8 +10,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
+import 'package:oms/view/order/order_details/widgets/custom_popup.dart';
 import 'package:oms/view/order/screen/widget/new_order_list_view.dart';
 import 'package:oms/view/setting_screen/widget/app_input.dart';
+import 'package:oms/widget/app_button.dart';
 
 import '../../../controller/order_controller.dart';
 import '../../../controller/restaurant_controller.dart';
@@ -66,7 +68,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           _incomingOrdersList.add(i);
         });
       }
-      if (i.isPaid != true && i.paymentMethod == "cash" && i.status == OrderStatus.readyForPickup) {
+      if (i.isPaid != true && i.paymentMethod == "cash" && i.status != OrderStatus.pending) {
         setState(() {
           _unpaidCashlist.add(i);
         });
@@ -225,7 +227,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                           border: Border.all(color: AppColors.grey200),
                                         ),
                                         child: ListTile(
-                                          leading: Icon(Icons.open_in_new),
+                                          leading: Icon(Icons.check_box_outlined),
                                           title: Text("Open"),
                                           subtitle: Text("Can't Complete Instraction"),
                                           trailing: Icon(
@@ -242,11 +244,11 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                           border: Border.all(color: AppColors.textindigo),
                                         ),
                                         child: ListTile(
-                                          leading: Icon(Icons.light_mode),
+                                          leading: Icon(Icons.refresh),
                                           title: Text("Busy"),
                                           subtitle: Text("Can't Complete Instraction"),
                                           trailing: Icon(
-                                            Icons.check_circle_outlined,
+                                            Icons.task_alt,
                                             color: AppColors.textindigo,
                                           ),
                                         ),
@@ -260,7 +262,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                           border: Border.all(color: AppColors.grey200),
                                         ),
                                         child: ListTile(
-                                          leading: Icon(Icons.pause_circle),
+                                          leading: Icon(Icons.pause_circle_outline),
                                           title: Text("Paush"),
                                           subtitle: Text("Can't Complete Instraction"),
                                           trailing: Icon(
@@ -285,6 +287,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                                           ),
                                           onTap: () {
                                             Navigator.pop(context);
+                                            _schedulePopUp(context);
                                           },
                                         ),
                                       ),
@@ -350,7 +353,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                           border:
                               OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(10)))),
                     )),
-                    const SizedBox(
+                    SizedBox(
                       width: 30,
                     ),
                     Container(
@@ -469,5 +472,157 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
       // Call your function here
       withoutLoadingOrderLoad();
     });
+  }
+
+  /*---schedule popUp---*/
+  Future<void> _schedulePopUp(BuildContext context) {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
+            ),
+            title: Container(
+              padding: EdgeInsets.all(15),
+              //height: MediaQuery.of(context).size.height-200,
+              width: MediaQuery.of(context).size.width * 0.30,
+              child: Column(
+                children: [
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(
+                            Icons.cancel_outlined,
+                            size: 40,
+                            color: Colors.red,
+                          ))),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Text(
+                            "Select Schedule\n Pause Time",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: titleFontSize,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ListTile(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            side: BorderSide(color: AppColors.grey200),
+                          ),
+                          title: Text(
+                            "15 Minutes",
+                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: AppColors.textblack),
+                          ),
+                          subtitle: Text(
+                            "For Pause",
+                            style: TextStyle(fontSize: smallFontSize, fontWeight: FontWeight.w400, color: AppColors.textblack),
+                          ),
+                          trailing: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.circle_outlined,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ListTile(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            side: BorderSide(color: AppColors.grey200),
+                          ),
+                          title: Text(
+                            "30 Minutes",
+                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: AppColors.textblack),
+                          ),
+                          subtitle: Text(
+                            "For Pause",
+                            style: TextStyle(fontSize: smallFontSize, fontWeight: FontWeight.w400, color: AppColors.textblack),
+                          ),
+                          trailing: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.circle_outlined,
+                              )),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ListTile(
+                          title: Text(
+                            "45 Minutes",
+                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: AppColors.textblack),
+                          ),
+                          subtitle: Text(
+                            "For Pause",
+                            style: TextStyle(fontSize: smallFontSize, fontWeight: FontWeight.w400, color: AppColors.textblack),
+                          ),
+                          trailing: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.task_alt,
+                                color: AppColors.textindigo,
+                              )),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            side: BorderSide(color: AppColors.textindigo),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ListTile(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            side: BorderSide(color: AppColors.grey200),
+                          ),
+                          title: Text(
+                            "60 Minutes",
+                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: AppColors.textblack),
+                          ),
+                          subtitle: Text(
+                            "For Pause",
+                            style: TextStyle(fontSize: smallFontSize, fontWeight: FontWeight.w400, color: AppColors.textblack),
+                          ),
+                          trailing: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.circle_outlined,
+                              )),
+                          onTap: () {},
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        AppButton(text: "Pause Orders", width: double.infinity, height: 50, onClick: () {}),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
