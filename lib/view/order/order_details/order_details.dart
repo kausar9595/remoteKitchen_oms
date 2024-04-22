@@ -76,8 +76,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       children: [
                         ///TODO: Uncomment it
                         PrinterViewPage(orderResult: widget.orderResult,),
-                        Center(),
-
+                        SizedBox(width: 10,),
                         AppButton(
                           bgColor: AppColors.adjbutton,
                             text: "Adjust Order",
@@ -89,7 +88,7 @@ class _OrderDetailState extends State<OrderDetail> {
 
                             },
                         ),
-
+                        SizedBox(width: 10,),
                         IconButton(onPressed: (){
                           Navigator.pop(context);
                         }, icon: Icon(Icons.cancel_outlined,color: Colors.black,size: 50,)
