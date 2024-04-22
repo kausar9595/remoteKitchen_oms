@@ -16,6 +16,7 @@ import '../../model/order_model/order_list_model.dart';
 import '../../utility/appcolor.dart';
 import '../../utility/order_status.dart';
 import '../menus/widgets/widget/radio.dart';
+import '../order/order_details/widgets/printer_view.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});

@@ -68,7 +68,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           _incomingOrdersList.add(i);
         });
       }
-      if (i.isPaid != true && i.paymentMethod == "cash" && i.status != OrderStatus.pending) {
+      if (i.isPaid != true && i.paymentMethod == "cash" && i.status == OrderStatus.readyForPickup) {
         setState(() {
           _unpaidCashlist.add(i);
         });

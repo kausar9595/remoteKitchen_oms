@@ -318,7 +318,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                                             id: widget.orderResult!.id.toString(),
                                                             title: "Are you sure?",
                                                             child: Text("Are you sure? Your order is Ready for Pickup?"),
-                                                            okClick: () => orderStatusChange(OrderStatus.completed));
+                                                            okClick: () => orderStatusChange(OrderStatus.readyForPickup));
                                                       },
                                                       text: "Mark as Ready",
                                                       bgColor: AppColors.textindigo,
