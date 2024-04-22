@@ -342,7 +342,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                       ),
                     )
                   ),
-                  const SizedBox(width: 30,),
+                  SizedBox(width: 30,),
                   Container(
                     width: 220,
                     decoration: BoxDecoration(
@@ -392,49 +392,49 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
         body: _isNew ? NewUser(onClick: (){
           _key.currentState!.openDrawer();
         }, mes: "You are new here. You need to Choose Restaurant & Location")
-                : Container(
-                      margin: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 20),
-                      height: size.height,
-                      width: size.width,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: NewOrdersListView(
-                              title: "Incoming Orders",
-                              orders: _incomingOrdersList,
-                              btnText: "Incoming Orders",
-                              btnColor: Colors.blue.shade100,
-                              onClick: () {
+            :  Container(
+          margin: EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 20),
+          height: size.height,
+          width: size.width,
+          child: Row(
+            children: [
+              Expanded(
+                child: NewOrdersListView(
+                  title: "Incoming Orders",
+                  orders: _incomingOrdersList,
+                  btnText: "Incoming Orders",
+                  btnColor: Colors.blue.shade100,
+                  onClick: () {
 
-                              },
+                  },
 
-                            )
-                          ),
-                        SizedBox(width: 10,),
-                        Expanded(
-                            child: NewOrdersListView(
-                              title: "Preparing",
-                              orders: _preparingOrderList,
-                              btnText: "Ready in 13 Mins",
-                              btnColor: Colors.greenAccent.shade100,
-                              onClick: () {
+                )
+              ),
+              SizedBox(width: 10,),
+              Expanded(
+                  child: NewOrdersListView(
+                    title: "Preparing",
+                    orders: _preparingOrderList,
+                    btnText: "Ready in 13 Mins",
+                    btnColor: Colors.greenAccent.shade100,
+                    onClick: () {
 
-                              },
-                            )
-                        ),
-                        SizedBox(width: 10,),
-                        Expanded(
-                            child: NewOrdersListView(
-                              isLast: true,
-                              title: "Cash Unpaid",
-                              orders: _unpaidCashlist,
-                              btnText: "Unpaid",
-                              btnColor: Colors.red.shade100,
-                              onClick: () {
+                    },
+                  )
+              ),
+              SizedBox(width: 10,),
+              Expanded(
+                  child: NewOrdersListView(
+                    isLast: true,
+                    title: "Cash Unpaid",
+                    orders: _unpaidCashlist,
+                    btnText: "Unpaid",
+                    btnColor: Colors.red.shade100,
+                    onClick: () {
 
-                              },
-                            )
-                        ),
+                    },
+                  )
+              ),
             ],
           ),
         )

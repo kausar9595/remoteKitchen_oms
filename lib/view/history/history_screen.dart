@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/view/history/history_details.dart';
-import 'package:oms/view/order/screen/widget/calculat_amounts_order_details.dart';
 import 'package:oms/widget/app_button.dart';
 import 'package:oms/widget/app_drawer.dart';
 import 'package:oms/widget/app_shemmer.dart';
@@ -16,7 +15,6 @@ import '../../model/order_model/order_list_model.dart';
 import '../../utility/appcolor.dart';
 import '../../utility/order_status.dart';
 import '../menus/widgets/widget/radio.dart';
-import '../order/order_details/widgets/printer_view.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -349,7 +347,69 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 crossAxisAlignment:
                 CrossAxisAlignment.center,
                 children: [
-                  PrinterViewPage(orderResult: orderResult,),
+                  Container(
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context)
+                        .size
+                        .height *
+                        0.07,
+                    width: MediaQuery.of(context)
+                        .size
+                        .width *
+                        0.20,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                      BorderRadius.circular(10),
+                      color: Colors.white,
+                      border: Border.all(
+                          color: Colors.grey),
+                    ),
+                    child: DropdownButton<String>(
+                      icon: Icon(
+                        Icons
+                            .keyboard_arrow_down_rounded,
+                        size: 35,
+                        color: Colors.black,
+                      ),
+                      elevation: 0,
+                      underline: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                              bottom:
+                              BorderSide.none),
+                        ),
+                      ),
+                      hint: Row(
+                        children: [
+                          Icon(
+                            Icons.print,
+                            color: Colors.black,
+                            size: 35,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text("Reprint Ticket"),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                      items: <String>[
+                        'A',
+                        'B',
+                        'C',
+                        'D'
+                      ].map((String value) {
+                        return DropdownMenuItem<
+                            String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (_) {},
+                    ),
+                  ),
                   IconButton(
                       onPressed: () {
                         Navigator.pop(context);
@@ -433,19 +493,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                          ),
                        ),
                        subtitle: items.modifiers!.isNotEmpty
-                           ? ListView(
-                         physics: NeverScrollableScrollPhysics(),
-                         shrinkWrap: true,
-                         children: List.generate(items.modifiers!.length, (modifires) {
-                           return  ListView.builder(
+                           ? ListView.builder(
                              shrinkWrap: true,
                              physics: NeverScrollableScrollPhysics(),
-                             itemCount: items.modifiers![modifires].modifiersItems!.length,
+                             itemCount: items.modifiers![index].modifiersItems!.length,
                              itemBuilder: (_, modifiarItem){
                                return Row(
                                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                  children: [
-                                   Text("${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
+                                   Text("${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
                                      style: TextStyle(
                                        fontSize: 13,
                                        fontWeight: FontWeight.w400,
@@ -453,7 +509,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                      ),
                                    ),
                                    SizedBox(width: 10,),
-                                   Text("(CA\$${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
+                                   Text("(CA\$${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
                                      style: TextStyle(
                                        fontSize: 13,
                                        fontWeight: FontWeight.w600,
@@ -463,20 +519,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                  ],
                                );
                              },
-                           );
-                         }),
-                       )
-
-                           : Center(),
+                           ) : Center(),
                        title: Text(
-                         "${items.menuItem != null ? items.menuItem!.name : ""}",
+                         "${items.menuItem!.name}",
                          style: TextStyle(
                              fontSize: normalFontSize,
                              fontWeight: FontWeight.w600,
                              color: Colors.black),
                        ),
                        trailing: Text(
-                         "CA\$${items.menuItem != null ? items.menuItem!.basePrice : ""}",
+                         "CA\$${items.menuItem!.basePrice}",
                          style: TextStyle(
                              fontSize: normalFontSize,
                              fontWeight: FontWeight.w500,
@@ -522,8 +574,72 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           color: Colors.black),
                     ),
                   ),
-                  CalculatOrdersAmount(orderResult: orderResult),
-
+                  orderResult.discount != 0.0 ? ListTile(
+                    leading: Text("Discount",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color:Colors.black),
+                    ),
+                    title: Divider(),
+                    trailing: Text("CA\$${orderResult.discount}",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color:Colors.black),
+                    ),
+                  ) :Center(),
+                  orderResult.deliveryFee != 0.0 ? ListTile(
+                    leading: Text("Delivery Fee",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color:Colors.black),
+                    ),
+                    title: Divider(),
+                    trailing: Text("CA\$${orderResult.deliveryFee}",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color: Colors.black),
+                    ),
+                  ) :Center(),
+                  orderResult.convenienceFee != 0.0 ? ListTile(
+                    leading: Text("Convenience Fee",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color:Colors.black),
+                    ),
+                    title: Divider(),
+                    trailing: Text("CA\$${orderResult.convenienceFee}",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color: Colors.black),
+                    ),
+                  ) :Center(),
+                  orderResult.deliveryDiscount != 0.0 ? ListTile(
+                    leading: Text("Delivery Discount",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color:Colors.black),
+                    ),
+                    title: Divider(),
+                    trailing: Text("CA\$${orderResult.deliveryDiscount}",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color: Colors.black),
+                    ),
+                  ) :Center(),
+                  orderResult.voucher != null && orderResult.voucher != 0.0 ? ListTile(
+                    leading: Text("Voucher",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color:Colors.black),
+                    ),
+                    title: Divider(),
+                    trailing: Text("CA\$${orderResult.voucher}",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color: Colors.black),
+                    ),
+                  ) :Center(),
+                  orderResult.tips != null && orderResult.tips != 0.0 ? ListTile(
+                    leading: Text("Tips",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color:Colors.black),
+                    ),
+                    title: Divider(),
+                    trailing: Text("CA\$${orderResult.tips}",
+                      style: TextStyle(fontWeight: FontWeight.w500,
+                          fontSize: normalFontSize,color: Colors.black),
+                    ),
+                  ) :Center(),
                   Divider(
                     thickness: 5,
                     color: Colors.black,

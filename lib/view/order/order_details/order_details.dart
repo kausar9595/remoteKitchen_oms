@@ -1,20 +1,22 @@
-
-import 'package:flutter/cupertino.dart';
+import 'package:bluetooth_print/bluetooth_print.dart';
+import 'package:bluetooth_print/bluetooth_print_model.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:oms/controller/printer_controller.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/utility/order_status.dart';
-import 'package:oms/view/order/order_details/widgets/custom_popup.dart';
 import 'package:oms/view/order/order_details/widgets/customer_info.dart';
 import 'package:oms/view/order/order_details/widgets/printer_view.dart';
 import 'package:oms/view/order/screen/new_orders.dart';
+import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_alert.dart';
-import 'package:oms/widget/app_button.dart';
 import '../../../controller/order_controller.dart';
 import '../../../model/order_model/order_curiar_model.dart';
 import '../../../model/order_model/order_list_model.dart';
-import '../../../utility/appcolor.dart';
-import '../screen/widget/calculat_amounts_order_details.dart';
+import '../../under_constraction.dart';
 
 class OrderDetail extends StatefulWidget {
   final OrderResult orderResult;
@@ -34,9 +36,6 @@ class _OrderDetailState extends State<OrderDetail> {
 
    Future<OrderCuriarInfoModel>? getOrderCuriar;
 
-   final modefires = <Widget>[];
-
-
 
 
 
@@ -47,7 +46,6 @@ class _OrderDetailState extends State<OrderDetail> {
     currentOrderStatus = widget.orderResult.status!;
 
   }
-   int _quantity = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -76,19 +74,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       children: [
                         ///TODO: Uncomment it
                         PrinterViewPage(orderResult: widget.orderResult,),
-                        SizedBox(width: 10,),
-                        AppButton(
-                          bgColor: AppColors.adjbutton,
-                            text: "Adjust Order",
-                            fontSize: normalFontSize,
-                            width: 110,
-                            height: 60,
-                            onClick: (){
-                            _adjustBuilder(context);
-
-                            },
-                        ),
-                        SizedBox(width: 10,),
+                        Center(),
                         IconButton(onPressed: (){
                           Navigator.pop(context);
                         }, icon: Icon(Icons.cancel_outlined,color: Colors.black,size: 50,)
@@ -128,7 +114,6 @@ class _OrderDetailState extends State<OrderDetail> {
                         itemCount: widget.orderResult.orderitemSet!.length,
                         itemBuilder: (_, index) {
                           var items = widget.orderResult.orderitemSet![index];
-                          //add modifires
                           return  ListTile(
                             leading: Container(
                               alignment: Alignment.center,
@@ -161,41 +146,33 @@ class _OrderDetailState extends State<OrderDetail> {
                               ],
                             ),
                             subtitle: items.modifiers!.isNotEmpty
-                                ? ListView(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              children: List.generate(items.modifiers!.length, (modifires) {
-                                  return  ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: items.modifiers![modifires].modifiersItems!.length,
-                                    itemBuilder: (_, modifiarItem){
-                                      return Row(
-                                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text("${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColors.textblack,
-                                            ),
+                                ? ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: items.modifiers![index].modifiersItems!.length,
+                                  itemBuilder: (_, modifiarItem){
+                                    return Row(
+                                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.textblack,
                                           ),
-                                          SizedBox(width: 10,),
-                                          Text("(CA\$${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w600,
-                                              color: AppColors.textblack,
-                                            ),
+                                        ),
+                                        SizedBox(width: 10,),
+                                        Text("(CA\$${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.textblack,
                                           ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                              }),
-                            )
-
-                                : Center(),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ) : Center(),
                             trailing: Text("CA\$${items.menuItem!.basePrice}",
                               style: TextStyle(
                                 fontSize: normalFontSize,
@@ -233,7 +210,72 @@ class _OrderDetailState extends State<OrderDetail> {
                       ),
                     ),
 
-                    CalculatOrdersAmount(orderResult: widget.orderResult),
+                    widget.orderResult.discount != 0.0 ? ListTile(
+                      leading: Text("Discount",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.discount}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                    ) :Center(),
+                    widget.orderResult.deliveryFee != 0.0 ? ListTile(
+                      leading: Text("Delivery Fee",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.deliveryFee}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color: Colors.black),
+                      ),
+                    ) :Center(),
+                    widget.orderResult.convenienceFee != 0.0 ? ListTile(
+                      leading: Text("Convenience Fee",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.convenienceFee}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color: Colors.black),
+                      ),
+                    ) :Center(),
+                    widget.orderResult.deliveryDiscount != 0.0 ? ListTile(
+                      leading: Text("Delivery Discount",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.deliveryDiscount}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color: Colors.black),
+                      ),
+                    ) :Center(),
+                    widget.orderResult.voucher != null && widget.orderResult.voucher != 0.0 ? ListTile(
+                      leading: Text("Voucher",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.voucher}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color: Colors.black),
+                      ),
+                    ) :Center(),
+                    widget.orderResult.tips != null && widget.orderResult.tips != 0.0 ? ListTile(
+                      leading: Text("Tips",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color:Colors.black),
+                      ),
+                      title: Divider(),
+                      trailing: Text("CA\$${widget.orderResult.tips}",
+                        style: TextStyle(fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,color: Colors.black),
+                      ),
+                    ) :Center(),
 
                     Divider(),
                     ListTile(
@@ -363,297 +405,6 @@ class _OrderDetailState extends State<OrderDetail> {
         }
       });
   }
-
-   /*---Adjust Order---*/
-    Future<void>_adjustBuilder(BuildContext context)async{
-      return showDialog(barrierDismissible:false,context: context, builder: (context){
-        return Container(
-          height: 300,
-          child: AlertDialog(
-            insetPadding: EdgeInsets.only(bottom: 20,top: 10),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            content: Container(
-              height: MediaQuery.of(context).size.height*0.40,
-              width: MediaQuery.of(context).size.width * 0.30,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Adjust Order",
-                        style: TextStyle(fontSize: titleFontSize,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textblack,
-                        ),
-                      ),
-                      SizedBox(height: 20,),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: IconButton(onPressed: (){
-                          Navigator.pop(context);
-                        }, icon: Icon(Icons.cancel_outlined,color: Colors.red,size: 30,),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  ListTile(
-                    leading: Icon(Icons.cancel_outlined,color: AppColors.textblack,),
-                    title: Text("Can’t Complete Instruction",
-                      style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600,color:AppColors.textblack),
-                    ),
-                    trailing: Icon(Icons.arrow_forward_ios_sharp,color: AppColors.textblack,),
-                    onTap: (){Navigator.pop(context);},
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.monetization_on_outlined,color: AppColors.textblack,),
-                    title: Text("Update Price",
-                      style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600,color: AppColors.textblack),
-                    ),
-                    trailing: Icon(Icons.arrow_forward_ios_sharp,color: AppColors.textblack,),
-                    onTap: (){
-                      Navigator.pop(context);
-                      CustomPopup(context: context,
-                          Texttitle: Column(
-                            children: [
-                              Text("Update Price",
-                                style: TextStyle(fontWeight: FontWeight.w600,fontSize: titleFontSize,color: AppColors.textblack),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Current subtotal",
-                                    style: TextStyle(fontSize: normalFontSize,color: AppColors.textblack,fontWeight: FontWeight.w400),
-                                  ),
-                                  Text("CA \$23.47",
-                                    style: TextStyle(fontSize: normalFontSize,color: AppColors.textblack,fontWeight: FontWeight.w400),
-                                  ),
-
-                                ],
-                              ),
-                              SizedBox(height: 30,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Price Adjust",
-                                    style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w400,color: AppColors.textblack),),
-                                  Container(
-                                    padding: EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10),
-                                  alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Colors.grey.shade300,
-                                    ),
-
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          InkWell(
-                                            onTap:(){
-                                              setState(() {
-                                                _quantity++;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: 30,
-                                              width: 30,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border:Border.all(color: AppColors.textblack,width: 1),
-                                              ),
-                                              child: Center(child: Icon(Icons.add,size: 15,color: Colors.black,)),
-                                            ),
-                                          ),
-                                          SizedBox(width: 20,),
-                                          Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Text("${_quantity}",
-                                              style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600,color: AppColors.textblack),
-                                            ),
-                                          ),
-                                          SizedBox(width: 20,),
-                                          InkWell(
-                                            onTap:(){
-                                              setState(() {
-                                                _quantity--;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: 30,
-                                              width: 30,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border:Border.all(color: AppColors.textblack,width: 1),
-                                              ),
-                                              child: Center(child: Icon(Icons.remove,size: 15,color: Colors.black,)),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(height: 40,),
-                              AppButton(
-                                  text: "Continue",
-                                  width: 260,
-                                  height: 40,
-                                  bgColor: AppColors.popupbutton,
-                                  onClick: (){})
-
-                            ],
-                          ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.access_time_sharp,color: AppColors.textblack,),
-                    title: Text("Update Ready Time",
-                      style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600,color: AppColors.textblack),
-                    ),
-                    trailing: Icon(Icons.arrow_forward_ios_sharp,color:AppColors.textblack,),
-                    onTap: (){
-                       Navigator.pop(context);
-                       CustomPopup(
-                           context: context,
-                           Texttitle: Center(
-                             child: Text("Ready Time",
-                               style: TextStyle(fontWeight: FontWeight.w600,fontSize: titleFontSize,color: AppColors.textblack),
-                             ),
-                           ),
-
-                           child: Column(
-                           children: [
-                             Text("A delivery person will pickup\n the order around the\n time the order is Ready",
-                               style: TextStyle(
-                                 fontSize: normalFontSize,
-                                 fontWeight: FontWeight.w400,
-                                 color: AppColors.textblack,
-                               ),
-                             ),
-                             SizedBox(height: 20,),
-                             SizedBox(
-                               child: Row(
-                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                 children: [
-                                   InkWell(
-                                     onTap:(){
-                                       setState(() {
-                                         _quantity++;
-                                       });
-                                     },
-                                     child: Container(
-                                       height: 30,
-                                       width: 30,
-                                       decoration: BoxDecoration(
-                                         shape: BoxShape.circle,
-                                         border:Border.all(color: AppColors.textblack,width: 2),
-                                       ),
-                                       child: Center(child: Icon(Icons.add,size: 18,color: Colors.black,)),
-                                     ),
-                                   ),
-                                   Text("${_quantity} MIN",
-                                     style: TextStyle(fontSize: titleFontSize,fontWeight: FontWeight.w600,color: AppColors.textblack),
-                                   ),
-                                   InkWell(
-                                     onTap:(){
-                                       setState(() {
-                                         _quantity--;
-                                       });
-                                     },
-                                     child: Container(
-                                       height: 30,
-                                       width: 30,
-                                       decoration: BoxDecoration(
-                                         shape: BoxShape.circle,
-                                         border:Border.all(color: AppColors.textblack,width: 2),
-                                       ),
-                                       child: Center(child: Icon(Icons.remove,size: 18,color: Colors.black,)),
-                                     ),
-                                   ),
-                                 ],
-                               ),
-                             ),
-                             SizedBox(height: 35,),
-                             AppButton(
-                                 text: "Ready",
-                                 width: 260,
-                                 height: 40,
-                                 bgColor: AppColors.popupbutton,
-                                 onClick: (){},
-                             ),
-                           ],
-                                                        ),
-                       );
-
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.phone,color: AppColors.textblack,),
-                    title: Text("Call Customer Or Support",
-                      style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w600,color: AppColors.textblack),
-                    ),
-                    trailing: Icon(Icons.arrow_forward_ios_sharp,color:AppColors.textblack,),
-                    onTap: (){
-                      Navigator.pop(context);
-                      CustomPopup(
-                          context: context,
-                          Texttitle: Center(child: Text("Call",
-                            style: TextStyle(fontWeight: FontWeight.w600,fontSize: titleFontSize,color: AppColors.textblack),),),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 300,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: AppColors.textindigo),
-                                ),
-                                child: Center(child: Text("Customer : ( Customer Number)",
-                                  style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w500,color: AppColors.textindigo),
-                                ),
-                                ),
-                              ),
-                              SizedBox(height: 10,),
-                              Container(
-                                height: 60,
-                                width: 300,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                  border: Border.all(color: AppColors.textindigo),
-                                ),
-                                child: Center(child: Text("Support Centre : +1 236-239-6988",
-                                  style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w500,color: AppColors.textindigo),
-                                ),
-                                ),
-                              ),
-                            ],
-                          ),
-                      );
-                    },
-                  ),
-
-                ],
-              ),
-            ),
-
-          ),
-        );
-      });
-    }
-
 }
 
 class StatusButton extends StatelessWidget {

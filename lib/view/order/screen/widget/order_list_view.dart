@@ -35,7 +35,7 @@ class OrderListView extends StatelessWidget {
     _payInPersonPumpUp(orderInfo.createdDate!, context);
     return InkWell(
       onTap: () {
-        if (orderInfo.status == OrderStatus.accepted && orderInfo.paymentMethod != "stripe") {
+        if (orderInfo.status == OrderStatus.accepted && orderInfo.paymentMethod == "cash") {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -171,18 +171,21 @@ class OrderListView extends StatelessWidget {
 
   void _payInPersonPumpUp(DateTime datetime, BuildContext context) {
     // If the order is not pay in person or the order is not in the accepted
-    if (orderInfo.paymentMethod == "stripe" || orderInfo.status != OrderStatus.accepted) return;
+    if (orderInfo.paymentMethod != "cash" || orderInfo.status != OrderStatus.accepted) return;
 
     // If the order has exceeded the 50 min time period
     if (datetime.add(const Duration(minutes: 50)).isBefore(DateTime.now())) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PaymentReceiveConfirmationScreen(
-            orderResult: orderInfo,
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await Future.delayed(const Duration(seconds: 3));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PaymentReceiveConfirmationScreen(
+              orderResult: orderInfo,
+            ),
           ),
-        ),
-      );
+        );
+      });
 
       PaymentStatusReminder.remove(orderInfo.id ?? 0);
 
