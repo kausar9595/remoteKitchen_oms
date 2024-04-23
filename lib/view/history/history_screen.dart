@@ -39,6 +39,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     var response = await OrderController.getPendingOrder();
     if (response!.results!.isNotEmpty) {
       for (var i in response!.results!) {
+        print(i.status);
         if (i.status != OrderStatus.pending && i.status != OrderStatus.accepted) {
           setState(() {
             _history.add(i);
