@@ -7,9 +7,11 @@ import 'package:oms/app_config.dart';
 import 'package:oms/controller/auth_controller.dart';
 import 'package:oms/controller/restaurant_controller.dart';
 import 'package:oms/model/restaurant_model/location_list_model.dart';
+import 'package:oms/view/complete_order/complete_order.dart';
 import 'package:oms/view/menus/menus.dart';
 import 'package:oms/view/menus/new_menu_screen.dart';
 import 'package:oms/view/order/screen/new_orders.dart';
+import 'package:oms/view/order/screen/widget/scheduled_order.dart';
 import 'package:oms/widget/app_shemmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../model/restaurant_model/restaurantListModel.dart';
@@ -17,6 +19,7 @@ import '../utility/appcolor.dart';
 import '../view/history/history_screen.dart';
 import '../view/issue_order/issue_order_screen.dart';
 import '../view/order/screen/orders.dart';
+import '../view/schedule_order/schedule_order.dart';
 
 class AppDrawer extends StatefulWidget {
   final Widget currentPage;
@@ -326,6 +329,36 @@ class _AppDrawerState extends State<AppDrawer> {
                 width: double.infinity,
                 child: Text(
                   "Issue Order",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Get.to(ScheduleOrder(), transition: Transition.rightToLeft);
+              },
+              child: Container(
+                padding: EdgeInsets.only(left: 20),
+                alignment: Alignment.centerLeft,
+                height: 50,
+                width: double.infinity,
+                child: Text(
+                  "Schedule Order",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Get.to(CompleteOrder(), transition: Transition.rightToLeft);
+              },
+              child: Container(
+                padding: EdgeInsets.only(left: 20),
+                alignment: Alignment.centerLeft,
+                height: 50,
+                width: double.infinity,
+                child: Text(
+                  "Complete Order",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
                 ),
               ),

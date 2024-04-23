@@ -217,65 +217,56 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                               ),
                             ),
                             SizedBox(height: 10,),
-                            Container(
-
-                              decoration: BoxDecoration(
+                            ListTile(
+                              leading: Icon(Icons.check_box_outlined),
+                              title: Text("Open"),
+                              subtitle: Text("Can't Complete Instraction"),
+                              trailing: Icon(Icons.circle_outlined,),
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.grey200),
+                                side: BorderSide(color: AppColors.grey200),
                               ),
-                              child: ListTile(
-                                leading: Icon(Icons.check_box_outlined),
-                                title: Text("Open"),
-                                subtitle: Text("Can't Complete Instraction"),
-                                trailing: Icon(Icons.circle_outlined,),
-                              ),
+                              onTap: (){},
                             ),
                             SizedBox(height: 10,),
-                            Container(
-
-                              decoration: BoxDecoration(
+                            ListTile(
+                              leading: Icon(Icons.refresh),
+                              title: Text("Busy"),
+                              subtitle: Text("Can't Complete Instraction"),
+                              trailing: Icon(Icons.task_alt,color: AppColors.textindigo,),
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.textindigo),
+                                side: BorderSide(color: AppColors.textindigo),
                               ),
-                              child: ListTile(
-                                leading: Icon(Icons.refresh),
-                                title: Text("Busy"),
-                                subtitle: Text("Can't Complete Instraction"),
-                                trailing: Icon(Icons.task_alt,color: AppColors.textindigo,),
-                              ),
+                              onTap: (){},
                             ),
                             SizedBox(height: 10,),
-                            Container(
-
-                              decoration: BoxDecoration(
+                            ListTile(
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.grey200),
+                                side: BorderSide(color: AppColors.grey200),
                               ),
-                              child: ListTile(
-                                leading: Icon(Icons.pause_circle_outline),
-                                title: Text("Paush"),
-                                subtitle: Text("Can't Complete Instraction"),
-                                trailing: Icon(Icons.circle_outlined,),
-                              ),
+                              leading: Icon(Icons.pause_circle_outline),
+                              title: Text("Paush"),
+                              subtitle: Text("Can't Complete Instraction"),
+                              trailing: Icon(Icons.circle_outlined,),
+                              onTap: (){},
                             ),
                             SizedBox(height: 10,),
-                            Container(
-
-                              decoration: BoxDecoration(
+                            ListTile(
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: AppColors.grey200),
+                                side: BorderSide(color: AppColors.grey200),
                               ),
-                              child: ListTile(
-                                leading: Icon(Icons.schedule),
-                                title: Text("Schedule paush"),
-                                subtitle: Text("Can't Complete Instraction"),
-                                trailing: Icon(Icons.circle_outlined,),
-                                onTap: (){
-                                  Navigator.pop(context);
-                                  _schedulePopUp(context);
+                              leading: Icon(Icons.schedule),
+                              title: Text("Schedule paush"),
+                              subtitle: Text("Can't Complete Instraction"),
+                              trailing: Icon(Icons.circle_outlined,),
+                              onTap: (){
+                                Navigator.pop(context);
+                                _schedulePopUp(context);
 
-                                },
-                              ),
+                              },
                             ),
 
 
@@ -527,7 +518,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                       subtitle: Text("For Pause",
                         style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400,color:AppColors.textblack),
                       ),
-                      trailing: IconButton(onPressed: (){}, icon: Icon(Icons.circle_outlined,)),
+                      trailing: IconButton(onPressed: (){}, icon: Icon(Icons.circle_outlined,)
+                      ),
+                      onTap: (){},
                     ),
                     SizedBox(height: 10,),
                     ListTile(
@@ -539,23 +532,43 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                         style: TextStyle(fontWeight: FontWeight.w500,fontSize: normalFontSize,color: AppColors.textblack),
                       ),
                       subtitle: Text("For Pause",
-                        style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400,color:AppColors.textblack),
+                        style: TextStyle(
+                            fontSize: smallFontSize,
+                            fontWeight: FontWeight.w400,
+                            color:AppColors.textblack,
+                        ),
                       ),
-                      trailing: IconButton(onPressed: (){}, icon: Icon(Icons.circle_outlined,)),
+                      trailing: IconButton(
+                          onPressed: (){},
+                          icon: Icon(Icons.circle_outlined,)
+                      ),
+                      onTap: (){},
                     ),
                     SizedBox(height: 10,),
                     ListTile(
                       title: Text("45 Minutes",
-                        style: TextStyle(fontWeight: FontWeight.w500,fontSize: normalFontSize,color: AppColors.textblack),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,
+                            color: AppColors.textblack,
+                        ),
                       ),
                       subtitle: Text("For Pause",
-                        style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400,color:AppColors.textblack),
+                        style: TextStyle(
+                            fontSize: smallFontSize,
+                            fontWeight: FontWeight.w400,
+                            color:AppColors.textblack,
+                        ),
                       ),
-                      trailing: IconButton(onPressed: (){}, icon: Icon(Icons.task_alt,color: AppColors.textindigo,)),
+                      trailing: IconButton(
+                          onPressed: (){},
+                          icon: Icon(Icons.task_alt,color: AppColors.textindigo,)
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                         side: BorderSide(color: AppColors.textindigo),
                       ),
+                      onTap: (){},
 
                     ),
                     SizedBox(height: 10,),
@@ -565,12 +578,23 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                         side: BorderSide(color: AppColors.grey200),
                       ),
                       title: Text("60 Minutes",
-                        style: TextStyle(fontWeight: FontWeight.w500,fontSize: normalFontSize,color: AppColors.textblack),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: normalFontSize,
+                            color: AppColors.textblack,
+                        ),
                       ),
                       subtitle: Text("For Pause",
-                        style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400,color:AppColors.textblack),
+                        style: TextStyle(
+                            fontSize: smallFontSize,
+                            fontWeight: FontWeight.w400,
+                            color:AppColors.textblack,
+                        ),
                       ),
-                      trailing: IconButton(onPressed: (){}, icon: Icon(Icons.circle_outlined,)),
+                      trailing: IconButton(
+                          onPressed: (){},
+                          icon: Icon(Icons.circle_outlined,)
+                      ),
                       onTap: (){},
                     ),
                     SizedBox(height: 30,),

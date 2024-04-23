@@ -59,7 +59,6 @@ class _OrderDetailState extends State<OrderDetail> {
               child: CustomerInfo(orderResult: widget.orderResult)
           ),
 
-
           Expanded(
             flex: 1,
               child: Container(

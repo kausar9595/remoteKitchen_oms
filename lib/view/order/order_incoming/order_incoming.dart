@@ -1,5 +1,6 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
+import 'package:oms/assets/app_assets.dart';
 import 'package:oms/controller/order_controller.dart';
 import 'package:oms/model/order_model/order_list_model.dart';
 import 'package:oms/utility/app_const.dart';
@@ -8,6 +9,7 @@ import 'package:oms/utility/order_status.dart';
 import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/view/order/screen/orders.dart';
 import 'package:oms/widget/app_alert.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../../model/order_model/order_list_model.dart';
 import 'widgets/incoming_order_details.dart';
@@ -21,6 +23,9 @@ class OrderIncoming extends StatefulWidget {
 }
 
 class _OrderIncomingState extends State<OrderIncoming> {
+  double _value = 10.0;
+
+
   final _key = GlobalKey<ScaffoldState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -220,6 +225,63 @@ class _OrderIncomingState extends State<OrderIncoming> {
                       style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, color: AppColors.textindigo),
                     ),
                   ),
+                  SizedBox(height: 10,),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width*0.25,
+                    child: ListTile(
+                      leading: Container(
+                        margin: EdgeInsets.all(5),
+                        padding: EdgeInsets.all(5),
+                        height: 70,
+                        width: 60,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: AssetImage(AppAssets.bankCode),fit: BoxFit.contain),
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                      ),
+                      // leading: ClipRRect(
+                      //   borderRadius: BorderRadius.circular(5),
+                      //
+                      //   child: Image.asset(
+                      //     AppAssets.bankCode,
+                      //     fit: BoxFit.cover,
+                      //   ),
+                      // ),
+                      title: Text("Pay Later With Card",
+                        style: TextStyle(fontSize: normalFontSize,fontWeight: FontWeight.w500,color: Colors.white),
+                      ),
+                      subtitle: Text("Pay with credit card  in person",
+                        style: TextStyle(fontSize: smallFontSize,fontWeight: FontWeight.w400,color: Colors.white),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: BorderSide(color: Colors.grey)
+                      ),
+                      onTap: (){},
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width*0.30,
+                    child: SfSlider(
+                      min: 5.0,
+                      max: 30.0,
+                      value: _value,
+                      interval: 5,
+                      showTicks: true,
+                      showLabels: true,
+                      enableTooltip: true,
+                      //minorTicksPerInterval: 1,
+                      onChanged: (dynamic value){
+                        setState(() {
+                          _value = value;
+                        });
+                      },
+                    ),
+                  ),
+                  
+
                 ],
               ),
             ),
