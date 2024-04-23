@@ -14,6 +14,7 @@ class AppColors{
   static const Color grey100 = Color(0xff5A5A5A);
   static const Color adjbutton = Color(0xff42C2FF);
   static const Color popupbutton = Color(0xff2330066);
+  static const Color scheduleButton = Color(0xff0047FF3D);
 
 
 

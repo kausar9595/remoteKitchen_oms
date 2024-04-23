@@ -74,6 +74,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
         });
       }
       if (i.status == OrderStatus.accepted) {
+        if (i.paymentMethod == "cash" && i.isPaid == true) {
+          continue;
+        }
         setState(() {
           _preparingOrderList.add(i);
         });
