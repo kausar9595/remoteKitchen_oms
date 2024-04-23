@@ -338,7 +338,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "${orderResult.quantity} items for Example User Name",
+                        "${orderResult.quantity} items for ${orderResult.customer}",
                         style: TextStyle(
                           fontSize: titleFontSize,
                           fontWeight: FontWeight.w600,
@@ -365,6 +365,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         itemCount: orderResult.orderitemSet!.length,
                         itemBuilder: (_, index) {
                           var items = orderResult.orderitemSet![index];
+                          if (items.modifiers!.length > 0) {
+                            print(items.modifiers?.first);
+                          }
                           return ListTile(
                             leading: Container(
                               alignment: Alignment.center,
@@ -379,11 +382,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: normalFontSize),
                               ),
                             ),
-                            subtitle: items.modifiers!.isNotEmpty
+                            subtitle: items.modifiers!.isNotEmpty && items.modifiers!.length > index
                                 ? ListView.builder(
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
-                                    itemCount: items.modifiers![index].modifiersItems!.length,
+                                    itemCount: items.modifiers![index].modifiersItems?.length,
                                     itemBuilder: (_, modifiarItem) {
                                       return Row(
                                         //mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -156,7 +156,9 @@ class _AppDrawerState extends State<AppDrawer> {
                               _selectedRestaurantId = v;
                             });
                             RestaurantController.addSelectedRestaurantInfo(
-                                    restaurantId: _selectedRestaurantId!.id.toString(), restaurantName: _selectedRestaurantId!.name.toString(), restaurantNumber: _selectedRestaurantId!.phone!.toString())
+                                    restaurantId: _selectedRestaurantId!.id.toString(),
+                                    restaurantName: _selectedRestaurantId!.name.toString(),
+                                    restaurantNumber: _selectedRestaurantId!.phone!.toString())
                                 .then((value) {
                               //call location list
                               _getLocation();
@@ -346,21 +348,21 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
             ),
-            InkWell(
-              onTap: () {
-                Get.to(ReportScreen(), transition: Transition.rightToLeft);
-              },
-              child: Container(
-                padding: EdgeInsets.only(left: 20),
-                alignment: Alignment.centerLeft,
-                height: 50,
-                width: double.infinity,
-                child: Text(
-                  "Report",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
-                ),
-              ),
-            ),
+            // InkWell(
+            //   onTap: () {
+            //     Get.to(ReportScreen(), transition: Transition.rightToLeft);
+            //   },
+            //   child: Container(
+            //     padding: EdgeInsets.only(left: 20),
+            //     alignment: Alignment.centerLeft,
+            //     height: 50,
+            //     width: double.infinity,
+            //     child: Text(
+            //       "Report",
+            //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: 100,
             ),
