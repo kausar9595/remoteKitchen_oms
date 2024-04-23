@@ -156,7 +156,7 @@ class _AppDrawerState extends State<AppDrawer> {
                               _selectedRestaurantId = v;
                             });
                             RestaurantController.addSelectedRestaurantInfo(
-                                    restaurantId: _selectedRestaurantId!.id.toString(), restaurantName: _selectedRestaurantId!.name.toString())
+                                    restaurantId: _selectedRestaurantId!.id.toString(), restaurantName: _selectedRestaurantId!.name.toString(), restaurantNumber: _selectedRestaurantId!.phone!.toString())
                                 .then((value) {
                               //call location list
                               _getLocation();

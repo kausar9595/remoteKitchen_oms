@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/view/menus/menus.dart';
+import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/view/order/screen/orders.dart';
 
 
@@ -25,7 +26,7 @@ class _CheckAuthState extends State<CheckAuth> {
             Navigator.push(context, MaterialPageRoute(builder: (context)=>Menus()));
           }, child: Text("menus")),
           ElevatedButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Orders()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>NewOrderScreen()));
           }, child: Text("orders")),
         ],
       ),

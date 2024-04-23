@@ -21,6 +21,7 @@ class PrinterController{
     try{
       SharedPreferences _pref = await SharedPreferences.getInstance();
       var resturantName = _pref.getString("restaurant_name");
+      var resturantNumber = _pref.getString("restaurant_number");
 
       Map<String, dynamic> config = Map();
 
@@ -48,8 +49,10 @@ class PrinterController{
       if(orderResult.orderMethod != "pickup"){
         list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery Platform: ${orderResult.deliveryPlatform}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
         list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery address: ${orderResult.dropoffAddress}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
-        list.add(LineText(type: LineText.TYPE_TEXT, content: 'Customer Name: ${orderResult.customer}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
       }
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Customer Name: ${orderResult.customer}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Restaurant Phone Number: ${resturantNumber ?? "-"}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
+
       list.add(LineText(linefeed: 1));
 
       list.add(LineText(type: LineText.TYPE_TEXT, content: 'Order Items', weight: 3, align: LineText.ALIGN_CENTER, linefeed: 1));

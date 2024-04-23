@@ -36,10 +36,11 @@ class RestaurantController{
 
 
   //add selected restaurant name into local storage
-  static Future addSelectedRestaurantInfo({required String restaurantId, required String restaurantName})async{
+  static Future addSelectedRestaurantInfo({required String restaurantId, required String restaurantName, required String restaurantNumber})async{
     SharedPreferences _pref = await SharedPreferences.getInstance();
     _pref.setString("restaurant_id",restaurantId);
     _pref.setString("restaurant_name",restaurantName);
+    _pref.setString("restaurant_number",restaurantNumber);
   }
   //add selected restaurant name into local storage
   static Future addSelectedLocationInfo({required String locationId, required String locationName})async{
