@@ -56,7 +56,7 @@ class NewOrdersListView extends StatelessWidget {
                 itemBuilder: (_, index) {
                   var data = orders[index];
                   // Set a reminder for pay in cash
-                  _payInPersonPumpUp(data, context);
+                  // _payInPersonPumpUp(data, context);
                   return InkWell(
                     onTap: () {
                       if (data.status == OrderStatus.readyForPickup && data.paymentMethod == "cash") {

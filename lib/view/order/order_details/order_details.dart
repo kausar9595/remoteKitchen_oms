@@ -152,7 +152,7 @@ class _OrderDetailState extends State<OrderDetail> {
                             children: [
                               //  items.modifiers!.isEmpty  ? SizedBox(height: 4.5,) : Center(),
                               Text(
-                                "${items.menuItem!.name}",
+                                "${items.menuItem?.name}",
                                 style: TextStyle(
                                   fontSize: normalFontSize,
                                   fontWeight: FontWeight.w700,
@@ -201,7 +201,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                 )
                               : Center(),
                           trailing: Text(
-                            "CA\$${items.menuItem!.basePrice}",
+                            "CA\$${items.menuItem?.basePrice}",
                             style: TextStyle(
                               fontSize: normalFontSize,
                               fontWeight: FontWeight.w400,

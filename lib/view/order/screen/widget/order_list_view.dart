@@ -172,16 +172,18 @@ class OrderListView extends StatelessWidget {
 
   void _payInPersonPumpUp(DateTime datetime, BuildContext context) async {
     // If the order is not pay in person or the order is not in the accepted
-    if (orderInfo.paymentMethod != "cash" || orderInfo.status != OrderStatus.accepted) return;
+    if (orderInfo.paymentMethod != "cash" || orderInfo.status != OrderStatus.readyForPickup) return;
 
     final sharedPreferences = await SharedPreferences.getInstance();
     final isPumpedUp = sharedPreferences.getBool("${orderInfo.id}".toString());
-
+    print("isPumpedUpisPumpedUpisPumpedUpisPumpedUpisPumpedUpisPumpedUp");
+    print(isPumpedUp);
     if (isPumpedUp == true) return;
 
     // If the order has exceeded the 50 min time period
     if (datetime.add(const Duration(minutes: 50)).isBefore(DateTime.now())) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+        // Pump has been opened once
         sharedPreferences.setBool(orderInfo.id.toString(), true);
         await Future.delayed(const Duration(seconds: 3));
         Navigator.push(

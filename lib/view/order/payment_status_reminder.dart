@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:oms/model/order_model/order_list_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'payment_receive_confirmation/payment_receive_confirmation_screen.dart';
 
 abstract class PaymentStatusReminder {
@@ -11,6 +12,10 @@ abstract class PaymentStatusReminder {
       Duration(minutes: minutes),
       () {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
+          final sharedPreferences = await SharedPreferences.getInstance();
+
+          // Pump has been opened once
+          sharedPreferences.setBool(orderResult.id.toString(), true);
           await Future.delayed(const Duration(seconds: 3));
           Navigator.push(
             context,

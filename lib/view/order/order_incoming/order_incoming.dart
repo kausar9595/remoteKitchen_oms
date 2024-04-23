@@ -1,5 +1,6 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:oms/controller/order_controller.dart';
 import 'package:oms/model/order_model/order_list_model.dart';
 import 'package:oms/utility/app_const.dart';
@@ -224,7 +225,31 @@ class _OrderIncomingState extends State<OrderIncoming> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.2,
+              height: 20,
+            ),
+            Text(
+              "Payment Method: ${widget.orderResult.paymentMethod?.capitalizeFirst}",
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Prepare Time",
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            SizedBox(
+              width: 300,
+              child: Slider(
+                value: 20,
+                onChanged: (value) {},
+                min: 5,
+                max: 30,
+                divisions: 6,
+              ),
+            ),
+            SizedBox(
+              height: 20,
             ),
             InkWell(
               onTap: () => orderAccept(widget.orderResult.id.toString()),
