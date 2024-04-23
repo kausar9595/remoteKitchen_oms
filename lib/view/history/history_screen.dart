@@ -306,51 +306,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        alignment: Alignment.center,
-                        height: MediaQuery.of(context).size.height * 0.07,
-                        width: MediaQuery.of(context).size.width * 0.20,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: DropdownButton<String>(
-                          icon: Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            size: 35,
-                            color: Colors.black,
-                          ),
-                          elevation: 0,
-                          underline: Container(
-                            decoration: BoxDecoration(
-                              border: Border(bottom: BorderSide.none),
-                            ),
-                          ),
-                          hint: Row(
-                            children: [
-                              Icon(
-                                Icons.print,
-                                color: Colors.black,
-                                size: 35,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text("Reprint Ticket"),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                          items: <String>['A', 'B', 'C', 'D'].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (_) {},
-                        ),
+                      PrinterViewPage(
+                        orderResult: orderResult,
                       ),
                       IconButton(
                           onPressed: () {
