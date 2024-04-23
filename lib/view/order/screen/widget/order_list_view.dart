@@ -33,7 +33,7 @@ class OrderListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _payInPersonPumpUp(orderInfo.createdDate!, context);
+    // _payInPersonPumpUp(orderInfo.createdDate!, context);
     return InkWell(
       onTap: () {
         if (orderInfo.status == OrderStatus.accepted && orderInfo.paymentMethod == "cash") {

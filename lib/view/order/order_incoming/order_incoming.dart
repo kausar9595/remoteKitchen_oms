@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oms/assets/app_assets.dart';
 import 'package:get/get.dart';
 import 'package:oms/controller/order_controller.dart';
+import 'package:oms/controller/prepare_time_controller.dart';
 import 'package:oms/model/order_model/order_list_model.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
@@ -374,6 +375,10 @@ class _OrderIncomingState extends State<OrderIncoming> {
     try {
       await OrderController.changeStatus(id, OrderStatus.accepted).then((value) {
         if (value.statusCode == 200) {
+          // Prep TIme
+          Get.find<PrepareTimeController>().setOrderAcceptTime(int.parse(id));
+          Get.find<PrepareTimeController>().setOrderPrepTime(int.parse(id), _value.round());
+
           AppSnackBar(context, "Order has been accepted", Colors.green);
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const NewOrderScreen()), (route) => false);
         } else {

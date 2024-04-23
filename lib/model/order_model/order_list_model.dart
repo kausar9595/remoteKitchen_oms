@@ -54,7 +54,6 @@ class Links {
 
 class OrderResult {
   double adjustedPrice;
-  int prepTime;
   final int? id;
   final List<OrderitemSet>? orderitemSet;
   final DateTime? createdDate;
@@ -113,7 +112,6 @@ class OrderResult {
 
   OrderResult({
     this.adjustedPrice = 0,
-    this.prepTime = 20,
     this.id,
     this.orderitemSet,
     this.createdDate,
