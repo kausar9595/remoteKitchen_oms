@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:oms/controller/prepare_time_controller.dart';
 import 'package:oms/utility/app_const.dart';
 
 import '../../../../model/order_model/order_list_model.dart';
@@ -56,7 +60,7 @@ class NewOrdersListView extends StatelessWidget {
                 itemBuilder: (_, index) {
                   var data = orders[index];
                   // Set a reminder for pay in cash
-                  _payInPersonPumpUp(data, context);
+                  // _payInPersonPumpUp(data, context);
                   return InkWell(
                     onTap: () {
                       if (data.status == OrderStatus.readyForPickup && data.paymentMethod == "cash") {
@@ -181,16 +185,21 @@ class NewOrdersListView extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: onClick,
-                                  child: Container(
-                                    padding: EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      color: btnColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Center(
-                                      child: Text("$btnText"),
-                                    ),
-                                  ),
+                                  child: btnText == "Ready in 13 Mins"
+                                      ? TimerButton(
+                                          btnColor: btnColor,
+                                          orderResult: data,
+                                        )
+                                      : Container(
+                                          padding: EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                            color: btnColor,
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          child: Center(
+                                            child: Text("$btnText"),
+                                          ),
+                                        ),
                                 )
                               ],
                             ),
@@ -234,6 +243,86 @@ class NewOrdersListView extends StatelessWidget {
       orderResult: data,
       minutes: data.createdDate!.add(const Duration(minutes: 50)).difference(DateTime.now()).inMinutes,
       context: context,
+    );
+  }
+}
+
+class TimerButton extends StatelessWidget {
+  const TimerButton({
+    super.key,
+    required this.btnColor,
+    required this.orderResult,
+  });
+
+  final Color btnColor;
+  final OrderResult orderResult;
+
+  @override
+  Widget build(BuildContext context) {
+    final DateTime acceptTime = Get.find<PrepareTimeController>().getOrderAcceptTime(orderResult.id ?? 0);
+    final int prepTime = Get.find<PrepareTimeController>().getOrderPrepTime(orderResult.id ?? 0);
+    return Container(
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: btnColor,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Center(
+        child: TimerText(
+          durationInMinutes: prepTime,
+          startTime: acceptTime,
+        ),
+      ),
+    );
+  }
+}
+
+class TimerText extends StatefulWidget {
+  final DateTime startTime;
+  final int durationInMinutes;
+
+  TimerText({required this.startTime, required this.durationInMinutes});
+
+  @override
+  _TimerTextState createState() => _TimerTextState();
+}
+
+class _TimerTextState extends State<TimerText> {
+  late DateTime _endTime;
+  late Duration _remainingTime;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _endTime = widget.startTime.add(Duration(minutes: widget.durationInMinutes));
+    _remainingTime = _endTime.difference(DateTime.now());
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _remainingTime = _endTime.difference(DateTime.now());
+        if (_remainingTime.isNegative) {
+          _timer.cancel();
+          // Handle timer completion here
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '${_remainingTime.inMinutes}:${(_remainingTime.inSeconds % 60).toString().padLeft(2, '0')}',
+      style: TextStyle(fontSize: 18),
     );
   }
 }

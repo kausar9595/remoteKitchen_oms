@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:oms/bindings.dart';
 import 'package:oms/firebase_options.dart';
 import 'package:oms/notifications/notification.dart';
 import 'package:oms/view/order/screen/new_orders.dart';
@@ -12,12 +13,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'notifications/local_notoification.dart';
 import 'view/auth/login.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
- // notificationAccess();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // notificationAccess();
   LocalNotificationService.initialize();
 
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
@@ -28,10 +27,12 @@ void main() async{
   removePrinter();
   runApp(const MyApp());
 }
-Future removePrinter()async{
-SharedPreferences _pref = await SharedPreferences.getInstance();
-_pref.remove("printer_name");
+
+Future removePrinter() async {
+  SharedPreferences _pref = await SharedPreferences.getInstance();
+  _pref.remove("printer_name");
 }
+
 Future<void> checkAndroidScheduleExactAlarmPermission() async {
   final status = await Permission.scheduleExactAlarm.status;
   print('Schedule exact alarm permission: $status.');
@@ -47,7 +48,7 @@ Future<void> backgroundHandler(RemoteMessage message) async {
   print(message.notification!.title);
 }
 
-Future notificationAccess()async{
+Future notificationAccess() async {
   final _firebaseMesseegin = await FirebaseMessaging.instance;
   await _firebaseMesseegin.requestPermission();
 }
@@ -62,7 +63,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   //check auth
   var token;
-  getToken()async{
+  getToken() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     setState(() => token = _prefs.getString("token"));
   }
@@ -72,7 +73,6 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     getToken();
-
   }
 
   // This widget is the root of your application.
@@ -82,18 +82,17 @@ class _MyAppState extends State<MyApp> {
         designSize: const Size(360, 690),
         minTextAdapt: true,
         splitScreenMode: true,
-      builder: (context, child) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'OMS',
-          theme: ThemeData(
-            fontFamily: 'Poppins',
-            primarySwatch: Colors.blue,
-          ),
-          home: token == null ? Login() : NewOrderScreen(),
-
-        );
-      }
-    );
+        builder: (context, child) {
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'OMS',
+            theme: ThemeData(
+              fontFamily: 'Poppins',
+              primarySwatch: Colors.blue,
+            ),
+            initialBinding: ControllerBinder(),
+            home: token == null ? Login() : NewOrderScreen(),
+          );
+        });
   }
 }

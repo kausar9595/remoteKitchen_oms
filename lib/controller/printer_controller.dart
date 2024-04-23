@@ -21,6 +21,8 @@ class PrinterController{
     try{
       SharedPreferences _pref = await SharedPreferences.getInstance();
       var resturantName = _pref.getString("restaurant_name");
+      var resturantNumber = _pref.getString("restaurant_number");
+
       Map<String, dynamic> config = Map();
 
       // Define the width of the paper and adjust text positions accordingly
@@ -37,7 +39,7 @@ class PrinterController{
 
       List<LineText> list = [];
       //
-       list.add(LineText(type: LineText.TYPE_TEXT, content: '${resturantName}', weight: 3, align: LineText.ALIGN_CENTER, fontZoom: 2, linefeed: 1));
+       list.add(LineText(type: LineText.TYPE_TEXT, content: resturantName ?? "ChatChef", weight: 3, align: LineText.ALIGN_CENTER, fontZoom: 2, linefeed: 1));
       list.add(LineText(type: LineText.TYPE_TEXT, content: '******************************', weight: 1, align: LineText.ALIGN_CENTER,linefeed: 1));
       list.add(LineText(linefeed: 1));
 
@@ -47,8 +49,10 @@ class PrinterController{
       if(orderResult.orderMethod != "pickup"){
         list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery Platform: ${orderResult.deliveryPlatform}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
         list.add(LineText(type: LineText.TYPE_TEXT, content: 'Delivery address: ${orderResult.dropoffAddress}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
-        list.add(LineText(type: LineText.TYPE_TEXT, content: 'Customer Name: ${orderResult.customer}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
       }
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Customer Name: ${orderResult.customer}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
+      list.add(LineText(type: LineText.TYPE_TEXT, content: 'Restaurant Phone Number: ${resturantNumber ?? "-"}', weight: 0, align: LineText.ALIGN_LEFT, linefeed: 1));
+
       list.add(LineText(linefeed: 1));
 
       list.add(LineText(type: LineText.TYPE_TEXT, content: 'Order Items', weight: 3, align: LineText.ALIGN_CENTER, linefeed: 1));
@@ -58,10 +62,10 @@ class PrinterController{
       for(var i =0; i<orderResult.orderitemSet!.length; i++){
         //order item details
         list.add(LineText(
-            type: LineText.TYPE_TEXT, content: '${orderResult.orderitemSet![i]!.menuItem != null ? orderResult.orderitemSet![i]!.menuItem!.name : "Item name is empty"}   -   ', weight: 0, align: LineText.ALIGN_LEFT, x: leftAlignX, relativeX: 0, y: startY, linefeed: 0));
+            type: LineText.TYPE_TEXT, content: '${orderResult.orderitemSet![i].menuItem != null ? orderResult.orderitemSet![i].menuItem!.name : "Item name is empty"}   -   ', weight: 0, align: LineText.ALIGN_LEFT, x: leftAlignX, relativeX: 0, y: startY, linefeed: 0));
         //order item printer
         list.add(LineText(
-            type: LineText.TYPE_TEXT, content: '${orderResult.orderitemSet![i]!.quantity} X \$${orderResult.orderitemSet![i]!.menuItem != null ? orderResult.orderitemSet![i]!.menuItem!.basePrice : "0.00"}',  weight: 0, align: LineText.ALIGN_RIGHT, x: rightAlignX, relativeX: 0, y: startY, linefeed: 1));
+            type: LineText.TYPE_TEXT, content: '${orderResult.orderitemSet![i].quantity} X \$${orderResult.orderitemSet![i].menuItem != null ? orderResult.orderitemSet![i]!.menuItem!.basePrice : "0.00"}',  weight: 0, align: LineText.ALIGN_RIGHT, x: rightAlignX, relativeX: 0, y: startY, linefeed: 1));
 
       }
        list.add(LineText(linefeed: 1));
@@ -99,7 +103,7 @@ class PrinterController{
       });
     }catch(e){
       print("Printer error: $e");
-      AppSnackBar(context, "Printer error: $e", Colors.green);
+      AppSnackBar(context, "Printer error: $e", Colors.red);
     }
   }
 

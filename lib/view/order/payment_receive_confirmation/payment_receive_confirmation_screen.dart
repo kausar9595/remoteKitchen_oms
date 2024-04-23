@@ -63,9 +63,7 @@ class _PaymentReceiveConfirmationScreenState extends State<PaymentReceiveConfirm
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Orders(
-                                  pageIndex: 0,
-                                )));
+                            builder: (context) => const NewOrderScreen()));
                   },
                   icon: const Icon(
                     Icons.cancel_outlined,

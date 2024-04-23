@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:oms/utility/order_status.dart';
 import 'package:oms/view/order/payment_receive_confirmation/payment_receive_confirmation_screen.dart';
 import 'package:oms/view/order/payment_status_reminder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../model/order_model/order_list_model.dart';
 import '../../../../utility/app_const.dart';
@@ -32,7 +33,7 @@ class OrderListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _payInPersonPumpUp(orderInfo.createdDate!, context);
+    // _payInPersonPumpUp(orderInfo.createdDate!, context);
     return InkWell(
       onTap: () {
         if (orderInfo.status == OrderStatus.accepted && orderInfo.paymentMethod == "cash") {
@@ -169,13 +170,21 @@ class OrderListView extends StatelessWidget {
     );
   }
 
-  void _payInPersonPumpUp(DateTime datetime, BuildContext context) {
+  void _payInPersonPumpUp(DateTime datetime, BuildContext context) async {
     // If the order is not pay in person or the order is not in the accepted
-    if (orderInfo.paymentMethod != "cash" || orderInfo.status != OrderStatus.accepted) return;
+    if (orderInfo.paymentMethod != "cash" || orderInfo.status != OrderStatus.readyForPickup) return;
+
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final isPumpedUp = sharedPreferences.getBool("${orderInfo.id}".toString());
+    print("isPumpedUpisPumpedUpisPumpedUpisPumpedUpisPumpedUpisPumpedUp");
+    print(isPumpedUp);
+    if (isPumpedUp == true) return;
 
     // If the order has exceeded the 50 min time period
     if (datetime.add(const Duration(minutes: 50)).isBefore(DateTime.now())) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+        // Pump has been opened once
+        sharedPreferences.setBool(orderInfo.id.toString(), true);
         await Future.delayed(const Duration(seconds: 3));
         Navigator.push(
           context,

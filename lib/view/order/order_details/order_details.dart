@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:oms/controller/adjust_price_controller.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/appcolor.dart';
 import 'package:oms/utility/order_status.dart';
@@ -25,6 +27,7 @@ class OrderDetail extends StatefulWidget {
 }
 
 class _OrderDetailState extends State<OrderDetail> {
+  final priceAdjustReasonController = TextEditingController();
   bool _isScanning = false;
 
   String currentOrderStatus = "";
@@ -33,11 +36,30 @@ class _OrderDetailState extends State<OrderDetail> {
 
   final modefires = <Widget>[];
 
+  void increaseAdjustedPrice(bool value) {
+    if (value) {
+      Get.find<AdjustPriceController>().increaseAdjustedPrice();
+    } else {
+      if (Get.find<AdjustPriceController>().adjustedPrice > 0) {
+        Get.find<AdjustPriceController>().decreaseAdjustedPrice();
+      }
+    }
+  }
+
+  void setAdjustedPrice() {
+    Get.find<AdjustPriceController>().setFinalAdjustedPrice();
+    Get.find<AdjustPriceController>().setReason(priceAdjustReasonController.text);
+    AppSnackBar(context, "Price Adjustment Will be Activated When You Set Mark As Ready", Colors.blue);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     currentOrderStatus = widget.orderResult.status!;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<AdjustPriceController>().setAdjustedPrice(widget.orderResult.adjustedPrice);
+    });
   }
 
   int _quantity = 0;
@@ -68,6 +90,18 @@ class _OrderDetailState extends State<OrderDetail> {
                         orderResult: widget.orderResult,
                       ),
                       Center(),
+
+                      AppButton(
+                        bgColor: AppColors.adjbutton,
+                        text: "Adjust Order",
+                        fontSize: normalFontSize,
+                        width: 110,
+                        height: 60,
+                        onClick: () {
+                          _adjustBuilder(context, widget.orderResult);
+                        },
+                      ),
+
                       IconButton(
                           onPressed: () {
                             Navigator.pop(context);
@@ -115,6 +149,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       itemCount: widget.orderResult.orderitemSet!.length,
                       itemBuilder: (_, index) {
                         var items = widget.orderResult.orderitemSet![index];
+                        //add modifires
                         return ListTile(
                           leading: Container(
                             alignment: Alignment.center,
@@ -139,7 +174,7 @@ class _OrderDetailState extends State<OrderDetail> {
                             children: [
                               //  items.modifiers!.isEmpty  ? SizedBox(height: 4.5,) : Center(),
                               Text(
-                                "${items.menuItem!.name}",
+                                "${items.menuItem?.name}",
                                 style: TextStyle(
                                   fontSize: normalFontSize,
                                   fontWeight: FontWeight.w700,
@@ -149,40 +184,46 @@ class _OrderDetailState extends State<OrderDetail> {
                             ],
                           ),
                           subtitle: items.modifiers!.isNotEmpty
-                              ? ListView.builder(
-                                  shrinkWrap: true,
+                              ? ListView(
                                   physics: NeverScrollableScrollPhysics(),
-                                  itemCount: items.modifiers![index].modifiersItems!.length,
-                                  itemBuilder: (_, modifiarItem) {
-                                    return Row(
-                                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.textblack,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "(CA\$${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.textblack,
-                                          ),
-                                        ),
-                                      ],
+                                  shrinkWrap: true,
+                                  children: List.generate(items.modifiers!.length, (modifires) {
+                                    return ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: items.modifiers![modifires].modifiersItems!.length,
+                                      itemBuilder: (_, modifiarItem) {
+                                        return Row(
+                                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColors.textblack,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              "(CA\$${items.modifiers![modifires].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.textblack,
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
-                                  },
+                                  }),
                                 )
                               : Center(),
                           trailing: Text(
-                            "CA\$${items.menuItem!.basePrice}",
+                            "CA\$${items.menuItem?.basePrice}",
                             style: TextStyle(
                               fontSize: normalFontSize,
                               fontWeight: FontWeight.w400,
@@ -224,84 +265,7 @@ class _OrderDetailState extends State<OrderDetail> {
                       style: TextStyle(fontWeight: FontWeight.w400, fontSize: normalFontSize, color: AppColors.textblack),
                     ),
                   ),
-                  widget.orderResult.discount != 0.0
-                      ? ListTile(
-                          leading: Text(
-                            "Discount",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                          title: Divider(),
-                          trailing: Text(
-                            "CA\$${widget.orderResult.discount}",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                        )
-                      : Center(),
-                  widget.orderResult.deliveryFee != 0.0
-                      ? ListTile(
-                          leading: Text(
-                            "Delivery Fee",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                          title: Divider(),
-                          trailing: Text(
-                            "CA\$${widget.orderResult.deliveryFee}",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                        )
-                      : Center(),
-                  widget.orderResult.convenienceFee != 0.0
-                      ? ListTile(
-                          leading: Text(
-                            "Convenience Fee",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                          title: Divider(),
-                          trailing: Text(
-                            "CA\$${widget.orderResult.convenienceFee}",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                        )
-                      : Center(),
-                  widget.orderResult.deliveryDiscount != 0.0
-                      ? ListTile(
-                          leading: Text(
-                            "Delivery Discount",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                          title: Divider(),
-                          trailing: Text(
-                            "CA\$${widget.orderResult.deliveryDiscount}",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                        )
-                      : Center(),
-                  widget.orderResult.voucher != null && widget.orderResult.voucher != 0.0
-                      ? ListTile(
-                          leading: Text(
-                            "Voucher",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                          title: Divider(),
-                          trailing: Text(
-                            "CA\$${widget.orderResult.voucher}",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                        )
-                      : Center(),
-                  widget.orderResult.tips != null && widget.orderResult.tips != 0.0
-                      ? ListTile(
-                          leading: Text(
-                            "Tips",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                          title: Divider(),
-                          trailing: Text(
-                            "CA\$${widget.orderResult.tips}",
-                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
-                          ),
-                        )
-                      : Center(),
+                  CalculatOrdersAmount(orderResult: widget.orderResult),
                   Divider(),
                   ListTile(
                     leading: Text(
@@ -313,6 +277,30 @@ class _OrderDetailState extends State<OrderDetail> {
                       "CA\$${widget.orderResult.total}",
                       style: TextStyle(fontWeight: FontWeight.w400, fontSize: normalFontSize, color: AppColors.textblack),
                     ),
+                  ),
+                  GetBuilder<AdjustPriceController>(
+                    builder: (controller) {
+                      if (controller.finalAdjustedPrice < 1) {
+                        return SizedBox.shrink();
+                      }
+                      final price = (widget.orderResult.subtotal ?? 0) + controller.finalAdjustedPrice;
+                      print(price);
+                      return ListTile(
+                        leading: Text(
+                          "Adjusted Price",
+                          style: TextStyle(fontWeight: FontWeight.w800, fontSize: normalFontSize, color: AppColors.textblack),
+                        ),
+                        title: Divider(),
+                        trailing: Text(
+                          "CA\$${(price)}",
+                          style: TextStyle(
+                            fontSize: normalFontSize,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.textblack,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.1,
@@ -376,7 +364,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                                             id: widget.orderResult!.id.toString(),
                                                             title: "Are you sure?",
                                                             child: Text("Are you sure? Your order is Ready for Pickup?"),
-                                                            okClick: () => orderStatusChange(OrderStatus.completed));
+                                                            okClick: () => orderStatusChange(OrderStatus.readyForPickup));
                                                       },
                                                       text: "Mark as Ready",
                                                       bgColor: AppColors.textindigo,
@@ -408,6 +396,10 @@ class _OrderDetailState extends State<OrderDetail> {
   }
 
   orderStatusChange(status) async {
+    if (Get.find<AdjustPriceController>().finalAdjustedPrice > 0) {
+      print(Get.find<AdjustPriceController>().finalAdjustedPrice);
+      print(Get.find<AdjustPriceController>().reason);
+    }
     appLoading(context);
     await OrderController.changeStatus(widget.orderResult.id.toString(), status).then((value) {
       if (value.statusCode == 200) {
@@ -430,7 +422,7 @@ class _OrderDetailState extends State<OrderDetail> {
   }
 
   /*---Adjust Order---*/
-  Future<void> _adjustBuilder(BuildContext context) async {
+  Future<void> _adjustBuilder(BuildContext context, OrderResult orderResult) async {
     return showDialog(
         barrierDismissible: false,
         context: context,
@@ -443,10 +435,11 @@ class _OrderDetailState extends State<OrderDetail> {
                 borderRadius: BorderRadius.circular(15),
               ),
               content: Container(
-                height: MediaQuery.of(context).size.height * 0.40,
+                // height: MediaQuery.of(context).size.height * 0.40,
                 width: MediaQuery.of(context).size.width * 0.30,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -513,14 +506,11 @@ class _OrderDetailState extends State<OrderDetail> {
                       onTap: () {
                         Navigator.pop(context);
                         CustomPopup(
+                          fizedHeight: false,
                           context: context,
-                          Texttitle: Column(
-                            children: [
-                              Text(
-                                "Update Price",
-                                style: TextStyle(fontWeight: FontWeight.w600, fontSize: titleFontSize, color: AppColors.textblack),
-                              ),
-                            ],
+                          Texttitle: Text(
+                            "Update Price",
+                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: titleFontSize, color: AppColors.textblack),
                           ),
                           child: Column(
                             children: [
@@ -532,7 +522,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                     style: TextStyle(fontSize: normalFontSize, color: AppColors.textblack, fontWeight: FontWeight.w400),
                                   ),
                                   Text(
-                                    "CA \$23.47",
+                                    "CA \$${orderResult.total}",
                                     style: TextStyle(fontSize: normalFontSize, color: AppColors.textblack, fontWeight: FontWeight.w400),
                                   ),
                                 ],
@@ -561,43 +551,7 @@ class _OrderDetailState extends State<OrderDetail> {
                                         children: [
                                           InkWell(
                                             onTap: () {
-                                              setState(() {
-                                                _quantity++;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: 30,
-                                              width: 30,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(color: AppColors.textblack, width: 1),
-                                              ),
-                                              child: Center(
-                                                  child: Icon(
-                                                Icons.add,
-                                                size: 15,
-                                                color: Colors.black,
-                                              )),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Text(
-                                              "${_quantity}",
-                                              style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w600, color: AppColors.textblack),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                _quantity--;
-                                              });
+                                              increaseAdjustedPrice(false);
                                             },
                                             child: Container(
                                               height: 30,
@@ -614,6 +568,40 @@ class _OrderDetailState extends State<OrderDetail> {
                                               )),
                                             ),
                                           ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: GetBuilder<AdjustPriceController>(builder: (controller) {
+                                              return Text(
+                                                "${controller.adjustedPrice.round()}",
+                                                style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w600, color: AppColors.textblack),
+                                              );
+                                            }),
+                                          ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              increaseAdjustedPrice(true);
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(color: AppColors.textblack, width: 1),
+                                              ),
+                                              child: Center(
+                                                  child: Icon(
+                                                Icons.add,
+                                                size: 15,
+                                                color: Colors.black,
+                                              )),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -623,7 +611,28 @@ class _OrderDetailState extends State<OrderDetail> {
                               SizedBox(
                                 height: 40,
                               ),
-                              AppButton(text: "Continue", width: 260, height: 40, bgColor: AppColors.popupbutton, onClick: () {})
+                              TextFormField(
+                                controller: priceAdjustReasonController,
+                                minLines: 2,
+                                maxLines: 2,
+                                decoration: InputDecoration(
+                                  hintText: "Write a Reason",
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              AppButton(
+                                  text: "Continue",
+                                  width: 260,
+                                  height: 40,
+                                  bgColor: AppColors.popupbutton,
+                                  onClick: () {
+                                    setAdjustedPrice();
+
+                                    Get.back();
+                                  })
                             ],
                           ),
                         );

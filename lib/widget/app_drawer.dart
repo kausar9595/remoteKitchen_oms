@@ -12,6 +12,7 @@ import 'package:oms/view/menus/menus.dart';
 import 'package:oms/view/menus/new_menu_screen.dart';
 import 'package:oms/view/order/screen/new_orders.dart';
 import 'package:oms/view/order/screen/widget/scheduled_order.dart';
+import 'package:oms/view/report/report_screen.dart';
 import 'package:oms/widget/app_shemmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../model/restaurant_model/restaurantListModel.dart';
@@ -158,7 +159,9 @@ class _AppDrawerState extends State<AppDrawer> {
                               _selectedRestaurantId = v;
                             });
                             RestaurantController.addSelectedRestaurantInfo(
-                                    restaurantId: _selectedRestaurantId!.id.toString(), restaurantName: _selectedRestaurantId!.name.toString())
+                                    restaurantId: _selectedRestaurantId!.id.toString(),
+                                    restaurantName: _selectedRestaurantId!.name.toString(),
+                                    restaurantNumber: _selectedRestaurantId!.phone!.toString())
                                 .then((value) {
                               //call location list
                               _getLocation();
@@ -378,6 +381,21 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
             ),
+            // InkWell(
+            //   onTap: () {
+            //     Get.to(ReportScreen(), transition: Transition.rightToLeft);
+            //   },
+            //   child: Container(
+            //     padding: EdgeInsets.only(left: 20),
+            //     alignment: Alignment.centerLeft,
+            //     height: 50,
+            //     width: double.infinity,
+            //     child: Text(
+            //       "Report",
+            //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: 100,
             ),
