@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:oms/app_config.dart';
 import 'package:oms/controller/api.dart';
 import 'package:oms/controller/restaurant_controller.dart';
+import 'package:oms/utility/app_const.dart';
 import 'package:oms/utility/order_status.dart';
 
 import '../model/order_model/order_curiar_model.dart';
@@ -59,5 +60,22 @@ class OrderController {
   static Future<OrderCuriarInfoModel> geteCuriarInfo(id) async {
     var response = await Api.getApi(url: AppConfig.CURIAR_INFO + id);
     return OrderCuriarInfoModel.fromJson(jsonDecode(response.body));
+  }
+
+
+
+  //prap time
+  static Future<http.Response> addPrapTime({required DateTime prapTime, required String ID})async{
+      //pst time zone
+      String date = convertPacificTimeZoon(prapTime.toString());
+      var res = Api.postApi(
+          url: AppConfig.PRAP_TIME_UPDATE+ID,
+          body: {
+            "status": OrderStatus.accepted,
+            "pickup_time": date
+          }
+      );
+
+      return res;
   }
 }

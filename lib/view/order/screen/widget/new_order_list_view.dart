@@ -247,8 +247,8 @@ class NewOrdersListView extends StatelessWidget {
   }
 }
 
-class TimerButton extends StatelessWidget {
-  const TimerButton({
+class TimerButton extends StatefulWidget {
+   const TimerButton({
     super.key,
     required this.btnColor,
     required this.orderResult,
@@ -258,13 +258,35 @@ class TimerButton extends StatelessWidget {
   final OrderResult orderResult;
 
   @override
+  State<TimerButton> createState() => _TimerButtonState();
+}
+
+class _TimerButtonState extends State<TimerButton> {
+   int prepTime = 0;
+   DateTime acceptTime = DateTime.now();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    acceptTime = Get.find<PrepareTimeController>().getOrderAcceptTime(widget.orderResult.id ?? 0);
+
+
+    prepTime = Get.find<PrepareTimeController>().getOrderPrepTime(widget.orderResult.id ?? 0);
+
+
+    setState(() {
+
+    });
+
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final DateTime acceptTime = Get.find<PrepareTimeController>().getOrderAcceptTime(orderResult.id ?? 0);
-    final int prepTime = Get.find<PrepareTimeController>().getOrderPrepTime(orderResult.id ?? 0);
+
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: btnColor,
+        color: widget.btnColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(

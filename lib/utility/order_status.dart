@@ -11,6 +11,7 @@ class OrderStatus{
   static const String rider_confirmed_dropoff_arrival = "rider_confirmed_dropoff_arrival";
   static const String completed = "completed";
   static const String schedule = "schedule";
+  static const String unpaid = "Unpaid";
 
 
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oms/utility/app_const.dart';
+import 'package:oms/widget/app_alert.dart';
+import 'package:oms/widget/app_button.dart';
 import 'package:oms/widget/app_drawer.dart';
 import 'package:oms/widget/app_shemmer.dart';
 import 'package:oms/widget/empty_data.dart';
@@ -407,11 +409,11 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                               ),
                             ),
                             title: Text(
-                              "${items.menuItem!.name}",
+                              "${items.menuItem != null ?  items.menuItem!.name : "Null"}",
                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
                             ),
                             trailing: Text(
-                              "CA\$${items.menuItem!.basePrice}",
+                              "CA\$${items.menuItem != null ? items.menuItem!.basePrice : "Null"}",
                               style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                             ),
                           );
@@ -468,6 +470,16 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                         ),
                       ),
+
+
+                      orderResult.isPaid ==  false ?  AppButton(text: "Paid", width: 200,  height: 45, bgColor: Colors.green, onClick: ()async{
+                        ///TODO api....
+                        OrderController.changeStatus(orderResult.id.toString(), OrderStatus.completed).then((value) {
+                          AppSnackBar(context, "Order mark as complete", Colors.green);
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> IssueOrderScreen()));
+                        });
+                        ///
+                      })  : Center()
                     ],
                   ),
                 ),

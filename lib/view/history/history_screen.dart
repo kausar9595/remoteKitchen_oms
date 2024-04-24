@@ -39,7 +39,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     var response = await OrderController.getPendingOrder();
     if (response!.results!.isNotEmpty) {
       for (var i in response!.results!) {
-        print(i.status);
+        print("i.status === ${i.status}");
         if (i.status != OrderStatus.pending && i.status != OrderStatus.accepted) {
           setState(() {
             _history.add(i);
@@ -184,7 +184,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 ],
                                 rows: _searchHistory.isNotEmpty
                                     ? _searchHistory
-                                        .map((value) => DataRow(cells: [
+                                        .map((value) => DataRow(
+                                    cells: [
                                               DataCell(Row(
                                                 children: [
                                                   InkWell(
@@ -338,6 +339,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+
                       Text(
                         "${orderResult.quantity} items for ${orderResult.customer}",
                         style: TextStyle(
@@ -556,6 +558,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                         ),
                       ),
+                      HistoryOrderStatusCard(orderResult: orderResult)
                     ],
                   ),
                 ),
@@ -591,13 +594,13 @@ class HistoryOrderStatusCard extends StatelessWidget {
     // if (orderResult.isPaid! == false) {
     //   return _buildCard("Unpaid", Colors.red.shade100);
     // }
-    if (orderResult.status == "completed") {
+    if (orderResult.status == OrderStatus.completed) {
       return _buildCard("Completed", Colors.green.shade200);
     }
-    if (orderResult.status == "cancelled") {
+    if (orderResult.status == OrderStatus.cancelled) {
       return _buildCard("Cancelled", Colors.red, false);
     }
-    if (orderResult.status == "ready_for_pickup") {
+    if (orderResult.status == OrderStatus.readyForPickup) {
       return _buildCard("Ready For Pickup", Colors.blueAccent.shade100);
     }
     return _buildCard(orderResult.status?.capitalizeFirst ?? "Unknown", Colors.grey.shade300);

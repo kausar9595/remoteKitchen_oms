@@ -5,8 +5,14 @@ import 'package:oms/widget/app_button.dart';
 import 'package:oms/widget/app_input.dart';
 import 'package:url_launcher/link.dart';
 
+import '../../controller/order_controller.dart';
+import '../../controller/restaurant_controller.dart';
+import '../../controller/restaurant_controller.dart';
+import '../../model/order_model/order_list_model.dart';
 import '../../utility/appcolor.dart';
+import '../../utility/order_status.dart';
 import '../../widget/app_drawer.dart';
+import '../../widget/app_shemmer.dart';
 
 class ScheduleOrder extends StatefulWidget {
   const ScheduleOrder({super.key});
@@ -17,6 +23,51 @@ class ScheduleOrder extends StatefulWidget {
 
 class _ScheduleOrderState extends State<ScheduleOrder> {
   final _search= TextEditingController();
+
+
+  var _searchText;
+
+  List<OrderResult> _orders = [];
+  List<OrderResult> _searchHistory = [];
+  bool _isLoading = false;
+
+  Future _getIncomingOrders() async {
+    _orders.clear();
+    setState(() => _isLoading = true);
+    var response = await OrderController.getPendingOrder();
+    if (response!.results!.isNotEmpty) {
+      for (var i in response!.results!) {
+        print("i.status === ${i.status}");
+        if (i.status == OrderStatus.schedule && i.status == OrderStatus.accepted) {
+          setState(() {
+            _orders.add(i);
+          });
+        }
+      }
+    }
+    setState(() => _isLoading = false);
+  }
+
+  var selectLocationName, selectRsname;
+  _getLocationAdnRestaurant() async {
+    await RestaurantController.getLocationAndRestaurantIds().then((value) {
+      print("value.locationName! === ${value.locationName!}");
+      setState(() {
+        selectLocationName = (value.locationName!);
+        selectRsname = value.restaurantName!;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getIncomingOrders();
+    _getLocationAdnRestaurant();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child:Scaffold(
@@ -86,53 +137,55 @@ class _ScheduleOrderState extends State<ScheduleOrder> {
             Divider(color: Colors.grey.withOpacity(0.5),
             ),
             SizedBox(height: 20,),
-            scheduleTable(
-                rowOneTitle: "#600175820",
-                rowOneSubtitle: "Customer Name Ex.",
-                rowTwoTitle: "Meat that Skewers&Kebab",
-                rowTwoSubtitle: "Fresh lamb kebab (10 skewers)- BOG....",
-                orderCount: "2",
-                orderPrice: "CA\$23",
-              buttonColor: Colors.blue.shade100,
-              buttonText: "Waiting",
 
-            ),
-            Divider(color: Colors.grey.withOpacity(0.5),),
-            SizedBox(height: 10,),
-            scheduleTable(
-              rowOneTitle: "#600175820",
-              rowOneSubtitle: "Customer Name Ex.",
-              rowTwoTitle: "Meat that Skewers&Kebab",
-              rowTwoSubtitle: "Fresh lamb kebab (10 skewers)- BOG....",
-              orderCount: "3",
-              orderPrice: "CA\$23",
-              buttonColor: Colors.blue.shade100,
-              buttonText: "Waiting",
-            ),
-            Divider(color: Colors.grey.withOpacity(0.5),),
-            SizedBox(height: 10,),
-            scheduleTable(
-              rowOneTitle: "#600175820",
-              rowOneSubtitle: "Customer Name Ex.",
-              rowTwoTitle: "Meat that Skewers&Kebab",
-              rowTwoSubtitle: "Fresh lamb kebab (10 skewers)- BOG....",
-              orderCount: "5",
-              orderPrice: "CA\$23",
-              buttonColor: Colors.blue.shade100,
-              buttonText: "Waiting",
-            ),
-            Divider(color: Colors.grey.withOpacity(0.5),),
-            SizedBox(height: 10,),
-            scheduleTable(
-              rowOneTitle: "#600175820",
-              rowOneSubtitle: "Customer Name Ex.",
-              rowTwoTitle: "Meat that Skewers&Kebab",
-              rowTwoSubtitle: "Fresh lamb kebab (10 skewers)- BOG....",
-              orderCount: "1",
-              orderPrice: "CA\$23",
-              buttonColor: Colors.blue.shade100,
-              buttonText: "Waiting",
-            ),
+
+            _isLoading
+                ? ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: 10,
+                itemBuilder: (_, index){
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: AppShimmer(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                    ),
+                  );
+
+                }
+            )
+                : _orders.isNotEmpty
+                ? ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: _orders.length,
+                itemBuilder: (_, index){
+                  var data = _orders[index];
+                  return  ScheduleTable(
+                    date: convertPacificTimeZoon(data.modifiedDate.toString()),
+                    customerName: "${data.customer}",
+                    orderId: "${data.orderId}",
+                    itemName: "${data.orderitemSet![0].menuItem!.name}",
+                    modifire: "${data.orderitemSet![0].modifiers!.isNotEmpty ?  data.orderitemSet![0].modifiers![0].modifiers!.name!.toString() : ""}",
+                    qty: "${data.quantity}",
+                    orderPrice: "CA\$${data.total}",
+                    buttonColor: Colors.blue.shade100,
+                    buttonText: "Schedule",
+                  );
+                  // return ScheduleTable(
+                  //     customerName: data.customer ?? "",
+                  //     orderId: data.orderId ?? "",
+                  //     qty: data.quantity .toString(),
+                  //     itemName: data.orderitemSet![0] != null ? data.orderitemSet![0].menuItem!.name.toString() : "Null",
+                  //     modifire: data.orderitemSet![0] != null &&  data.orderitemSet![0].modifiers!.isNotEmpty?  data.orderitemSet![0].modifiers![0].modifiers!.name.toString() : "NUll",
+                  //     orderPrice: data.total.toString(),
+                  //   buttonColor: Colors.blue.shade200,
+                  //   onTap: (){},
+                  // );
+                }
+            )
+                : Center(child: Text("Schedule order is empty!"),),
             Divider(color: Colors.grey.withOpacity(0.5),),
             SizedBox(height: 10,),
 

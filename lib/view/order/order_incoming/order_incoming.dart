@@ -309,8 +309,9 @@ class _OrderIncomingState extends State<OrderIncoming> {
                 ],
               ),
             ),
+            SizedBox(height: 20,),
             const SizedBox(
-              height: 20,
+              height: 25,
             ),
             InkWell(
               onTap: () => orderAccept(widget.orderResult.id.toString()),
@@ -372,6 +373,8 @@ class _OrderIncomingState extends State<OrderIncoming> {
     setState(() => _isAccepting = true);
     //alarm stop
     await Alarm.stop(1);
+    //prap time calculate with current time (add)
+    var calPrapTime = DateTime.now().add(Duration(minutes: _value.round()));
     try {
       await OrderController.changeStatus(id, OrderStatus.accepted).then((value) {
         if (value.statusCode == 200) {
@@ -379,8 +382,14 @@ class _OrderIncomingState extends State<OrderIncoming> {
           Get.find<PrepareTimeController>().setOrderAcceptTime(int.parse(id));
           Get.find<PrepareTimeController>().setOrderPrepTime(int.parse(id), _value.round());
 
-          AppSnackBar(context, "Order has been accepted", Colors.green);
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const NewOrderScreen()), (route) => false);
+
+         OrderController.addPrapTime(prapTime: calPrapTime, ID: widget.orderResult!.id.toString()).then((value) {
+           AppSnackBar(context, "Order has been accepted", Colors.green);
+           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const NewOrderScreen()), (route) => false);
+         });
+
+
+
         } else {
           AppSnackBar(context, "Getting some issues to Accept this order.", Colors.red);
         }

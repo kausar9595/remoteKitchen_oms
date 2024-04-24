@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:oms/utility/app_const.dart';
 import 'package:oms/view/schedule_order/widget/data_table.dart';
+import 'package:oms/widget/app_shemmer.dart';
+import '../../controller/order_controller.dart';
+import '../../controller/restaurant_controller.dart';
+import '../../model/order_model/order_list_model.dart';
 import '../../utility/appcolor.dart';
+import '../../utility/order_status.dart';
 import '../../widget/app_drawer.dart';
 
 class CompleteOrder extends StatefulWidget {
@@ -13,6 +18,51 @@ class CompleteOrder extends StatefulWidget {
 
 class _CompleteOrderState extends State<CompleteOrder> {
   final _search= TextEditingController();
+
+
+  var _searchText;
+
+  List<OrderResult> _completeOrders = [];
+  List<OrderResult> _searchHistory = [];
+  bool _isLoading = false;
+
+  Future _getIncomingOrders() async {
+    _completeOrders.clear();
+    setState(() => _isLoading = true);
+    var response = await OrderController.getPendingOrder();
+    if (response!.results!.isNotEmpty) {
+      for (var i in response!.results!) {
+        print("i.status === ${i.status}");
+        if (i.status == OrderStatus.readyForPickup || i.status == OrderStatus.completed) {
+          setState(() {
+            _completeOrders.add(i);
+          });
+        }
+      }
+    }
+    setState(() => _isLoading = false);
+  }
+
+  var selectLocationName, selectRsname;
+  _getLocationAdnRestaurant() async {
+    await RestaurantController.getLocationAndRestaurantIds().then((value) {
+      print("value.locationName! === ${value.locationName!}");
+      setState(() {
+        selectLocationName = (value.locationName!);
+        selectRsname = value.restaurantName!;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getIncomingOrders();
+    _getLocationAdnRestaurant();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(child:Scaffold(
@@ -82,53 +132,59 @@ class _CompleteOrderState extends State<CompleteOrder> {
             Divider(color: Colors.grey.withOpacity(0.5),
             ),
             SizedBox(height: 20,),
-            scheduleTable(
-              rowOneTitle: "#600175820",
-              rowOneSubtitle: "Customer Name Ex.",
-              rowTwoTitle: "Meat that Skewers&Kebab",
-              rowTwoSubtitle: "Fresh lamb kebab (10 skewers)- BOG....",
-              orderCount: "2",
-              orderPrice: "CA\$23",
-              buttonColor: Colors.green.shade100,
-              buttonText: "Complete",
-            ),
-            Divider(color: Colors.grey.withOpacity(0.5),),
-            SizedBox(height: 10,),
-            scheduleTable(
-              rowOneTitle: "#600175820",
-              rowOneSubtitle: "Customer Name Ex.",
-              rowTwoTitle: "Meat that Skewers&Kebab",
-              rowTwoSubtitle: "Fresh lamb kebab (10 skewers)- BOG....",
-              orderCount: "3",
-              orderPrice: "CA\$23",
-              buttonColor: Colors.green.shade100,
-              buttonText: "Complete",
-            ),
-            Divider(color: Colors.grey.withOpacity(0.5),),
-            SizedBox(height: 10,),
-            scheduleTable(
-              rowOneTitle: "#600175820",
-              rowOneSubtitle: "Customer Name Ex.",
-              rowTwoTitle: "Meat that Skewers&Kebab",
-              rowTwoSubtitle: "Fresh lamb kebab (10 skewers)- BOG....",
-              orderCount: "5",
-              orderPrice: "CA\$23",
-              buttonColor: Colors.green.shade100,
-              buttonText: "Complete",
-            ),
-            Divider(color: Colors.grey.withOpacity(0.5),),
-            SizedBox(height: 10,),
-            scheduleTable(
-              rowOneTitle: "#600175820",
-              rowOneSubtitle: "Customer Name Ex.",
-              rowTwoTitle: "Meat that Skewers&Kebab",
-              rowTwoSubtitle: "Fresh lamb kebab (10 skewers)- BOG....",
-              orderCount: "1",
-              orderPrice: "CA\$23",
-              buttonColor: Colors.green.shade100,
-              buttonText: "Complete",
-            ),
-            Divider(color: Colors.grey.withOpacity(0.5),),
+
+            //check loading
+
+            _isLoading
+                ? ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: 10,
+                itemBuilder: (_, index){
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: AppShimmer(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                    ),
+                  );
+
+                }
+            )
+                : _completeOrders.isNotEmpty
+                ? ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: _completeOrders.length,
+                itemBuilder: (_, index){
+                var data = _completeOrders[index];
+                return  ScheduleTable(
+                  date: convertPacificTimeZoon(data.modifiedDate.toString()),
+                  customerName: "${data.customer}",
+                  orderId: "${data.orderId}",
+                  itemName: data.orderitemSet![0].menuItem != null ? data.orderitemSet![0].menuItem!.name.toString() : "NUll",
+
+                  modifire: "${data.orderitemSet![0].modifiers!.isNotEmpty ?  data.orderitemSet![0].modifiers![0].modifiers!.name!.toString() : ""}",
+                  qty: "${data.quantity}",
+                  orderPrice: "CA\$${data.total}",
+                  buttonColor: Colors.green.shade100,
+                  buttonText: "Complete",
+                );
+                  // return ScheduleTable(
+                  //     customerName: data.customer ?? "",
+                  //     orderId: data.orderId ?? "",
+                  //     qty: data.quantity .toString(),
+                  //     itemName: data.orderitemSet![0] != null ? data.orderitemSet![0].menuItem!.name.toString() : "Null",
+                  //     modifire: data.orderitemSet![0] != null &&  data.orderitemSet![0].modifiers!.isNotEmpty?  data.orderitemSet![0].modifiers![0].modifiers!.name.toString() : "NUll",
+                  //     orderPrice: data.total.toString(),
+                  //   buttonColor: Colors.blue.shade200,
+                  //   onTap: (){},
+                  // );
+                }
+            )
+                : Center(child: Text("Complete order is empty!"),),
+
+
             SizedBox(height: 10,),
 
 
