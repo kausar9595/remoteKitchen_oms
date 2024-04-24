@@ -74,7 +74,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       onRefresh: () => _getIncomingOrders(),
       child: SafeArea(
           child: Scaffold(
-        drawer: AppDrawer(
+        drawer: const AppDrawer(
           currentPage: HistoryScreen(),
         ),
         backgroundColor: Colors.white,
@@ -87,7 +87,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
         ),
         body: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               TextFormField(
@@ -98,7 +98,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     _searchOrder(v);
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Search By Customer Name or Order ID",
                   hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
                   contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
@@ -111,7 +111,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   border: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(10))),
                 ),
               ),
-              Divider(),
+              const Divider(),
               _isLoading
                   ? Expanded(
                       child: Container(
@@ -119,7 +119,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           itemCount: 10,
                           itemBuilder: (_, index) {
                             return Container(
-                              margin: EdgeInsets.only(bottom: 10),
+                              margin: const EdgeInsets.only(bottom: 10),
                               child: AppShimmer(
                                 width: MediaQuery.of(context).size.width,
                                 height: 50,
@@ -137,7 +137,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 columnSpacing: 70,
                                 dividerThickness: 1,
                                 dataRowMaxHeight: 60,
-                                columns: [
+                                columns: const [
                                   DataColumn(
                                     label: Expanded(
                                       child: Text(
@@ -189,7 +189,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                       children: [
                                                         Text(
                                                           "#${value.id.toString()}",
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                             fontWeight: FontWeight.w400,
                                                             color: AppColors.textblack,
                                                             fontSize: 14,
@@ -216,11 +216,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                               )),
                                               DataCell(InkWell(
                                                 child: Text("CA\$${value.total.toString()}",
-                                                    style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
+                                                    style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                               )),
                                               DataCell(InkWell(
                                                 child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
-                                                    style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
+                                                    style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                               )),
                                               DataCell(
                                                 HistoryOrderStatusCard(
@@ -240,7 +240,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
                                                         Text("#${value.id.toString()}",
-                                                            style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
+                                                            style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                                         Text(
                                                           "${value.customer.toString()}",
                                                           style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.textblack, fontSize: normalFontSize),
@@ -259,15 +259,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                               )),
                                               DataCell(InkWell(
                                                 child: Text("${selectLocationName}",
-                                                    style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14)),
+                                                    style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14)),
                                               )),
                                               DataCell(InkWell(
                                                 child: Text("CA\$${value.total.toString()}",
-                                                    style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
+                                                    style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                               )),
                                               DataCell(InkWell(
                                                 child: Text("${convertPacificTimeZoon(value.receiveDate)}",
-                                                    style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
+                                                    style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                               )),
                                               DataCell(
                                                 HistoryOrderStatusCard(
@@ -292,7 +292,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         context: (context),
         builder: (context) => AlertDialog(
               backgroundColor: Colors.white,
-              shape: OutlineInputBorder(
+              shape: const OutlineInputBorder(
                 borderRadius: BorderRadius.zero,
               ),
               alignment: Alignment.centerRight,
@@ -309,20 +309,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.cancel_outlined,
                             color: Colors.black,
                             size: 50,
                           )),
                     ],
                   ),
-                  Divider(),
+                  const Divider(),
                 ],
               ),
               content: SingleChildScrollView(
                 child: Container(
                   //margin: EdgeInsets.only(top: 30, bottom: 30),
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   width: MediaQuery.of(context).size.width * .45,
 
                   child: Column(
@@ -337,29 +337,29 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 6),
+                      const SizedBox(height: 6),
                       Text(
                         "Phone: ${orderResult.dropoffPhoneNumber}",
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       ListTile(
                         leading: Text(
                           "Order Placed",
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: normalFontSize, color: Colors.black),
                         ),
-                        title: Divider(),
+                        title: const Divider(),
                         trailing: Text(
                           "${convertPacificTimeZoon(orderResult.receiveDate)}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: orderResult.orderitemSet!.length,
                         itemBuilder: (_, index) {
                           var items = orderResult.orderitemSet![index];
@@ -383,7 +383,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             subtitle: items.modifiers!.isNotEmpty && items.modifiers!.length > index
                                 ? ListView.builder(
                                     shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     itemCount: items.modifiers![index].modifiersItems?.length,
                                     itemBuilder: (_, modifiarItem) {
                                       return Row(
@@ -391,18 +391,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         children: [
                                           Text(
                                             "${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.name}",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.w400,
                                               color: AppColors.textblack,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 10,
                                           ),
                                           Text(
                                             "(CA\$${items.modifiers![index].modifiersItems![modifiarItem].modifiersOrderItems!.basePrice})",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.w600,
                                               color: AppColors.textblack,
@@ -412,7 +412,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                       );
                                     },
                                   )
-                                : Center(),
+                                : const Center(),
                             title: Text(
                               "${items.menuItem?.name}",
                               style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w600, color: Colors.black),
@@ -424,7 +424,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           );
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       ListTile(
@@ -432,7 +432,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           "Item Subtotal",
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: normalFontSize, color: Colors.black),
                         ),
-                        title: Divider(),
+                        title: const Divider(),
                         trailing: Text(
                           "CA\$${orderResult.subtotal}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
@@ -443,7 +443,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           "Tax",
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: normalFontSize, color: Colors.black),
                         ),
-                        title: Divider(),
+                        title: const Divider(),
                         trailing: Text(
                           "CA\$${orderResult.tax}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
@@ -455,79 +455,79 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 "Discount",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
-                              title: Divider(),
+                              title: const Divider(),
                               trailing: Text(
                                 "CA\$${orderResult.discount}",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
                             )
-                          : Center(),
+                          : const Center(),
                       orderResult.deliveryFee != 0.0
                           ? ListTile(
                               leading: Text(
                                 "Delivery Fee",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
-                              title: Divider(),
+                              title: const Divider(),
                               trailing: Text(
                                 "CA\$${orderResult.deliveryFee}",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
                             )
-                          : Center(),
+                          : const Center(),
                       orderResult.convenienceFee != 0.0
                           ? ListTile(
                               leading: Text(
                                 "Convenience Fee",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
-                              title: Divider(),
+                              title: const Divider(),
                               trailing: Text(
                                 "CA\$${orderResult.convenienceFee}",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
                             )
-                          : Center(),
+                          : const Center(),
                       orderResult.deliveryDiscount != 0.0
                           ? ListTile(
                               leading: Text(
                                 "Delivery Discount",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
-                              title: Divider(),
+                              title: const Divider(),
                               trailing: Text(
                                 "CA\$${orderResult.deliveryDiscount}",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
                             )
-                          : Center(),
+                          : const Center(),
                       orderResult.voucher != null && orderResult.voucher != 0.0
                           ? ListTile(
                               leading: Text(
                                 "Voucher",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
-                              title: Divider(),
+                              title: const Divider(),
                               trailing: Text(
                                 "CA\$${orderResult.voucher}",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
                             )
-                          : Center(),
+                          : const Center(),
                       orderResult.tips != null && orderResult.tips != 0.0
                           ? ListTile(
                               leading: Text(
                                 "Tips",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
-                              title: Divider(),
+                              title: const Divider(),
                               trailing: Text(
                                 "CA\$${orderResult.tips}",
                                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize, color: Colors.black),
                               ),
                             )
-                          : Center(),
-                      Divider(
+                          : const Center(),
+                      const Divider(
                         thickness: 5,
                         color: Colors.black,
                       ),
@@ -536,7 +536,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           "Total",
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: normalFontSize, color: Colors.black),
                         ),
-                        title: Divider(),
+                        title: const Divider(),
                         trailing: Text(
                           "CA\$${orderResult.total}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
@@ -547,7 +547,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           "Order Completed",
                           style: TextStyle(fontWeight: FontWeight.w600, fontSize: normalFontSize, color: Colors.black),
                         ),
-                        title: Divider(),
+                        title: const Divider(),
                         trailing: Text(
                           "${convertPacificTimeZoon(orderResult.modifiedDate)}",
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
@@ -587,7 +587,7 @@ class HistoryOrderStatusCard extends StatelessWidget {
       return _buildCard("Completed", Colors.green, false);
     }
     if (orderResult.status == OrderStatus.cancelled) {
-      return _buildCard("Cancelled", Colors.red, false);
+      return _buildCard("Cancelled", Colors.red.shade400, false);
     }
     if (orderResult.status == OrderStatus.rejected) {
       return _buildCard("Rejected", Colors.red, false);
@@ -597,6 +597,9 @@ class HistoryOrderStatusCard extends StatelessWidget {
     }
     if (orderResult.status == OrderStatus.readyForPickup) {
       return _buildCard("Ready For\nPickup", Colors.blueAccent.shade100);
+    }
+    if (orderResult.status == OrderStatus.pending) {
+      return _buildCard("Pending", Colors.yellow);
     }
     return _buildCard(orderResult.status?.capitalizeFirst ?? "Unknown", Colors.grey.shade300);
   }
