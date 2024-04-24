@@ -184,8 +184,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 ],
                                 rows: _searchHistory.isNotEmpty
                                     ? _searchHistory
-                                        .map((value) => DataRow(
-                                    cells: [
+                                        .map((value) => DataRow(cells: [
                                               DataCell(Row(
                                                 children: [
                                                   InkWell(
@@ -324,9 +323,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     ],
                   ),
                   Divider(),
-                  SizedBox(
-                    height: 30,
-                  ),
                 ],
               ),
               content: SingleChildScrollView(
@@ -339,7 +335,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
                       Text(
                         "${orderResult.quantity} items for ${orderResult.customer}",
                         style: TextStyle(
@@ -348,6 +343,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           color: Colors.black,
                         ),
                       ),
+                      SizedBox(height: 6),
+                      Text(
+                        "Phone: ${orderResult.dropoffPhoneNumber}",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      SizedBox(height: 15),
                       ListTile(
                         leading: Text(
                           "Order Placed",
