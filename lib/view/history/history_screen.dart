@@ -28,6 +28,7 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   final _search = TextEditingController();
   var _searchText;
+  bool isSearchEmpty = true;
 
   List<OrderResult> _history = [];
   List<OrderResult> _searchHistory = [];
@@ -39,12 +40,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
     var response = await OrderController.getPendingOrder();
     if (response!.results!.isNotEmpty) {
       for (var i in response!.results!) {
-        print("i.status === ${i.status}");
-        if (i.status != OrderStatus.pending && i.status != OrderStatus.accepted) {
-          setState(() {
-            _history.add(i);
-          });
-        }
+        setState(() {
+          _history.add(i);
+        });
+        if (i.status != OrderStatus.pending && i.status != OrderStatus.accepted) {}
       }
     }
     setState(() => _isLoading = false);
@@ -95,26 +94,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 controller: _search,
                 onChanged: (v) {
                   setState(() {
+                    isSearchEmpty = v.isEmpty;
                     _searchOrder(v);
                   });
                 },
                 decoration: InputDecoration(
-                    hintText: "Search Order number or Customer name",
-                    hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 30,
-                      color: Colors.black,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    )),
+                  hintText: "Search By Customer Name or Order ID",
+                  hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                  ),
+                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(10))),
+                  focusedBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.blue), borderRadius: BorderRadius.all(Radius.circular(10))),
+                  border: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey), borderRadius: BorderRadius.all(Radius.circular(10))),
+                ),
               ),
               Divider(),
               _isLoading
@@ -177,12 +172,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   ),
                                   DataColumn(
                                     label: Text(
-                                      "View",
+                                      "Status",
                                       style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                     ),
                                   ),
                                 ],
-                                rows: _searchHistory.isNotEmpty
+                                rows: _searchHistory.isNotEmpty || isSearchEmpty == false
                                     ? _searchHistory
                                         .map((value) => DataRow(cells: [
                                               DataCell(Row(
@@ -227,13 +222,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                 child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
                                                     style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                               )),
-                                              DataCell(AppButton(
-                                                text: "VIEW",
-                                                width: 70,
-                                                fontSize: 13,
-                                                height: 40,
-                                                onClick: () => _orderDetails(value),
-                                              )),
+                                              DataCell(
+                                                HistoryOrderStatusCard(
+                                                  orderResult: value,
+                                                  onClick: () => _orderDetails(value),
+                                                ),
+                                              ),
                                             ]))
                                         .toList()
                                     : _history
@@ -259,7 +253,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                               DataCell(InkWell(
                                                 child: Text(
                                                   "${selectRsname}",
-                                                  style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: normalFontSize),
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w600, color: const Color.fromRGBO(42, 42, 42, 1), fontSize: normalFontSize),
                                                 ),
                                               )),
                                               DataCell(InkWell(
@@ -274,13 +269,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                 child: Text("${convertPacificTimeZoon(value.receiveDate)}",
                                                     style: TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
                                               )),
-                                              DataCell(AppButton(
-                                                text: "VIEW",
-                                                width: 70,
-                                                fontSize: 13,
-                                                height: 40,
-                                                onClick: () => _orderDetails(value),
-                                              )),
+                                              DataCell(
+                                                HistoryOrderStatusCard(
+                                                  orderResult: value,
+                                                  onClick: () => _orderDetails(value),
+                                                ),
+                                              ),
                                             ]))
                                         .toList()),
                           ],
@@ -559,7 +553,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                         ),
                       ),
-                      HistoryOrderStatusCard(orderResult: orderResult)
                     ],
                   ),
                 ),
@@ -568,17 +561,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   void _searchOrder(String v) {
-    _searchHistory.clear();
-    setState(() {
-      for (var i in _history) {
-        //loop for items
-        for (var j in i.orderitemSet!) {
-          if (i.customer!.toLowerCase().contains(v.toLowerCase()) || j.menuItem!.name!.toLowerCase().contains(v)) {
-            _searchHistory.add(i);
-          }
-        }
-      }
-    });
+    _searchHistory = _history.where((element) {
+      return element.customer!.toLowerCase().contains(v.toLowerCase()) || element.id.toString().toLowerCase().contains(v.toLowerCase());
+    }).toList();
+    setState(() {});
   }
 }
 
@@ -586,9 +572,11 @@ class HistoryOrderStatusCard extends StatelessWidget {
   const HistoryOrderStatusCard({
     super.key,
     required this.orderResult,
+    required this.onClick,
   });
 
   final OrderResult orderResult;
+  final VoidCallback onClick;
 
   @override
   Widget build(BuildContext context) {
@@ -596,27 +584,36 @@ class HistoryOrderStatusCard extends StatelessWidget {
     //   return _buildCard("Unpaid", Colors.red.shade100);
     // }
     if (orderResult.status == OrderStatus.completed) {
-      return _buildCard("Completed", Colors.green.shade200);
+      return _buildCard("Completed", Colors.green, false);
     }
     if (orderResult.status == OrderStatus.cancelled) {
       return _buildCard("Cancelled", Colors.red, false);
     }
+    if (orderResult.status == OrderStatus.rejected) {
+      return _buildCard("Rejected", Colors.red, false);
+    }
+    if (orderResult.status == OrderStatus.accepted) {
+      return _buildCard("Accepted", Colors.green.shade200);
+    }
     if (orderResult.status == OrderStatus.readyForPickup) {
-      return _buildCard("Ready For Pickup", Colors.blueAccent.shade100);
+      return _buildCard("Ready For\nPickup", Colors.blueAccent.shade100);
     }
     return _buildCard(orderResult.status?.capitalizeFirst ?? "Unknown", Colors.grey.shade300);
   }
 
-  Container _buildCard(String value, Color color, [bool blackText = true]) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        color: color,
-      ),
-      child: Text(
-        value,
-        style: TextStyle(color: blackText ? Colors.black : Colors.white),
+  Widget _buildCard(String value, Color color, [bool blackText = true]) {
+    return InkWell(
+      onTap: onClick,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: color,
+        ),
+        child: Text(
+          value,
+          style: TextStyle(color: blackText ? Colors.black : Colors.white),
+        ),
       ),
     );
   }

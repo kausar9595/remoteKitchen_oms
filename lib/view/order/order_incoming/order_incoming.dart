@@ -309,7 +309,9 @@ class _OrderIncomingState extends State<OrderIncoming> {
                 ],
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             const SizedBox(
               height: 25,
             ),
@@ -382,16 +384,12 @@ class _OrderIncomingState extends State<OrderIncoming> {
           Get.find<PrepareTimeController>().setOrderAcceptTime(int.parse(id));
           Get.find<PrepareTimeController>().setOrderPrepTime(int.parse(id), _value.round());
 
-
-         OrderController.addPrapTime(prapTime: calPrapTime, ID: widget.orderResult!.id.toString()).then((value) {
-           AppSnackBar(context, "Order has been accepted", Colors.green);
-           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const NewOrderScreen()), (route) => false);
-         });
-
-
-
+          OrderController.addPrapTime(prapTime: calPrapTime, ID: widget.orderResult!.id.toString()).then((value) {
+            AppSnackBar(context, "Order has been accepted", Colors.green);
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const NewOrderScreen()), (route) => false);
+          });
         } else {
-          AppSnackBar(context, "Getting some issues to Accept this order.", Colors.red);
+          AppSnackBar(context, "Order was cancelled!", Colors.red);
         }
       });
     } catch (e) {

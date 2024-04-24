@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class OrderStatus{
+class OrderStatus {
   static const String cancelled = "cancelled";
   static const String pending = "pending";
   static const String accepted = "accepted";
@@ -12,32 +12,33 @@ class OrderStatus{
   static const String completed = "completed";
   static const String schedule = "schedule";
   static const String unpaid = "Unpaid";
-
-
+  static const String rejected = "rejected";
 
   //set order status staticly
-  static String setOrderStatus(String orderStatus){
-    if(orderStatus == cancelled){
+  static String setOrderStatus(String orderStatus) {
+    if (orderStatus == cancelled) {
       return "Cancelled";
-    }else if(orderStatus == pending){
+    } else if (orderStatus == pending) {
       return "New Order";
-    }else if(orderStatus == accepted){
+    } else if (orderStatus == accepted) {
       return "Accepted Order";
-    }else if(orderStatus == readyForPickup){
+    } else if (orderStatus == readyForPickup) {
       return "Ready for pickup";
-    }else if(orderStatus == rider_confirmed){
+    } else if (orderStatus == rider_confirmed) {
       return "Rider confirmed order";
-    }else if(orderStatus == rider_confirmed_dropoff_arrival){
+    } else if (orderStatus == rider_confirmed_dropoff_arrival) {
       return "Rider confirmed drop-off arrival";
-    }else if(orderStatus == rider_picked_up){
+    } else if (orderStatus == rider_picked_up) {
       return "Rider picked up";
-    }else if(orderStatus == rider_confirmed_pickup_arrival){
+    } else if (orderStatus == rider_confirmed_pickup_arrival) {
       return "Rider confirmed pick-off arrival";
-    }else if(orderStatus == completed){
+    } else if (orderStatus == completed) {
       return "Completed";
-    }else if(orderStatus == schedule){
+    } else if (orderStatus == schedule) {
       return "Schedule Order";
-    }else{
+    } else if (orderStatus == rejected) {
+      return "Rejected Order";
+    } else {
       return "No Order Status";
     }
   }

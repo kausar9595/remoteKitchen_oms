@@ -60,10 +60,7 @@ class _PaymentReceiveConfirmationScreenState extends State<PaymentReceiveConfirm
                     //alarm stop
                     await Alarm.stop(1);
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const NewOrderScreen()));
+                    Navigator.pop(context);
                   },
                   icon: const Icon(
                     Icons.cancel_outlined,
@@ -83,7 +80,7 @@ class _PaymentReceiveConfirmationScreenState extends State<PaymentReceiveConfirm
                 children: [
                   const Text(
                     "Have You Received The Payment?",
-                    style: TextStyle(fontSize: 32, color: Colors.white),
+                    style: TextStyle(fontSize: 28, color: Colors.white),
                   ),
                   const SizedBox(height: 15),
                   Container(
@@ -134,6 +131,13 @@ class _PaymentReceiveConfirmationScreenState extends State<PaymentReceiveConfirm
                       ),
                     ],
                   ),
+                  Text(
+                    "Phone: ${widget.orderResult.dropoffPhoneNumber}",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -145,13 +149,14 @@ class _PaymentReceiveConfirmationScreenState extends State<PaymentReceiveConfirm
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "Order for Delivery",
-                    style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w400),
-                  ),
+
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                  // const Text(
+                  //   "Order for Delivery",
+                  //   style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w400),
+                  // ),
                   const SizedBox(
                     height: 10,
                   ),

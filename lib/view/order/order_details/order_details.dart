@@ -126,6 +126,15 @@ class _OrderDetailState extends State<OrderDetail> {
                   SizedBox(
                     height: 10,
                   ),
+                  Center(
+                    child: Text(
+                      "Phone: ${widget.orderResult.dropoffPhoneNumber}",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text(
                     "Order Date: ${convertPacificTimeZoon(widget.orderResult.receiveDate)}",
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: normalFontSize),
