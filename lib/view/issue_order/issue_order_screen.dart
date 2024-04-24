@@ -35,7 +35,7 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
     var response = await OrderController.getPendingOrder();
     if (response.results!.isNotEmpty) {
       for (var i in response.results!) {
-        if (i.status == OrderStatus.cancelled) {
+        if (i.status == OrderStatus.cancelled || i.status == OrderStatus.rejected) {
           setState(() {
             _history.add(i);
           });
@@ -126,150 +126,153 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                   : _history.isNotEmpty
                       ? Expanded(
                           child: ListView(
-                          children: [
-                            DataTable(
-                                columnSpacing: 70,
-                                dividerThickness: 1,
-                                dataRowMaxHeight: 60,
-                                columns: const [
-                                  DataColumn(
-                                    label: Expanded(
-                                      child: Text(
-                                        "Order",
+                            children: [
+                              DataTable(
+                                  columnSpacing: 70,
+                                  dividerThickness: 1,
+                                  dataRowMaxHeight: 60,
+                                  columns: const [
+                                    DataColumn(
+                                      label: Expanded(
+                                        child: Text(
+                                          "Order",
+                                          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
+                                        ),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      label: Text(
+                                        "Restaurant",
                                         style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
                                       ),
                                     ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      "Restaurant",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
+                                    DataColumn(
+                                      label: Text(
+                                        "Location",
+                                        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
+                                      ),
                                     ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      "Location",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
+                                    DataColumn(
+                                      label: Text(
+                                        "Total",
+                                        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
+                                      ),
                                     ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      "Total",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
+                                    DataColumn(
+                                      label: Text(
+                                        "Placed",
+                                        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
+                                      ),
                                     ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      "Placed",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
+                                    DataColumn(
+                                      label: Text(
+                                        "Status",
+                                        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
+                                      ),
                                     ),
-                                  ),
-                                  DataColumn(
-                                    label: Text(
-                                      "Status",
-                                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.textblack),
-                                    ),
-                                  ),
-                                ],
-                                rows: _searchHistory.isNotEmpty
-                                    ? _searchHistory
-                                        .map((value) => DataRow(
-                                                onLongPress: () {
-                                                  _orderDetails(value);
-                                                },
-                                                cells: [
-                                                  DataCell(Row(
-                                                    children: [
-                                                      InkWell(
-                                                        child: Column(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: [
-                                                            Text(
-                                                              "#${value.id.toString()}",
-                                                              style: const TextStyle(
-                                                                fontWeight: FontWeight.w400,
-                                                                color: AppColors.textblack,
-                                                                fontSize: 14,
-                                                              ),
+                                  ],
+                                  rows: _searchHistory.isNotEmpty
+                                      ? _searchHistory
+                                          .map(
+                                            (value) => DataRow(
+                                              cells: [
+                                                DataCell(Row(
+                                                  children: [
+                                                    InkWell(
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            "#${value.id.toString()}",
+                                                            style: const TextStyle(
+                                                              fontWeight: FontWeight.w400,
+                                                              color: AppColors.textblack,
+                                                              fontSize: 14,
                                                             ),
-                                                            Text(
-                                                              "${value.customer.toString()}",
-                                                              style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.textblack, fontSize: 18),
-                                                            ),
-                                                          ],
-                                                        ),
+                                                          ),
+                                                          Text(
+                                                            "${value.customer.toString()}",
+                                                            style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.textblack, fontSize: 18),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ],
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text(
-                                                      "${selectRsname}",
-                                                      style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14),
                                                     ),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("${selectLocationName}",
-                                                        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14)),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("CA\$${value.total.toString()}",
-                                                        style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
-                                                        style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
-                                                  )),
-                                                  DataCell(HistoryOrderStatusCard(orderResult: value)),
-                                                ]))
-                                        .toList()
-                                    : _history
-                                        .map((value) => DataRow(
-                                                onLongPress: () {
-                                                  _orderDetails(value);
-                                                },
-                                                cells: [
-                                                  DataCell(Row(
-                                                    children: [
-                                                      InkWell(
-                                                        child: Column(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: [
-                                                            Text("#${value.id.toString()}",
-                                                                style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
-                                                            Text(
-                                                              "${value.customer.toString()}",
-                                                              style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.textblack, fontSize: 18),
-                                                            ),
-                                                          ],
-                                                        ),
+                                                  ],
+                                                )),
+                                                DataCell(InkWell(
+                                                  child: Text(
+                                                    "${selectRsname}",
+                                                    style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14),
+                                                  ),
+                                                )),
+                                                DataCell(InkWell(
+                                                  child: Text("${selectLocationName}",
+                                                      style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14)),
+                                                )),
+                                                DataCell(InkWell(
+                                                  child: Text("CA\$${value.total.toString()}",
+                                                      style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
+                                                )),
+                                                DataCell(InkWell(
+                                                  child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
+                                                      style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
+                                                )),
+                                                DataCell(
+                                                  HistoryOrderStatusCard(orderResult: value, onClick: () => _orderDetails(value)),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                          .toList()
+                                      : _history
+                                          .map(
+                                            (value) => DataRow(
+                                              cells: [
+                                                DataCell(Row(
+                                                  children: [
+                                                    InkWell(
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text("#${value.id.toString()}",
+                                                              style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
+                                                          Text(
+                                                            "${value.customer.toString()}",
+                                                            style: const TextStyle(fontWeight: FontWeight.w500, color: AppColors.textblack, fontSize: 18),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ],
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text(
-                                                      "${selectRsname}",
-                                                      style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: normalFontSize),
                                                     ),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("${selectLocationName}",
-                                                        style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14)),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("CA\$${value.total.toString()}",
-                                                        style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
-                                                  )),
-                                                  DataCell(InkWell(
-                                                    child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
-                                                        style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
-                                                  )),
-                                                  DataCell(HistoryOrderStatusCard(orderResult: value)),
-                                                ]))
-                                        .toList()),
-                          ],
-                        ))
+                                                  ],
+                                                )),
+                                                DataCell(InkWell(
+                                                  child: Text(
+                                                    "${selectRsname}",
+                                                    style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: normalFontSize),
+                                                  ),
+                                                )),
+                                                DataCell(InkWell(
+                                                  child: Text("${selectLocationName}",
+                                                      style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textblack, fontSize: 14)),
+                                                )),
+                                                DataCell(InkWell(
+                                                  child: Text("CA\$${value.total.toString()}",
+                                                      style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
+                                                )),
+                                                DataCell(InkWell(
+                                                  child: Text("${DateFormat('dd-MM-yyyy hh:mm a').format(DateTime.parse("${value.createdDate}"))}",
+                                                      style: const TextStyle(fontWeight: FontWeight.w400, color: AppColors.textblack, fontSize: 14)),
+                                                )),
+                                                DataCell(HistoryOrderStatusCard(orderResult: value, onClick: () => _orderDetails(value))),
+                                              ],
+                                            ),
+                                          )
+                                          .toList()),
+                            ],
+                          ),
+                        )
                       : EmptyData(onClick: () => _getIncomingOrders(), mes: "No history found for this Restaurant & Location."),
             ],
           ),
@@ -409,7 +412,7 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                               ),
                             ),
                             title: Text(
-                              "${items.menuItem != null ?  items.menuItem!.name : "Null"}",
+                              "${items.menuItem != null ? items.menuItem!.name : "Null"}",
                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
                             ),
                             trailing: Text(
@@ -470,16 +473,22 @@ class _IssueOrderScreenState extends State<IssueOrderScreen> {
                           style: TextStyle(fontSize: normalFontSize, fontWeight: FontWeight.w500, color: Colors.black),
                         ),
                       ),
+                      orderResult.isPaid == false
+                          ? AppButton(
+                              text: "Paid",
+                              width: 200,
+                              height: 45,
+                              bgColor: Colors.green,
+                              onClick: () async {
+                                ///TODO api....
+                                OrderController.changeStatus(orderResult.id.toString(), OrderStatus.completed).then((value) {
+                                  AppSnackBar(context, "Order mark as complete", Colors.green);
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => IssueOrderScreen()));
+                                });
 
-
-                      orderResult.isPaid ==  false ?  AppButton(text: "Paid", width: 200,  height: 45, bgColor: Colors.green, onClick: ()async{
-                        ///TODO api....
-                        OrderController.changeStatus(orderResult.id.toString(), OrderStatus.completed).then((value) {
-                          AppSnackBar(context, "Order mark as complete", Colors.green);
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> IssueOrderScreen()));
-                        });
-                        ///
-                      })  : Center()
+                                ///
+                              })
+                          : Center()
                     ],
                   ),
                 ),
@@ -506,34 +515,39 @@ class HistoryOrderStatusCard extends StatelessWidget {
   const HistoryOrderStatusCard({
     super.key,
     required this.orderResult,
+    required this.onClick,
   });
 
   final OrderResult orderResult;
+  final VoidCallback onClick;
 
   @override
   Widget build(BuildContext context) {
     if (orderResult.isPaid! == false) {
-      return _buildCard("Unpaid", Colors.red.shade100);
+      return _buildCard("Unpaid", Colors.red, false);
     }
-    if (orderResult.status == "completed") {
-      return _buildCard("Completed", Colors.green.shade200);
-    }
-    if (orderResult.status == "cancelled") {
+    if (orderResult.status == OrderStatus.cancelled) {
       return _buildCard("Cancelled", Colors.red, false);
+    }
+    if (orderResult.status == OrderStatus.rejected) {
+      return _buildCard("Rejected", Colors.red, false);
     }
     return _buildCard(orderResult.status?.capitalizeFirst ?? "Unknown", Colors.grey.shade300);
   }
 
-  Container _buildCard(String value, Color color, [bool blackText = true]) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        color: color,
-      ),
-      child: Text(
-        value,
-        style: TextStyle(color: blackText ? Colors.black : Colors.white),
+  Widget _buildCard(String value, Color color, [bool blackText = true]) {
+    return InkWell(
+      onTap: onClick,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: color,
+        ),
+        child: Text(
+          value,
+          style: TextStyle(color: blackText ? Colors.black : Colors.white),
+        ),
       ),
     );
   }
